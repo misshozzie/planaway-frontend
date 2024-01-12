@@ -10,8 +10,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/:userid" element={<TripPage />} />
-        <Route path="/:userid/:tripid" element={<PlanPage />} />
+        <Route path="/:username" element={<TripPage />} />
+        <Route path="/:username/:tripid" element={<PlanPage />} />
       </Routes>
     </>
   );
