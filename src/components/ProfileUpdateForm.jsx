@@ -136,10 +136,10 @@ const ProfileUpdateForm = () => {
               placeholder="Enter your username"
               mb="2"
               name="userName"
-              // value={formData.userName}
-              // onChange={handleInputChange}
+              value={formData.userName}
+              onChange={handleInputChange}
             />
-            {/* Render errors if there are any */}
+            <p style={{ color: "red" }}>{errors.userName}</p>
           </FormControl>
 
           <FormControl id="email" isRequired>
@@ -149,10 +149,10 @@ const ProfileUpdateForm = () => {
               placeholder="Enter your email"
               mb="2"
               name="email"
-              // value={formData.email}
-              // onChange={handleInputChange}
+              value={formData.email}
+              onChange={handleInputChange}
             />
-            {/* Render errors if there are any */}
+            <p style={{ color: "red" }}>{errors.email}</p>
           </FormControl>
 
           <FormControl id="password" isRequired>
@@ -164,8 +164,8 @@ const ProfileUpdateForm = () => {
                 placeholder="Enter new password"
                 mb="2"
                 name="password"
-                // value={formData.password}
-                // onChange={handleInputChange}
+                value={formData.password}
+                onChange={handleInputChange}
               />
               <InputRightElement width="4.5rem">
                 <Button h="1.75rem" size="sm" onClick={() => setShowPassword(!showPassword)}>
