@@ -1,20 +1,37 @@
-//tbc not quite sure about this part....
-
+// custom hooks:
+import { useEffect, useState } from "react";
 const BASE_URL = "http://localhost:3000";
 
-export async function getAllTrips(username, setter) {
-  const fullURL = `${BASE_URL}/${username}/trips`;
-  console.log(`fullURL:${fullURL}`);
+export function getAllTrips() {
+  //
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [data, setData] = useState([]);
 
-  const res = await fetch(fullURL, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
+  async function getData(username) {
+    const fullURL = `${BASE_URL}/${username}/trips`;
+    // console.log(`fullURL:${fullURL}`);
+    setIsLoading(true);
 
-  if (res.ok) {
-    const data = await res.json();
-    setter(data);
-  } else {
-    throw new Error("Failed to fetch trips");
+    const res = await fetch(fullURL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`, --> to update: need this later
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setError(json.error);
+    }
+    if (res.ok) {
+      //   localStorage.setItem("token", json.token); --> to update: need this later
+      setData(json);
+      setIsLoading(false);
+    }
   }
+
+  return { getData, data, isLoading, error };
 }
