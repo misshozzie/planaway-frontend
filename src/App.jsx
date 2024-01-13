@@ -5,7 +5,6 @@ import PlanPage from "./pages/PlanPage";
 import NewTripForm from "./components/NewTripForm";
 import SignUp from "./pages/SignUp";
 import Login from "./components/LoginForm";
-
 import "./App.css";
 
 function App() {
