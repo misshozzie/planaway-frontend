@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import TripPage from "./pages/TripPage";
 import PlanPage from "./pages/PlanPage";
 import NewTripForm from "./components/NewTripForm";
+import SignUp from "./pages/SignUp";
 
 import "./App.css";
 
@@ -11,6 +12,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="user/trips">
           <Route index={true} element={<TripPage />} />
           <Route path="new" element={<NewTripForm />} />
