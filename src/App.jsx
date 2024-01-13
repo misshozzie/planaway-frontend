@@ -6,8 +6,6 @@ import NewTripForm from "./components/NewTripForm";
 import SignUp from "./pages/SignUp";
 import ProfileUpdate from "./components/ProfileUpdateForm";
 import Login from "./components/LoginForm";
-
-
 import "./App.css";
 
 function App() {
