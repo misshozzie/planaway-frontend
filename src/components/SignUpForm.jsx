@@ -10,6 +10,7 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
+  Text
 } from "@chakra-ui/react";
 import Joi from "joi";
 import toast from "react-hot-toast";
