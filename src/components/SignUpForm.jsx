@@ -109,7 +109,13 @@ const SignUpForm = () => {
   };
 
   return (
-    <Flex align="center" justify="center" height="100vh" bgImage="url('https://i.imgur.com/RiN3U5c.jpg')" bgSize="cover">
+    <Flex
+      align="center"
+      justify="center"
+      height="100vh"
+      bgImage="url('https://i.imgur.com/RiN3U5c.jpg')"
+      bgSize="cover"
+    >
       <Box
         w="500px" // Adjust the width as needed
         borderWidth="1px"
@@ -117,7 +123,7 @@ const SignUpForm = () => {
         p="6"
         boxShadow="base"
         backgroundColor="rgba(255, 255, 255, 0.8)" // Semi-transparent white background
-        style={{ backdropFilter: 'blur(8px)' }}
+        style={{ backdropFilter: "blur(8px)" }}
       >
         <Heading
           align="center"
@@ -139,7 +145,7 @@ const SignUpForm = () => {
               name="userName"
               value={formData.userName}
               onChange={handleInputChange}
-              borderColor="#ccc" 
+              borderColor="#ccc"
             />
             <p style={{ color: "red" }}>{errors.userName}</p>
           </FormControl>
@@ -153,7 +159,7 @@ const SignUpForm = () => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              borderColor="#ccc" 
+              borderColor="#ccc"
             />
             <p style={{ color: "red" }}>{errors.email}</p>
           </FormControl>
@@ -161,22 +167,22 @@ const SignUpForm = () => {
           <FormControl>
             <FormLabel>Password</FormLabel>
             <InputGroup>
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-              mb="2"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              borderColor="#ccc" 
-            />
-            <InputRightElement width="4.5rem">
-            <Button
-                h="1.75rem"
-                size="sm"
-                onClick={togglePasswordVisibility}
-            >
-                {showPassword ? "Hide" : "Show"}
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                mb="2"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                borderColor="#ccc"
+              />
+              <InputRightElement width="4.5rem">
+                <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? "Hide" : "Show"}
                 </Button>
               </InputRightElement>
             </InputGroup>
@@ -192,7 +198,7 @@ const SignUpForm = () => {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              borderColor="#ccc" 
+              borderColor="#ccc"
             />
             <p style={{ color: "red" }}>{errors.confirmPassword}</p>
           </FormControl>
@@ -217,7 +223,8 @@ const SignUpForm = () => {
           </Button>
         </form>
         <Text align="center" fontSize="sm" color="#aaa" mt="4">
-          ©planaway2024 | feedback or query email us at <a href="mailto:info@planaway.com">info@planaway.com</a>
+          ©planaway2024 | feedback or query email us at{" "}
+          <a href="mailto:info@planaway.com">info@planaway.com</a>
         </Text>
       </Box>
     </Flex>

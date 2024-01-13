@@ -9,7 +9,7 @@ export function getAllTrips() {
   const [data, setData] = useState([]);
 
   async function getData(username) {
-    const fullURL = `${BASE_URL}/${username}/trips`;
+    const fullURL = `${BASE_URL}/trips/${username}`;
     // console.log(`fullURL:${fullURL}`);
     setIsLoading(true);
 
@@ -34,4 +34,68 @@ export function getAllTrips() {
   }
 
   return { getData, data, isLoading, error };
+}
+
+export function createOneTrip() {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [response, setResponse] = useState(null);
+
+  async function postData(username, body) {
+    setIsLoading(true);
+    const fullURL = `${BASE_URL}/trips/${username}`;
+    // console.log(body);
+
+    const res = await fetch(fullURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`, --> to update: need this later
+      },
+      body: JSON.stringify(body),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setError(json.error);
+    }
+    if (res.ok) {
+      setResponse(json);
+      setIsLoading(false);
+    }
+  }
+
+  return { postData, response, isLoading, error };
+}
+
+export function deleteOneTrip() {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [data, setData] = useState(null);
+
+  async function deleteData(username, tripid) {
+    setIsLoading(true);
+    const fullURL = `${BASE_URL}/trips/${username}?tripid=${tripid}`;
+
+    const res = await fetch(fullURL, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`, --> to update: need this later
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setError(json.error);
+    }
+    if (res.ok) {
+      setData(json);
+      setIsLoading(false);
+    }
+  }
+
+  return { deleteData, data, isLoading, error };
 }

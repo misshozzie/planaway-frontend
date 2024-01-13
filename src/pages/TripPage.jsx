@@ -37,7 +37,10 @@ export default function TripPage() {
 
   return (
     <>
-      <button type="button" onClick={() => navigate(`/user/trips/new`)}>
+      <button
+        type="button"
+        onClick={() => navigate(`/user/trips/new?username=${username}`)}
+      >
         Create New Trip
       </button>
       {isLoading ? (
@@ -52,6 +55,7 @@ export default function TripPage() {
             endDay={formatDate(trip.endDay)}
             description={trip.description}
             key={trip._id}
+            tripId={trip._id}
           />
         ))
       )}
