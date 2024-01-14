@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 const NavBar = () => {
     const [user, setUser] = useState();
     const navigate = useNavigate();
-    userEffect (() => {
+    useEffect (() => {
         const isUser = Cookies.get("user");
         if (isUser) {
             let parseUser = isUser?.substring(2);
@@ -49,7 +49,7 @@ const NavBar = () => {
             align="center"
             justify="space-between"
             padding="1rem"
-            color="#EAECCC"
+            color="white"
             width={"100%"}
           >
             <Link to="/">
