@@ -153,31 +153,29 @@ const ProfileUpdateForm = () => {
 
             <FormControl id="email" isRequired>
               <FormLabel>Email Address</FormLabel>
-              <Input
-                backgroundColor="#EAECCC"
-                type="text"
-                placeholder="Enter your email"
-                mb="2"
-                name="username"
-                value={formData.email}
-                onChange={handleInputChange}
-                borderColor="#ccc"
-              />
+              <InputGroup size="md">
+                <Input
+                  backgroundColor="#EAECCC"
+                  type="text"
+                  placeholder="Enter your email"
+                  mb="2"
+                  name="email" // Corrected here
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  borderColor="#ccc"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
               <p style={{ color: "red" }}>{errors.email}</p>
             </FormControl>
-              <InputRightElement width="4.5rem">
-              <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            <p style={{ color: "red" }}>{errors.password}</p>
-          </FormControl>
-
 
             <FormControl id="password" isRequired>
               <FormLabel>New Password</FormLabel>
