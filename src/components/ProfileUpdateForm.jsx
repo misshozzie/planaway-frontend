@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
+import apis from "../services/index";
 
 //schema to validate input
 const schema = Joi.object({
@@ -164,6 +165,19 @@ const ProfileUpdateForm = () => {
               />
               <p style={{ color: "red" }}>{errors.email}</p>
             </FormControl>
+              <InputRightElement width="4.5rem">
+              <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            <p style={{ color: "red" }}>{errors.password}</p>
+          </FormControl>
+
 
             <FormControl id="password" isRequired>
               <FormLabel>New Password</FormLabel>
