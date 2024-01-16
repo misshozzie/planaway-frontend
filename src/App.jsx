@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import HomePage from "./pages/HomePage";
 import TripPage from "./pages/TripPage";
 import PlanPage from "./pages/PlanPage";
@@ -6,7 +6,7 @@ import NewTripForm from "./components/NewTripForm";
 import SignUp from "./pages/SignUp";
 import ProfileUpdate from "./components/ProfileUpdateForm";
 import Login from "./components/LoginForm";
-import "./App.css";
+import "./index.css";
 
 function App() {
   return (
