@@ -15,7 +15,7 @@ import {
 import Joi from "joi";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
-//import apis from "../services";
+import apis from "../services/index";
 
 //schema to validate input
 const schema = Joi.object({
@@ -168,7 +168,11 @@ const ProfileUpdateForm = () => {
                 onChange={handleInputChange}
               />
               <InputRightElement width="4.5rem">
-                <Button h="1.75rem" size="sm" onClick={() => setShowPassword(!showPassword)}>
+              <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={togglePasswordVisibility}
+                >
                   {showPassword ? "Hide" : "Show"}
                 </Button>
               </InputRightElement>

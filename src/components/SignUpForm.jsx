@@ -10,12 +10,12 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import Joi from "joi";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-//import apis from "../services";
+import apis from "../services/index";
 import Cookies from "js-cookie";
 
 const schema = Joi.object({

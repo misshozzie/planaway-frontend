@@ -13,7 +13,7 @@ import {
   useColorModeValue
 } from "@chakra-ui/react";
 import Joi from "joi";
-//import apis from "../services";
+import apis from "../services/index";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
