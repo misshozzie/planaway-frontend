@@ -10,13 +10,16 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
-  Text,
 } from "@chakra-ui/react";
 import Joi from "joi";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+//import apis from "../services";
 import apis from "../services/index";
 import Cookies from "js-cookie";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import logo from "../assets/PAlogo.png";
+import bg from "../assets/Planawaybg.png";
+import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 const schema = Joi.object({
   userName: Joi.string().min(5).required().messages({
@@ -110,46 +113,50 @@ const SignUpForm = () => {
   };
 
   return (
-    <Flex
-      align="center"
-      justify="center"
-      height="100vh"
-      bgImage="url('https://i.imgur.com/RiN3U5c.jpg')"
-      bgSize="cover"
-    >
-      <Box
-        w="500px" // Adjust the width as needed
-        borderWidth="1px"
-        borderRadius="lg"
-        p="6"
-        boxShadow="base"
-        backgroundColor="rgba(255, 255, 255, 0.8)" // Semi-transparent white background
-        style={{ backdropFilter: "blur(8px)" }}
+    <>
+      <Flex
+        align="center"
+        justify="center"
+        height="100vh"
+        direction="column"
+        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
       >
-        <Heading
-          align="center"
-          mb={10}
-          fontSize="6xl"
-          p={2}
-          fontWeight="normal"
-          color="#333" // Change this to match the color in the image
-        >
-          Plan Away
+        <Heading align="center">
+          <Image src={logo} alt="planaway" height={200} />
         </Heading>
-        <form>
-          <FormControl>
-            <FormLabel>Username</FormLabel>
-            <Input
-              type="text"
-              placeholder="Enter your username"
-              mb="2"
-              name="userName"
-              value={formData.userName}
-              onChange={handleInputChange}
-              borderColor="#ccc"
-            />
-            <p style={{ color: "red" }}>{errors.userName}</p>
-          </FormControl>
+        <br />
+        <Box
+          minWidth="sm"
+          borderWidth="1px"
+          borderRadius="lg"
+          boxShadow="lg"
+          bg="rgba(195, 226, 194, 0.30)"
+          w="900px"
+          h="350px"
+          p="32px"
+          textAlign="center"
+          zIndex="2"
+        >
+          <form>
+            <Link as={RouterLink} to="/" display="flex" alignItems="center">
+              <ArrowLeftIcon />
+              Go Home
+            </Link>
+            <br />
+            <FormControl isRequired display="flex" alignItems="center">
+            <FormLabel mb={4} width="150px">Username</FormLabel>
+              <Input
+                backgroundColor="#EAECCC"
+                type="text"
+                placeholder="Enter your username"
+                mb={4}
+                name="username"
+                value={formData.username}
+                onChange={handleInputChange}
+                borderColor="#ccc"
+              />
+              <p style={{ color: "red" }}>{errors.username}</p>
+            </FormControl>
 
           <FormControl>
             <FormLabel>Email Address</FormLabel>

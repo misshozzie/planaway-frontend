@@ -4,6 +4,8 @@ import { Box, Flex, Heading, Text, Button, useColorModeValue } from "@chakra-ui/
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import Cookies from "js-cookie";
+import logo from "../components/assets/PAlogo.png";
+import bg from "../components/assets/planawaybg.png";
 
 const HomePage = () => {
   const navigate = useNavigate();

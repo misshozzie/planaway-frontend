@@ -9,12 +9,14 @@ import {
   Heading,
   InputGroup,
   InputRightElement,
-  Spinner,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import Joi from "joi";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+//import apis from "../services";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import logo from "../assets/PAlogo.png";
+import bg from "../assets/Planawaybg.png";
 import apis from "../services/index";
 
 //schema to validate input
@@ -126,21 +128,21 @@ const ProfileUpdateForm = () => {
           color={useColorModeValue('teal.600', 'teal.300')}
           fontSize="4xl"
         >
-          Planaway
-        </Heading>
-        <form>
-          <FormControl id="username" isRequired>
-            <FormLabel>Username</FormLabel>
-            <Input
-              type="text"
-              placeholder="Enter your username"
-              mb="2"
-              name="userName"
-              value={formData.userName}
-              onChange={handleInputChange}
-            />
-            <p style={{ color: "red" }}>{errors.userName}</p>
-          </FormControl>
+          <form>
+            <FormControl id="username" isRequired>
+              <FormLabel>Username</FormLabel>
+              <Input
+                backgroundColor="#EAECCC"
+                type="text"
+                placeholder="Enter your username"
+                mb="2"
+                name="username"
+                value={formData.username}
+                onChange={handleInputChange}
+                borderColor="#ccc"
+              />
+              <p style={{ color: "red" }}>{errors.username}</p>
+            </FormControl>
 
           <FormControl id="email" isRequired>
             <FormLabel>Email Address</FormLabel>
