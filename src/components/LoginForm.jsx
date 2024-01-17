@@ -8,14 +8,15 @@ import {
   Input,
   Button,
   Heading,
-  Spinner,
   Text,
-  useColorModeValue
 } from "@chakra-ui/react";
 import Joi from "joi";
 import apis from "../services/index";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import logo from "../components/assets/PAlogo.png";
+import bg from "../components/assets/planawaybg.png";
+import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 const schema = Joi.object({
   email: Joi.string()
@@ -86,71 +87,86 @@ const LoginForm = () => {
   };
 
   return (
-    <Flex align="center" justify="center" height="100vh" bg={useColorModeValue('green.50', 'green.900')} p={4}>
-      <Box
-        w="full"
-        maxW="md"
-        p={8}
-        borderRadius="lg"
-        bg={useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(23, 25, 35, 0.8)')}
-        boxShadow="lg"
+    <>
+      <Flex
+        align="center"
+        justify="center"
+        height="100vh"
+        direction="column"
+        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
       >
-        <Heading
-          as="h1"
-          size="xl"
-          fontWeight="bold"
-          color={useColorModeValue('black', 'white')}
-          textAlign="center"
-          mb={10}
-        >
-          Planaway
+        <Heading align="center">
+          <Image src={logo} alt="planaway" height={200} />
         </Heading>
-        <form>
-          <FormControl isRequired>
-            <FormLabel>Username</FormLabel>
-            <Input
-              type="text"
-              placeholder="Enter your username"
-              mb={4}
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-            />
-            {errors.username && <Text color="red.500">{errors.username}</Text>}
-          </FormControl>
+        <br />
+        <Box
+          minWidth="sm"
+          borderWidth="1px"
+          borderRadius="lg"
+          boxShadow="lg"
+          bg="rgba(195, 226, 194, 0.30)"
+          w="700px"
+          h="300px"
+          p="32px"
+          textAlign="center"
+          zIndex="2"
+        >
+          <form>
+            <Link as={RouterLink} to="/" display="flex" alignItems="center">
+              <ArrowLeftIcon />
+              Go Home
+            </Link>
+            <br />
+            <FormControl isRequired>
+              <FormLabel>Username</FormLabel>
+              <Input
+                backgroundColor="#EAECCC"
+                type="text"
+                placeholder="Enter your username"
+                mb={4}
+                name="username"
+                value={formData.username}
+                onChange={handleInputChange}
+              />
+              {errors.username && (
+                <Text color="red.500">{errors.username}</Text>
+              )}
+            </FormControl>
 
-          <FormControl isRequired mt={4}>
-            <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              placeholder="Enter your password"
-              mb={4}
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-            {errors.password && <Text color="red.500">{errors.password}</Text>}
-          </FormControl>
-
-          <Button
-            isLoading={isLoading}
-            type="submit"
-            colorScheme="teal"
-            width="100%"
-            mt={4}
-            spinnerPlacement="start"
-            loadingText="Logging in"
-            onClick={onSubmit}
-          >
-            Login
-          </Button>
-        </form>
-        <Text align={"center"} mt={5} onClick={() => navigate("/sign-up")}>
-          Have No Account? signUp
-        </Text>
-      </Box>
-    </Flex>
+            <FormControl isRequired>
+              <FormLabel>Password</FormLabel>
+              <Input
+                backgroundColor="#EAECCC"
+                type="text"
+                placeholder="Enter your password"
+                mb={4}
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+              {errors.username && (
+                <Text color="red.500">{errors.password}</Text>
+              )}
+            </FormControl>
+          </form>
+        </Box>
+        <br />
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          bg="#CD8D7A"
+          w="280px"
+          mt={4}
+          spinnerPlacement="start"
+          loadingText="Logging In"
+          onClick={onSubmit}
+          _hover={{ bg: " #DBCC95" }}
+        >
+          LOGIN
+        </Button>
+      </Flex>
+    </>
   );
-}
+};
 
 export default LoginForm;
