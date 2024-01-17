@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
+  Link,
+  Image,
   FormControl,
   FormLabel,
   Input,
@@ -22,7 +24,7 @@ import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 const schema = Joi.object({
-  userName: Joi.string().min(5).required().messages({
+  username: Joi.string().min(5).required().messages({
     "string.required": "Username is required.",
     "string.empty": "Username is required.",
     "string.min": "Username must be at least 5 characters",
@@ -49,7 +51,7 @@ const schema = Joi.object({
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -158,27 +160,29 @@ const SignUpForm = () => {
               <p style={{ color: "red" }}>{errors.username}</p>
             </FormControl>
 
-          <FormControl>
-            <FormLabel>Email Address</FormLabel>
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              mb="2"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              borderColor="#ccc"
-            />
-            <p style={{ color: "red" }}>{errors.email}</p>
-          </FormControl>
+            <FormControl isRequired display="flex" alignItems="center">
+            <FormLabel mb={4} width="150px">Email</FormLabel>
+              <Input
+                backgroundColor="#EAECCC"
+                type="email"
+                placeholder="Enter your email"
+                mb={2}
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                borderColor="#ccc"
+              />
+              <p style={{ color: "red" }}>{errors.email}</p>
+            </FormControl>
 
-          <FormControl>
-            <FormLabel>Password</FormLabel>
+            <FormControl isRequired display="flex" alignItems="center">
+            <FormLabel mb={4} width="150px">Passwords</FormLabel>
             <InputGroup>
               <Input
+                backgroundColor="#EAECCC"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                mb="2"
+                mb={2}
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
@@ -197,12 +201,13 @@ const SignUpForm = () => {
             <p style={{ color: "red" }}>{errors.password}</p>
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Confirm</FormLabel>
+          <FormControl isRequired display="flex" alignItems="center">
+            <FormLabel mb={4} width="150px">Confirm</FormLabel>
             <Input
+              backgroundColor="#EAECCC"
               type="password"
               placeholder="Confirm your password"
-              mb="2"
+              mb={2}
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
@@ -211,10 +216,15 @@ const SignUpForm = () => {
             <p style={{ color: "red" }}>{errors.confirmPassword}</p>
           </FormControl>
 
-          <Button
+          </form>
+        </Box>
+        <br />
+        <Button
             backgroundColor="#CD8D7A"
-            width="100%"
-            mt="4"
+            w="280px"
+            h="50px"
+            mt={2}
+            type="submit"
             onClick={onSubmit}
           >
             {isLoading ? (
@@ -226,16 +236,11 @@ const SignUpForm = () => {
                 size="sm"
               />
             ) : (
-              "SignUp" // Changed the text to match the button in the image
+              "SIGNUP"
             )}
           </Button>
-        </form>
-        <Text align="center" fontSize="sm" color="#aaa" mt="4">
-          ©planaway2024 | feedback or query email us at{" "}
-          <a href="mailto:info@planaway.com">info@planaway.com</a>
-        </Text>
-      </Box>
-    </Flex>
+      </Flex>
+    </>
   );
 };
 

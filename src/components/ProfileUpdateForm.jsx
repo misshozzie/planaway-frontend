@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
+  Image,
   FormControl,
   FormLabel,
   Input,
@@ -15,13 +16,13 @@ import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 //import apis from "../services";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
-import logo from "../assets/PAlogo.png";
-import bg from "../assets/Planawaybg.png";
+import logo from "../components/assets/PAlogo.png";
+import bg from "../components/assets/planawaybg.png";
 import apis from "../services/index";
 
 //schema to validate input
 const schema = Joi.object({
-  userName: Joi.string().min(3).required().messages({
+  username: Joi.string().min(3).required().messages({
     "string.required": "Username is required.",
     "string.empty": "Username is required.",
     "string.min": "Username must be at least 5 characters",
@@ -41,7 +42,7 @@ const schema = Joi.object({
 
 const ProfileUpdateForm = () => {
   const [formData, setFormData] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -64,7 +65,7 @@ const ProfileUpdateForm = () => {
       const user = JSON?.parse(parseUser);
       setNewUsers(user);
       setFormData({
-        userName: user?.userName,
+        username: user?.username,
         email: user?.email,
       });
     }
@@ -108,25 +109,29 @@ const ProfileUpdateForm = () => {
   };
 
   return (
-    <Flex
-      align="center"
-      justify="center"
-      height="100vh"
-      bgSize="cover"
-    >
-      <Box
-        minW="400px"
-        borderWidth="1px"
-        borderRadius="lg"
-        p="4"
-        boxShadow="base"
-        bg={useColorModeValue('rgba(195, 226, 194, 0.50)', 'gray.700')}
+    <>
+      <Flex
+        align="center"
+        justify="center"
+        height="100vh"
+        direction="column"
+        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
       >
-        <Heading
+        <Heading align="center">
+          <Image src={logo} alt="planaway" height={200} />
+        </Heading>
+        <br />
+        <Box
+          minWidth="sm"
+          borderWidth="1px"
+          borderRadius="lg"
+          boxShadow="lg"
+          bg="rgba(195, 226, 194, 0.30)"
+          w="500px"
+          h="300px"
+          p="32px"
           textAlign="center"
-          mb={10}
-          color={useColorModeValue('teal.600', 'teal.300')}
-          fontSize="4xl"
+          zIndex="2"
         >
           <form>
             <FormControl id="username" isRequired>
@@ -161,42 +166,87 @@ const ProfileUpdateForm = () => {
             <FormLabel>New Password</FormLabel>
             <InputGroup size="md">
               <Input
-                pr="4.5rem"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter new password"
+                backgroundColor="#EAECCC"
+                type="text"
+                placeholder="Enter your username"
                 mb="2"
-                name="password"
-                value={formData.password}
+                name="username"
+                value={formData.username}
                 onChange={handleInputChange}
+                borderColor="#ccc"
               />
-              <InputRightElement width="4.5rem">
-              <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            <p style={{ color: "red" }}>{errors.password}</p>
-          </FormControl>
+              <p style={{ color: "red" }}>{errors.username}</p>
+            </FormControl>
 
-          <Button
-            mt="4"
-            width="full"
-            bg="#CD8D7A"
-            color="white"
-            isLoading={loading}
-            loadingText="Updating..."
-            onClick={onSubmit}
-          >
-            Update Profile
-          </Button>
-        </form>
-      </Box>
-    </Flex>
+            <FormControl id="email" isRequired>
+              <FormLabel>Email Address</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  backgroundColor="#EAECCC"
+                  type="text"
+                  placeholder="Enter your email"
+                  mb="2"
+                  name="email" // Corrected here
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  borderColor="#ccc"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <p style={{ color: "red" }}>{errors.email}</p>
+            </FormControl>
+
+            <FormControl id="password" isRequired>
+              <FormLabel>New Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  backgroundColor="#EAECCC"
+                  pr="4.5rem"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter new password"
+                  mb="2"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  borderColor="#ccc"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <p style={{ color: "red" }}>{errors.password}</p>
+            </FormControl>
+          </form>
+        </Box>
+
+        <Button
+          mt="4"
+          width="280px"
+          bg="#CD8D7A"
+          color="white"
+          isLoading={loading}
+          loadingText="Updating..."
+          onClick={onSubmit}
+        >
+          UPDATE PROFILE
+        </Button>
+      </Flex>
+    </>
   );
-}
+};
 
 export default ProfileUpdateForm;
