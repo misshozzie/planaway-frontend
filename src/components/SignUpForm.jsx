@@ -12,7 +12,6 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
-  Text,
 } from "@chakra-ui/react";
 import Joi from "joi";
 import toast from "react-hot-toast";
@@ -20,8 +19,8 @@ import toast from "react-hot-toast";
 import apis from "../services/index";
 import Cookies from "js-cookie";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
-import logo from "../assets/PAlogo.png";
-import bg from "../assets/Planawaybg.png";
+import logo from "../components/assets/PAlogo.png";
+import bg from "../components/assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 const schema = Joi.object({
