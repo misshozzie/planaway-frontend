@@ -1,12 +1,10 @@
 //for login and signup
 import React, { useEffect } from "react";
-import { Box, Flex, Heading, Text, Button, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Button, Image } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import Cookies from "js-cookie";
 import logo from "../components/assets/PAlogo.png";
 import bg from "../components/assets/planawaybg.png";
-
 const HomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -22,30 +20,29 @@ const HomePage = () => {
         align="center"
         justify="center"
         height="100vh"
-        bgSize="cover"
-        bgPosition="center"
+        direction="column"
+        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
       >
+        <Heading align="center">
+          <Image src={logo} alt="planaway" height={200} />
+        </Heading>
+        <br />
         <Box
           minWidth="sm"
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="lg"
-          p={8}
-          bg="useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(0, 0, 0, 0.8)')"
-          color={useColorModeValue("black", "white")}
+          bg="rgba(195, 226, 194, 0.30)"
+          w="500px"
+          h="250px"
+          p="32px"
           textAlign="center"
+          zIndex="2" // ensure it's above the background
         >
-          <Heading
-            mb={6}
-            fontSize="5xl"
-            fontWeight="bold"
-            color={useColorModeValue("teal.600", "teal.300")}
-          >
-            Planaway
-          </Heading>
-          <Text mb={6} fontSize="xl">
-            welcome to planaway
+          <Text mb={5} fontSize="xl">
+            Welcome to Planaway
           </Text>
+          <br />
           <Link to="/login">
             <Button
               mb={4}

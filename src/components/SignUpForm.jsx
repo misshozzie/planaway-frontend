@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
+  Link,
+  Image,
   FormControl,
   FormLabel,
   Input,
@@ -22,7 +24,7 @@ import bg from "../components/assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 const schema = Joi.object({
-  userName: Joi.string().min(5).required().messages({
+  username: Joi.string().min(5).required().messages({
     "string.required": "Username is required.",
     "string.empty": "Username is required.",
     "string.min": "Username must be at least 5 characters",
@@ -49,7 +51,7 @@ const schema = Joi.object({
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
