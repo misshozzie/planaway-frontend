@@ -130,9 +130,11 @@ const LoginForm = () => {
                 value={formData.email}
                 onChange={handleInputChange}
               />
-              {errors.username && <Text color="red.500">{errors.email}</Text>}
+              {errors.username && (
+                <Text color="red.500">{errors.email}</Text>
+              )}
             </FormControl>
-
+  
             <FormControl isRequired>
               <FormLabel>Password</FormLabel>
               <Input
@@ -148,7 +150,7 @@ const LoginForm = () => {
                 <Text color="red.500">{errors.password}</Text>
               )}
             </FormControl>
-
+  
             <Button
               isLoading={isLoading}
               type="submit"
@@ -167,6 +169,6 @@ const LoginForm = () => {
       </Flex>
     </>
   );
-};
+ }  
 
-export default LoginForm;
+ export default LoginForm;

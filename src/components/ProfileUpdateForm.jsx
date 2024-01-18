@@ -147,7 +147,7 @@ const ProfileUpdateForm = () => {
               />
               <p style={{ color: "red" }}>{errors.userName}</p>
             </FormControl>
-
+  
             <FormControl id="email" isRequired>
               <FormLabel>Email Address</FormLabel>
               <InputGroup size="md">
@@ -164,7 +164,7 @@ const ProfileUpdateForm = () => {
               </InputGroup>
               <p style={{ color: "red" }}>{errors.email}</p>
             </FormControl>
-
+  
             <FormControl id="password" isRequired>
               <FormLabel>New Password</FormLabel>
               <InputGroup size="md">
@@ -191,7 +191,7 @@ const ProfileUpdateForm = () => {
               </InputGroup>
               <p style={{ color: "red" }}>{errors.password}</p>
             </FormControl>
-
+  
             <Button
               mt="4"
               width="280px"
@@ -208,6 +208,6 @@ const ProfileUpdateForm = () => {
       </Flex>
     </>
   );
-};
+  }  
 
-export default ProfileUpdateForm;
+  export default ProfileUpdateForm;

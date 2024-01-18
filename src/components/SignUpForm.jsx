@@ -145,9 +145,7 @@ const SignupForm = () => {
             </Link>
             <br />
             <FormControl isRequired display="flex" alignItems="center">
-              <FormLabel mb={4} width="150px">
-                Username
-              </FormLabel>
+            <FormLabel mb={4} width="150px">Username</FormLabel>
               <Input
                 backgroundColor="#EAECCC"
                 type="text"
@@ -162,9 +160,7 @@ const SignupForm = () => {
             </FormControl>
 
             <FormControl isRequired display="flex" alignItems="center">
-              <FormLabel mb={4} width="150px">
-                Email
-              </FormLabel>
+            <FormLabel mb={4} width="150px">Email</FormLabel>
               <Input
                 backgroundColor="#EAECCC"
                 type="email"
@@ -179,72 +175,69 @@ const SignupForm = () => {
             </FormControl>
 
             <FormControl isRequired display="flex" alignItems="center">
-              <FormLabel mb={4} width="150px">
-                Password
-              </FormLabel>
-              <InputGroup>
-                <Input
-                  backgroundColor="#EAECCC"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  mb={2}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  borderColor="#ccc"
-                />
-                <InputRightElement width="4.5rem">
-                  <Button
-                    h="1.75rem"
-                    size="sm"
-                    onClick={togglePasswordVisibility}
-                  >
-                    {showPassword ? "Hide" : "Show"}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              <p style={{ color: "red" }}>{errors.password}</p>
-            </FormControl>
-
-            <FormControl isRequired display="flex" alignItems="center">
-              <FormLabel mb={4} width="150px">
-                Confirm
-              </FormLabel>
+            <FormLabel mb={4} width="150px">Password</FormLabel>
+            <InputGroup>
               <Input
                 backgroundColor="#EAECCC"
-                type="password"
-                placeholder="Confirm your password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
                 mb={2}
-                name="confirmPassword"
-                value={formData.confirmPassword}
+                name="password"
+                value={formData.password}
                 onChange={handleInputChange}
                 borderColor="#ccc"
               />
-              <p style={{ color: "red" }}>{errors.confirmPassword}</p>
-            </FormControl>
+              <InputRightElement width="4.5rem">
+                <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            <p style={{ color: "red" }}>{errors.password}</p>
+          </FormControl>
+
+          <FormControl isRequired display="flex" alignItems="center">
+            <FormLabel mb={4} width="150px">Confirm</FormLabel>
+            <Input
+              backgroundColor="#EAECCC"
+              type="password"
+              placeholder="Confirm your password"
+              mb={2}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              borderColor="#ccc"
+            />
+            <p style={{ color: "red" }}>{errors.confirmPassword}</p>
+          </FormControl>
+
           </form>
         </Box>
         <br />
         <Button
-          backgroundColor="#CD8D7A"
-          w="280px"
-          h="50px"
-          mt={2}
-          type="submit"
-          onClick={onSubmit}
-        >
-          {isLoading ? (
-            <Spinner
-              thickness="3px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="sm"
-            />
-          ) : (
-            "SIGNUP"
-          )}
-        </Button>
+            backgroundColor="#CD8D7A"
+            w="280px"
+            h="50px"
+            mt={2}
+            type="submit"
+            onClick={onSubmit}
+          >
+            {isLoading ? (
+              <Spinner
+                thickness="3px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="sm"
+              />
+            ) : (
+              "SIGNUP"
+            )}
+          </Button>
       </Flex>
     </>
   );
