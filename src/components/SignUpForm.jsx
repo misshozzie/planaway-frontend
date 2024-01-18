@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import Joi from "joi";
 import toast from "react-hot-toast";
-//import apis from "../services";
 import apis from "../services/index";
 import Cookies from "js-cookie";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
@@ -24,7 +23,7 @@ import bg from "../components/assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 const schema = Joi.object({
-  username: Joi.string().min(5).required().messages({
+  userName: Joi.string().min(5).required().messages({
     "string.required": "Username is required.",
     "string.empty": "Username is required.",
     "string.min": "Username must be at least 5 characters",
@@ -49,9 +48,9 @@ const schema = Joi.object({
   }),
 });
 
-const SignUpForm = () => {
+const SignupForm = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    userName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -100,7 +99,7 @@ const SignUpForm = () => {
       setIsLoading(true);
       const { confirmPassword, ...rest } = formData || {};
 
-      const response = await apis?.authSignUp(rest);
+      const response = await apis?.authSignup(rest);
       if (response?.status === 201) {
         navigate("/login");
         toast.success(response?.data?.message, { id: 1 });
@@ -152,12 +151,12 @@ const SignUpForm = () => {
                 type="text"
                 placeholder="Enter your username"
                 mb={4}
-                name="username"
-                value={formData.username}
+                name="userName"
+                value={formData.userName}
                 onChange={handleInputChange}
                 borderColor="#ccc"
               />
-              <p style={{ color: "red" }}>{errors.username}</p>
+              <p style={{ color: "red" }}>{errors.userName}</p>
             </FormControl>
 
             <FormControl isRequired display="flex" alignItems="center">
@@ -176,7 +175,7 @@ const SignUpForm = () => {
             </FormControl>
 
             <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Passwords</FormLabel>
+            <FormLabel mb={4} width="150px">Password</FormLabel>
             <InputGroup>
               <Input
                 backgroundColor="#EAECCC"
@@ -244,4 +243,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignupForm;

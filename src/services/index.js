@@ -28,7 +28,7 @@ const createBackendServer = (baseURL) => {
   /*=== POST REQUEST ===*/
   const authLogin = async (body) => api.post("auth/login", body);
   const authLogout = async () => api.post("auth/logout");
-  const authSignUp = async (body) => api.post("auth/register", body);
+  const authSignup = async (body) => api.post("auth/register", body);
 
   /*=== GET REQUEST ===*/
   const updateProfile = async ({ id, body }) =>
@@ -36,7 +36,7 @@ const createBackendServer = (baseURL) => {
 
   return {
     authLogin,
-    authSignUp,
+    authSignup,
     authLogout,
     updateProfile,
   };
