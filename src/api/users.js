@@ -3,17 +3,26 @@
 // const BASE_URL = "http://localhost:3000/users";
 //import apis from"../
 import apis from "../services/index";
-import {createAsyncThunk} from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 /*=== USER APIS ===*/
-const userLogin = createAsyncThunk("Users Login", async (body) => apis.authLogin(body));
-const userSignUp = createAsyncThunk("Users SignUp", async (body) => apis.authSignUp(body));
-const getProfile = createAsyncThunk("Get Profile", async (id) => apis.getProfile(id));
+const userLogin = createAsyncThunk("Users Login", async (body) =>
+  apis.authLogin(body)
+);
+const userSignup = createAsyncThunk("Users SignUp", async (body) =>
+  apis.authSignup(body)
+);
+const getProfile = createAsyncThunk("Get Profile", async (id) =>
+  apis.getProfile(id)
+);
 
 /*=== WALLET REDUX APIS ===*/
 // fetching data by ID, manage loading, success, error
-const getWallet = createAsyncThunk('Get Wallet Data', async (id) => await apis.getWallet(id));
+const getWallet = createAsyncThunk(
+  "Get Wallet Data",
+  async (id) => await apis.getWallet(id)
+);
 
-const reduxApis = {userLogin, getProfile, getWallet}
+const reduxApis = { userSignup, userLogin, getProfile, getWallet };
 
 export default reduxApis;

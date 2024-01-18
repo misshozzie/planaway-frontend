@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import Joi from "joi";
 import toast from "react-hot-toast";
-//import apis from "../services";
 import apis from "../services/index";
 import Cookies from "js-cookie";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
@@ -24,7 +23,7 @@ import bg from "../components/assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 const schema = Joi.object({
-  username: Joi.string().min(5).required().messages({
+  userName: Joi.string().min(5).required().messages({
     "string.required": "Username is required.",
     "string.empty": "Username is required.",
     "string.min": "Username must be at least 5 characters",
@@ -49,9 +48,9 @@ const schema = Joi.object({
   }),
 });
 
-const SignUpForm = () => {
+const SignupForm = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    userName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -100,7 +99,7 @@ const SignUpForm = () => {
       setIsLoading(true);
       const { confirmPassword, ...rest } = formData || {};
 
-      const response = await apis?.authSignUp(rest);
+      const response = await apis?.authSignup(rest);
       if (response?.status === 201) {
         navigate("/login");
         toast.success(response?.data?.message, { id: 1 });
@@ -146,22 +145,26 @@ const SignUpForm = () => {
             </Link>
             <br />
             <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Username</FormLabel>
+              <FormLabel mb={4} width="150px">
+                Username
+              </FormLabel>
               <Input
                 backgroundColor="#EAECCC"
                 type="text"
                 placeholder="Enter your username"
                 mb={4}
-                name="username"
-                value={formData.username}
+                name="userName"
+                value={formData.userName}
                 onChange={handleInputChange}
                 borderColor="#ccc"
               />
-              <p style={{ color: "red" }}>{errors.username}</p>
+              <p style={{ color: "red" }}>{errors.userName}</p>
             </FormControl>
 
             <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Email</FormLabel>
+              <FormLabel mb={4} width="150px">
+                Email
+              </FormLabel>
               <Input
                 backgroundColor="#EAECCC"
                 type="email"
@@ -176,72 +179,75 @@ const SignUpForm = () => {
             </FormControl>
 
             <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Passwords</FormLabel>
-            <InputGroup>
+              <FormLabel mb={4} width="150px">
+                Password
+              </FormLabel>
+              <InputGroup>
+                <Input
+                  backgroundColor="#EAECCC"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  mb={2}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  borderColor="#ccc"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <p style={{ color: "red" }}>{errors.password}</p>
+            </FormControl>
+
+            <FormControl isRequired display="flex" alignItems="center">
+              <FormLabel mb={4} width="150px">
+                Confirm
+              </FormLabel>
               <Input
                 backgroundColor="#EAECCC"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
+                type="password"
+                placeholder="Confirm your password"
                 mb={2}
-                name="password"
-                value={formData.password}
+                name="confirmPassword"
+                value={formData.confirmPassword}
                 onChange={handleInputChange}
                 borderColor="#ccc"
               />
-              <InputRightElement width="4.5rem">
-                <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            <p style={{ color: "red" }}>{errors.password}</p>
-          </FormControl>
-
-          <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Confirm</FormLabel>
-            <Input
-              backgroundColor="#EAECCC"
-              type="password"
-              placeholder="Confirm your password"
-              mb={2}
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              borderColor="#ccc"
-            />
-            <p style={{ color: "red" }}>{errors.confirmPassword}</p>
-          </FormControl>
-
+              <p style={{ color: "red" }}>{errors.confirmPassword}</p>
+            </FormControl>
           </form>
         </Box>
         <br />
         <Button
-            backgroundColor="#CD8D7A"
-            w="280px"
-            h="50px"
-            mt={2}
-            type="submit"
-            onClick={onSubmit}
-          >
-            {isLoading ? (
-              <Spinner
-                thickness="3px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="sm"
-              />
-            ) : (
-              "SIGNUP"
-            )}
-          </Button>
+          backgroundColor="#CD8D7A"
+          w="280px"
+          h="50px"
+          mt={2}
+          type="submit"
+          onClick={onSubmit}
+        >
+          {isLoading ? (
+            <Spinner
+              thickness="3px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="sm"
+            />
+          ) : (
+            "SIGNUP"
+          )}
+        </Button>
       </Flex>
     </>
   );
 };
 
-export default SignUpForm;
+export default SignupForm;

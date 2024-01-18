@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { deleteOneTrip } from "../api/trips";
 
 export default function TripCard({
@@ -7,6 +8,7 @@ export default function TripCard({
   description,
   tripId,
 }) {
+  const navigate = useNavigate();
   const { deleteData, data, isLoading, error } = deleteOneTrip();
   let query = new URLSearchParams(window.location.search);
   // console.log(`query:${query}`);
@@ -33,7 +35,9 @@ export default function TripCard({
       </button>
       <button
         type="button"
-        // onClick={() => navigate("placeholder for plan page")}
+        onClick={() =>
+          navigate(`/user/trips/update?username=${username}&tripid=${tripId}`)
+        }
       >
         Edit
       </button>
