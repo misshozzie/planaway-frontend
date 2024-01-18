@@ -3,10 +3,10 @@ import Joi from "joi";
 
 export const RegisterValid = (req) => {
     const schema = Joi.object({
-        name: Joi.string().required().messages({
-            "string.base": "Name is required*",
-            "string.empty": "Name is required*",
-            "any.required": "Name is required*",
+        UserName: Joi.string().required().messages({
+            "string.base": "username is required*",
+            "string.empty": "username is required*",
+            "any.required": "username is required*",
         }),
 
         email: Joi.string()
