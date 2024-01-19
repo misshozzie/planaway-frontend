@@ -99,3 +99,76 @@ export function deleteOneTrip() {
 
   return { deleteData, data, isLoading, error };
 }
+
+export function getOneTrip() {
+  //
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [data, setData] = useState({});
+
+  async function getOneData(username, tripid) {
+    const fullURL = `${BASE_URL}/trips/${username}?tripid=${tripid}`;
+    // console.log(`fullURL:${fullURL}`);
+    setIsLoading(true);
+
+    const res = await fetch(fullURL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`, --> to update: need this later
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setError(json.error);
+    }
+    if (res.ok) {
+      //   localStorage.setItem("token", json.token); --> to update: need this later
+      setData(json[0]);
+      // console.log("json:");
+      // console.log(json[0]);
+      setIsLoading(false);
+    }
+  }
+
+  return { getOneData, data, isLoading, error };
+}
+
+export function updateOneTrip() {
+  //
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const [data, setData] = useState({});
+
+  async function updateOneData(username, tripid, body) {
+    const fullURL = `${BASE_URL}/trips/${username}?tripid=${tripid}`;
+    // console.log(`fullURL:${fullURL}`);
+    setIsLoading(true);
+
+    const res = await fetch(fullURL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`, --> to update: need this later
+      },
+      body: JSON.stringify(body),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setError(json.error);
+    }
+    if (res.ok) {
+      //   localStorage.setItem("token", json.token); --> to update: need this later
+      // setData(json[0]);
+      console.log("json:");
+      // console.log(json[0]);
+      setIsLoading(false);
+    }
+  }
+
+  return { updateOneData, data, isLoading, error };
+}

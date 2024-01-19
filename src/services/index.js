@@ -42,6 +42,6 @@ const createBackendServer = (baseURL) => {
   };
 };
 
-const apis = createBackendServer('http://localhost:3000/')
+const apis = createBackendServer("http://localhost:3000/");
 
 export default apis;
