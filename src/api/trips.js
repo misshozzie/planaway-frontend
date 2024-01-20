@@ -9,7 +9,7 @@ export function getAllTrips() {
   const [data, setData] = useState([]);
 
   async function getData(username) {
-    const fullURL = `${BASE_URL}/trips/${username}`;
+    const fullURL = `${BASE_URL}/trips/all/${username}`;
     // console.log(`fullURL:${fullURL}`);
     setIsLoading(true);
 
@@ -107,7 +107,7 @@ export function getOneTrip() {
   const [data, setData] = useState({});
 
   async function getOneData(username, tripid) {
-    const fullURL = `${BASE_URL}/trips/${username}?tripid=${tripid}`;
+    const fullURL = `${BASE_URL}/trips/one/${username}?tripid=${tripid}`;
     // console.log(`fullURL:${fullURL}`);
     setIsLoading(true);
 
@@ -126,7 +126,7 @@ export function getOneTrip() {
     }
     if (res.ok) {
       //   localStorage.setItem("token", json.token); --> to update: need this later
-      setData(json[0]);
+      setData(json);
       // console.log("json:");
       // console.log(json[0]);
       setIsLoading(false);
@@ -164,7 +164,7 @@ export function updateOneTrip() {
     if (res.ok) {
       //   localStorage.setItem("token", json.token); --> to update: need this later
       // setData(json[0]);
-      console.log("json:");
+      // console.log("json:");
       // console.log(json[0]);
       setIsLoading(false);
     }

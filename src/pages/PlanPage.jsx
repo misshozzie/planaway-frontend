@@ -1,4 +1,4 @@
-import PlanCard from '../components/PlanCard.jsx';
+import PlanCard from "../components/PlanCard.jsx";
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -11,32 +11,30 @@ import {
   Image,
   Heading,
   Spinner,
-  VStack, 
+  VStack,
   Text,
-  SimpleGrid, 
+  SimpleGrid,
   useColorModeValue,
 } from "@chakra-ui/react";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
-import { showPlans } from "../api/plans"; 
+import { showPlans } from "../api/plans";
 
-export default function PlanPage(){
-
+export default function PlanPage() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   function extractData(dataArray) {
-
     const cleanedData = dataArray[0].map((item) => ({
-      key: item._id, 
-      tripID: item.tripID, 
+      key: item._id,
+      tripID: item.tripID,
       header: item.header,
       description: item.description,
     }));
 
-    return cleanedData
-    }; 
+    return cleanedData;
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -46,8 +44,8 @@ export default function PlanPage(){
           // Handle the error, e.g., show an error message
           console.error("Error fetching data:", error);
         } else {
-            const cleanData = extractData(data);
-            setData(cleanData);
+          const cleanData = extractData(data);
+          setData(cleanData);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -55,14 +53,13 @@ export default function PlanPage(){
         setLoading(false);
       }
     }
-  
+
     fetchData();
   }, []);
 
-  
   return (
     <>
-   <Flex
+      <Flex
         align="center"
         justify="center"
         height="100vh"
@@ -74,22 +71,25 @@ export default function PlanPage(){
         </Heading>
         <br />
         <br />
-          {loading ? (
-            <Spinner size="xl" color="teal.500" />
-          ) : data.length ? (
-        <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacing={4}>
-          {/* Map through the data and render a card for each item using PlanCard component */}
-          {data.map((item, index) => (
-            <Box key={index}>
-              <PlanCard id={item.key} header={item.header} description={item.description} />
-            </Box>
-          ))}
-        </SimpleGrid>
-
-          ) : (
-            <p>No data available</p>
-          )}
-    </Flex> 
+        {loading ? (
+          <Spinner size="xl" color="teal.500" />
+        ) : data.length ? (
+          <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacing={4}>
+            {/* Map through the data and render a card for each item using PlanCard component */}
+            {data.map((item, index) => (
+              <Box key={index}>
+                <PlanCard
+                  id={item.key}
+                  header={item.header}
+                  description={item.description}
+                />
+              </Box>
+            ))}
+          </SimpleGrid>
+        ) : (
+          <p>No data available</p>
+        )}
+      </Flex>
     </>
   );
-}; 
+}
