@@ -1,15 +1,10 @@
 import React from "react";
-import { Box, Text, ButtonGroup} from "@chakra-ui/react";
+import { Box, Text, ButtonGroup, Button} from "@chakra-ui/react";
 import { deleteOneTrip } from "../api/trips";
+import { useNavigate } from "react-router-dom";
 
 export default function PlanCard({id,  header, description }) {
-
-  function handleDelete() {
-    async function fetch() {
-      await deleteData(username, tripId);
-    }
-    fetch();
-  }
+  const navigate = useNavigate();
 
   return (
     <>
@@ -30,26 +25,16 @@ export default function PlanCard({id,  header, description }) {
         <Text fontSize="xl">{id}</Text>
         <ButtonGroup gap="4">
           <Button
-            colorScheme="whiteAlpha"
-            onClick={() =>
-              navigate(
-                `/user/trips/plans?username=${username}&tripid=${tripId}`
-              )
-            }
-          >
-            View
-          </Button>
-          <Button
             colorScheme="teal"
             onClick={() =>
               navigate(
-                `user/trips/plans`
+                `/user/trips/plans/update/${id}`
               )
             }
           >
             Edit
           </Button>
-          <Button colorScheme="blackAlpha" onClick={handleDelete}>
+          <Button colorScheme="blackAlpha">
             Delete
           </Button>
           </ButtonGroup>
