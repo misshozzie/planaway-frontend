@@ -86,13 +86,13 @@ export default function NewTripForm() {
         NEW PLAN
       </Heading>
       <FormControl isRequired>
-        <FormLabel>Destination</FormLabel>
+        <FormLabel>Title</FormLabel>
         <Input
           backgroundColor="white"
           type="text"
           placeholder="Enter your destination"
           mb={4}
-          name="destination"
+          name="header"
           onChange={handleChange}
         />
       </FormControl>
