@@ -1,5 +1,24 @@
 //To display trips under a single user
 // import { useParams } from "react-router";
+import {
+  Box,
+  Flex,
+  Link,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Image,
+  Heading,
+  Spinner,
+  VStack,
+  Text,
+  SimpleGrid,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import logo from "../assets/PAlogo.png";
+import bg from "../assets/Planawaybg.png";
+import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { getAllTrips } from "../api/trips";
 import { useEffect, useState } from "react";
@@ -27,38 +46,57 @@ export default function TripPage() {
 
   // console.log(`tripData:${JSON.stringify(tripData)}`);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  // if (error) {
+  //   return <p>Error: {error.message}</p>;
+  // }
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => navigate(`/user/trips/new?username=${username}`)}
+      <Flex
+        align="center"
+        justify="center"
+        height="100vh"
+        direction="column"
+        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
       >
-        Create New Trip
-      </button>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error: {error.message}</p>
-      ) : (
-        data.map((trip) => (
-          <TripCard
-            destination={trip.destination}
-            startDay={formatDate(trip.startDay)}
-            endDay={formatDate(trip.endDay)}
-            description={trip.description}
-            key={trip._id}
-            tripId={trip._id}
-          />
-        ))
-      )}
+        <Heading align="center">
+          <Image src={logo} alt="planaway" height={200} />
+        </Heading>
+        <br />
+        <Button
+          colorScheme="teal"
+          variant="solid"
+          type="button"
+          onClick={() => navigate(`/user/trips/new?username=${username}`)}
+        >
+          Create New Trip
+        </Button>
+        <br />
+        {isLoading ? (
+          <Spinner size="xl" color="teal.500" />
+        ) : error ? (
+          <p>Error: {error.message}</p>
+        ) : (
+          <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacing={4}>
+            {data.map((trip) => (
+              <Box key={trip._id}>
+                <TripCard
+                  destination={trip.destination}
+                  startDay={formatDate(trip.startDay)}
+                  endDay={formatDate(trip.endDay)}
+                  description={trip.description}
+                  key={trip._id}
+                  tripId={trip._id}
+                />
+              </Box>
+            ))}
+          </SimpleGrid>
+        )}
+      </Flex>
     </>
   );
 }
