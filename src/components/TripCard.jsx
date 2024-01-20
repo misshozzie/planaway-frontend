@@ -44,7 +44,11 @@ export default function TripCard({
         <ButtonGroup gap="4">
           <Button
             colorScheme="whiteAlpha"
-            // onClick={() => navigate("placeholder for plan page")}
+            onClick={() =>
+              navigate(
+                `/user/trips/plans?username=${username}&tripid=${tripId}`
+              )
+            }
           >
             View
           </Button>
