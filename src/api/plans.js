@@ -43,7 +43,7 @@ export async function createPlan(formData) {
   const fullURL = `${BASE_URL}/plans/${tripID}`;
 
   const sendData = {
-    destination: formData.destination,
+    header: formData.header,
     description: formData.description,
   };
 
