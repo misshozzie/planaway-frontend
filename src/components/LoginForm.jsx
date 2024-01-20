@@ -51,8 +51,14 @@ const LoginForm = () => {
   useEffect(() => {
     const userCookie = Cookies.get("user");
     console.log(userCookie, "userCookie");
+    const jsonStartIndex = userCookie.indexOf("{");
+    const jsonString = userCookie.slice(jsonStartIndex);
+    // Parse the JSON string into a JavaScript object
+    const userObject = JSON.parse(jsonString);
+    const userName = userObject.userName
+  
     if (userCookie) {
-      navigate("/trips");
+      navigate(`/user/trips?username=${userName}`);
     }
     // eslint-disable-next-line
   }, []);
