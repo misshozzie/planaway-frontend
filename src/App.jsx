@@ -32,7 +32,7 @@ function App() {
 
         <Route path="user/trips/plans/new" element={<NewPlanForm />} />
         <Route path="user/trips/plans" element={<PlanPage />} />
-        <Route path="user/trips/plans/update" element={<UpdatePlanForm />} />
+        <Route path="user/trips/plans/update/:planid" element={<UpdatePlanForm />} />
         <Route path="user/trips/plans/view" element={<PlanCard />} />
       </Routes>
     </>

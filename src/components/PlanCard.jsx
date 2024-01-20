@@ -1,7 +1,11 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, ButtonGroup, Button} from "@chakra-ui/react";
+import { deleteOneTrip } from "../api/trips";
+import { useNavigate } from "react-router-dom";
 
 export default function PlanCard({id,  header, description }) {
+  const navigate = useNavigate();
+
   return (
     <>
       <Box
@@ -19,6 +23,21 @@ export default function PlanCard({id,  header, description }) {
         <br />
         <Text fontSize="xl">{description}</Text>
         <Text fontSize="xl">{id}</Text>
+        <ButtonGroup gap="4">
+          <Button
+            colorScheme="teal"
+            onClick={() =>
+              navigate(
+                `/user/trips/plans/update/${id}`
+              )
+            }
+          >
+            Edit
+          </Button>
+          <Button colorScheme="blackAlpha">
+            Delete
+          </Button>
+          </ButtonGroup>
       </Box>
     </>
   );

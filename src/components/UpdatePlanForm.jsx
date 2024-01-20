@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -25,6 +26,7 @@ export default function UpdateTripForm() {
   const [formState, setFormState] = useState({})
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { planid } = useParams(); 
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -37,7 +39,7 @@ export default function UpdateTripForm() {
   async function handleSubmit(evt) {
     evt.preventDefault();
     try {
-      const result = await updatePlan(formState);
+      const result = await updatePlan(formState, planid);
       setIsLoading(false);
       // navigate("/user/trips"); // Redirect after successful submission
     if (result.error) {
@@ -88,13 +90,13 @@ export default function UpdateTripForm() {
           UPDATE PLAN
         </Heading>
         <FormControl isRequired>
-          <FormLabel>Destination</FormLabel>
+          <FormLabel>Header</FormLabel>
           <Input
             backgroundColor="white"
             type="text"
             placeholder="Enter your destination"
             mb={4}
-            name="destination"
+            name="header"
             onChange={handleChange}
           />
         </FormControl>

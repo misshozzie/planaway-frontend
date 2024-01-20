@@ -10,8 +10,6 @@ export function getOneCard() {
   async function getData(planID) {
     const fullURL = `${BASE_URL}/plans/${planID}`;
     setIsLoading(true);
-    console.log(fullURL);
-    console.log("LOADING")
 
     const res = await fetch(fullURL, {
       method: "GET",
@@ -38,13 +36,15 @@ export function getOneCard() {
 }
 
 
-export async function createPlan(formData) {
-  const tripID = '659a1ce8041698a1edbcc0a4';
+export async function createPlan(formData, tripid) {
+  const tripID = tripid;
   const fullURL = `${BASE_URL}/plans/${tripID}`;
+
 
   const sendData = {
     header: formData.header,
     description: formData.description,
+    tripID: tripID, 
   };
 
   const res = await fetch(fullURL, {
@@ -64,13 +64,12 @@ export async function createPlan(formData) {
   return { error: null };
 }
 
-
-export async function updatePlan(formData) {
-  const planID = '65a2150f1fa39ad1cecd3a3a';
+export async function updatePlan(formData, planid) {
+  const planID = planid
   const fullURL = `${BASE_URL}/plans/${planID}`;
 
   const sendData = {
-    destination: formData.destination,
+    header: formData.header,
     description: formData.description,
   };
 
@@ -91,11 +90,10 @@ export async function updatePlan(formData) {
   return { error: null };
 }
 
+export async function showPlans(tripid) {
 
-
-export async function showPlans(formData) {
-  const tripID = '65a2306c649898af5e423475';
-  const fullURL = `${BASE_URL}/plans/${tripID}/plans`;
+  const tripID = tripid;
+  const fullURL = `${BASE_URL}/plans/${tripID}`;
 
   const res = await fetch(fullURL, {
     method: "GET",
@@ -107,6 +105,7 @@ export async function showPlans(formData) {
 
   const json = await res.json();
   const jsonArray = Object.values(json);
+ 
 
   if (!res.ok) {
     return { error: json.error, data: null };
