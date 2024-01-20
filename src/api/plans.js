@@ -38,13 +38,15 @@ export function getOneCard() {
 }
 
 
-export async function createPlan(formData) {
-  const tripID = '659a1ce8041698a1edbcc0a4';
+export async function createPlan(formData, tripid) {
+  const tripID = tripid;
   const fullURL = `${BASE_URL}/plans/${tripID}`;
 
+
   const sendData = {
-    destination: formData.destination,
+    header: formData.header,
     description: formData.description,
+    tripID: tripID, 
   };
 
   const res = await fetch(fullURL, {
@@ -63,7 +65,6 @@ export async function createPlan(formData) {
   }
   return { error: null };
 }
-
 
 export async function updatePlan(formData) {
   const planID = '65a2150f1fa39ad1cecd3a3a';
@@ -91,11 +92,10 @@ export async function updatePlan(formData) {
   return { error: null };
 }
 
+export async function showPlans(tripid) {
 
-
-export async function showPlans(formData) {
-  const tripID = '65a2306c649898af5e423475';
-  const fullURL = `${BASE_URL}/plans/${tripID}/plans`;
+  const tripID = tripid;
+  const fullURL = `${BASE_URL}/plans/${tripID}`;
 
   const res = await fetch(fullURL, {
     method: "GET",
@@ -107,10 +107,39 @@ export async function showPlans(formData) {
 
   const json = await res.json();
   const jsonArray = Object.values(json);
+ 
 
   if (!res.ok) {
     return { error: json.error, data: null };
   }
 
   return { error: null, data: jsonArray };
+}
+
+
+export async function createPlan(formData, tripid) {
+  const tripID = tripid;
+  const fullURL = `${BASE_URL}/plans/${tripID}`;
+
+  const sendData = {
+    header: formData.header,
+    description: formData.description,
+    tripID: tripID, 
+  };
+
+  const res = await fetch(fullURL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: `Bearer ${token}`, --> to update: need this later
+    },
+    body: JSON.stringify(sendData),
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    return { error: json.error };
+  }
+  return { error: null };
 }

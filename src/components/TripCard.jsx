@@ -56,7 +56,7 @@ export default function TripCard({
             colorScheme="teal"
             onClick={() =>
               navigate(
-                `/user/trips/update?username=${username}&tripid=${tripId}`
+                `user/trips/plans`
               )
             }
           >

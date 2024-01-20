@@ -1,5 +1,6 @@
 import PlanCard from "../components/PlanCard.jsx";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -22,8 +23,13 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { showPlans } from "../api/plans";
 
 export default function PlanPage() {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  // to get the query params in url
+  let query = new URLSearchParams(window.location.search);
+  let username = query.get("username");
+  let tripid = query.get("tripid");
 
   function extractData(dataArray) {
     const cleanedData = dataArray[0].map((item) => ({
@@ -39,7 +45,7 @@ export default function PlanPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { error, data } = await showPlans();
+        const { error, data } = await showPlans(tripid);
         if (error) {
           // Handle the error, e.g., show an error message
           console.error("Error fetching data:", error);
@@ -69,6 +75,14 @@ export default function PlanPage() {
         <Heading align="center">
           <Image src={logo} alt="planaway" height={200} />
         </Heading>
+        <Button
+          colorScheme="teal"
+          variant="solid"
+          type="button"
+          onClick={() => navigate(`/user/trips/plans/new${window.location.search}`)}
+        >
+          Create New Plan
+        </Button>
         <br />
         <br />
         {loading ? (

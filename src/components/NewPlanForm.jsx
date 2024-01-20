@@ -24,6 +24,9 @@ export default function NewTripForm() {
   const [formState, setFormState] = useState({})
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  let query = new URLSearchParams(window.location.search);
+  let username = query.get("username");
+  let tripid = query.get("tripid");
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -36,7 +39,7 @@ export default function NewTripForm() {
   async function handleSubmit(evt) {
     evt.preventDefault();
     try {
-      const result = await createPlan(formState);
+      const result = await createPlan(formState, tripid);
       setIsLoading(false);
       // navigate("/user/trips"); // Redirect after successful submission
     if (result.error) {
@@ -86,13 +89,13 @@ export default function NewTripForm() {
         NEW PLAN
       </Heading>
       <FormControl isRequired>
-        <FormLabel>Destination</FormLabel>
+        <FormLabel>Header</FormLabel>
         <Input
           backgroundColor="white"
           type="text"
           placeholder="Enter your destination"
           mb={4}
-          name="destination"
+          name="header"
           onChange={handleChange}
         />
       </FormControl>
