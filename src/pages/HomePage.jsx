@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { Box, Flex, Heading, Text, Button, Image } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import logo from "../components/assets/PAlogo.png";
-import bg from "../components/assets/planawaybg.png";
+import logo from "../assets/PAlogo.png";
+import bg from "../assets/planawaybg.png";
 const HomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {

@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { ArrowLeftIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Flex,
-  Link,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Image,
   Heading,
+  Image,
+  Input,
+  Link,
   Text,
 } from "@chakra-ui/react";
 import Joi from "joi";
-import apis from "../services/index";
+import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import logo from "../components/assets/PAlogo.png";
-import bg from "../components/assets/planawaybg.png";
-import { ArrowLeftIcon } from "@chakra-ui/icons";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import logo from "../assets/PAlogo.png";
+import bg from "../assets/planawaybg.png";
+import apis from "../services/index";
 
 const schema = Joi.object({
   email: Joi.string()
@@ -51,13 +51,13 @@ const LoginForm = () => {
   useEffect(() => {
     const userCookie = Cookies.get("user");
     console.log(userCookie, "userCookie");
-    const jsonStartIndex = userCookie.indexOf("{");
-    const jsonString = userCookie.slice(jsonStartIndex);
-    // Parse the JSON string into a JavaScript object
-    const userObject = JSON.parse(jsonString);
-    const userName = userObject.userName
-  
+
     if (userCookie) {
+      const jsonStartIndex = userCookie.indexOf("{");
+      const jsonString = userCookie.slice(jsonStartIndex);
+      // Parse the JSON string into a JavaScript object
+      const userObject = JSON.parse(jsonString);
+      const userName = userObject.userName;
       navigate(`/user/trips?username=${userName}`);
     }
     // eslint-disable-next-line
@@ -66,7 +66,7 @@ const LoginForm = () => {
   const onSubmit = async () => {
     // Validate all fields on form submission
     const validation = schema.validate(formData, { abortEarly: false });
-
+    console.log(1);
     if (validation.error) {
       const newErrors = {};
       validation.error.details.forEach((detail) => {
@@ -77,12 +77,20 @@ const LoginForm = () => {
       console.error("Validation error:", validation.error.details);
       return;
     }
-
+    console.log(2);
     try {
       setIsLoading(true);
       const response = await apis?.authLogin(formData);
       if (response?.status === 200) {
-        navigate("/trips");
+        console.log(3);
+        const userCookie = Cookies.get("user");
+        console.log(userCookie, "userCookie");
+        const jsonStartIndex = userCookie.indexOf("{");
+        const jsonString = userCookie.slice(jsonStartIndex);
+        // Parse the JSON string into a JavaScript object
+        const userObject = JSON.parse(jsonString);
+        const userName = userObject.userName;
+        navigate(`/user/trips?username=${userName}`);
         toast.success(response?.data?.message, { id: 1 });
       }
       setIsLoading(false);
@@ -136,11 +144,9 @@ const LoginForm = () => {
                 value={formData.email}
                 onChange={handleInputChange}
               />
-              {errors.username && (
-                <Text color="red.500">{errors.email}</Text>
-              )}
+              {errors.username && <Text color="red.500">{errors.email}</Text>}
             </FormControl>
-  
+
             <FormControl isRequired>
               <FormLabel>Password</FormLabel>
               <Input
@@ -156,7 +162,7 @@ const LoginForm = () => {
                 <Text color="red.500">{errors.password}</Text>
               )}
             </FormControl>
-  
+
             <Button
               isLoading={isLoading}
               type="submit"
@@ -175,6 +181,6 @@ const LoginForm = () => {
       </Flex>
     </>
   );
- }  
+};
 
- export default LoginForm;
+export default LoginForm;
