@@ -18,8 +18,8 @@ import toast from "react-hot-toast";
 import apis from "../services/index";
 import Cookies from "js-cookie";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
-import logo from "../components/assets/PAlogo.png";
-import bg from "../components/assets/planawaybg.png";
+import logo from "../assets/PAlogo.png";
+import bg from "../assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 const schema = Joi.object({
@@ -80,35 +80,72 @@ const SignupForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = async () => {
-    // Validate all fields on form submission
-    const validation = schema.validate(formData, { abortEarly: false });
+  // const onSubmit = async () => {
+  //   // Validate all fields on form submission
+  //   const validation = schema.validate(formData, { abortEarly: false });
 
-    if (validation.error) {
-      const newErrors = {};
-      validation.error.details.forEach((detail) => {
-        const key = detail.path[0];
-        newErrors[key] = detail.message;
-      });
+  //   if (validation.error) {
+  //     const newErrors = {};
+  //     validation.error.details.forEach((detail) => {
+  //       const key = detail.path[0];
+  //       newErrors[key] = detail.message;
+  //     });
+  //     setErrors(newErrors);
+  //     console.error("Validation error:", validation.error.details);
+  //     return;
+  //   }
+
+  //   try {
+  //     setIsLoading(true);
+  //     const { confirmPassword, ...rest } = formData || {};
+
+  //     const response = await apis?.authSignup(rest);
+  //     if (response?.status === 201) {
+  //       navigate("/login");
+  //       toast.success(response?.data?.message, { id: 1 });
+  //     }
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     if (error.message) {
+  //       toast.error(error.response?.data?.message || "An error occurred", { id: 1 });
+  //     }
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const onSubmit = async (event) => {
+    // Prevent default form submission behavior
+    event.preventDefault();
+
+    // Validate all fields on form submission
+    const { error } = schema.validate(formData, { abortEarly: false });
+    if (error) {
+      const newErrors = error.details.reduce((acc, detail) => {
+        acc[detail.path[0]] = detail.message;
+        return acc;
+      }, {});
       setErrors(newErrors);
-      console.error("Validation error:", validation.error.details);
+      console.error("Validation error:", error.details);
       return;
     }
 
     try {
       setIsLoading(true);
-      const { confirmPassword, ...rest } = formData || {};
+      // Exclude confirmPassword from the data to be sent to the backend
+      const { confirmPassword, ...dataToSubmit } = formData;
 
-      const response = await apis?.authSignup(rest);
-      if (response?.status === 201) {
+      const response = await apis.authSignup(dataToSubmit);
+      if (response.status === 201) {
+        toast.success(response.data.message);
         navigate("/login");
-        toast.success(response?.data?.message, { id: 1 });
+      } else {
+        // Handle other statuses if necessary
+        toast.error("An unexpected status was returned from the server");
       }
-      setIsLoading(false);
     } catch (error) {
-      if (error.message) {
-        toast?.error(error?.message, { id: 1 });
-      }
+      toast.error(error.response?.data?.message || "An error occurred");
+    } finally {
+      // Ensure isLoading is set to false when the request is completed
       setIsLoading(false);
     }
   };
@@ -145,7 +182,9 @@ const SignupForm = () => {
             </Link>
             <br />
             <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Username</FormLabel>
+              <FormLabel mb={4} width="150px">
+                Username
+              </FormLabel>
               <Input
                 backgroundColor="#EAECCC"
                 type="text"
@@ -160,7 +199,9 @@ const SignupForm = () => {
             </FormControl>
 
             <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Email</FormLabel>
+              <FormLabel mb={4} width="150px">
+                Email
+              </FormLabel>
               <Input
                 backgroundColor="#EAECCC"
                 type="email"
@@ -175,69 +216,72 @@ const SignupForm = () => {
             </FormControl>
 
             <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Password</FormLabel>
-            <InputGroup>
+              <FormLabel mb={4} width="150px">
+                Password
+              </FormLabel>
+              <InputGroup>
+                <Input
+                  backgroundColor="#EAECCC"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  mb={2}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  borderColor="#ccc"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <p style={{ color: "red" }}>{errors.password}</p>
+            </FormControl>
+
+            <FormControl isRequired display="flex" alignItems="center">
+              <FormLabel mb={4} width="150px">
+                Confirm
+              </FormLabel>
               <Input
                 backgroundColor="#EAECCC"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
+                type="password"
+                placeholder="Confirm your password"
                 mb={2}
-                name="password"
-                value={formData.password}
+                name="confirmPassword"
+                value={formData.confirmPassword}
                 onChange={handleInputChange}
                 borderColor="#ccc"
               />
-              <InputRightElement width="4.5rem">
-                <Button
-                  h="1.75rem"
-                  size="sm"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-            <p style={{ color: "red" }}>{errors.password}</p>
-          </FormControl>
-
-          <FormControl isRequired display="flex" alignItems="center">
-            <FormLabel mb={4} width="150px">Confirm</FormLabel>
-            <Input
-              backgroundColor="#EAECCC"
-              type="password"
-              placeholder="Confirm your password"
-              mb={2}
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              borderColor="#ccc"
-            />
-            <p style={{ color: "red" }}>{errors.confirmPassword}</p>
-          </FormControl>
-
+              <p style={{ color: "red" }}>{errors.confirmPassword}</p>
+            </FormControl>
           </form>
         </Box>
         <br />
         <Button
-            backgroundColor="#CD8D7A"
-            w="280px"
-            h="50px"
-            mt={2}
-            type="submit"
-            onClick={onSubmit}
-          >
-            {isLoading ? (
-              <Spinner
-                thickness="3px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="sm"
-              />
-            ) : (
-              "SIGNUP"
-            )}
-          </Button>
+          backgroundColor="#CD8D7A"
+          w="280px"
+          h="50px"
+          mt={2}
+          type="submit"
+          onClick={onSubmit}
+        >
+          {isLoading ? (
+            <Spinner
+              thickness="3px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="sm"
+            />
+          ) : (
+            "SIGNUP"
+          )}
+        </Button>
       </Flex>
     </>
   );

@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from "react";
 import {
   Box,
+  Button,
   Flex,
-  Image,
   FormControl,
   FormLabel,
-  Input,
-  Button,
   Heading,
+  Image,
+  Input,
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
 import Joi from "joi";
 import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import logo from "../components/assets/PAlogo.png";
-import bg from "../components/assets/planawaybg.png";
+import logo from "../assets/PAlogo.png";
+import bg from "../assets/planawaybg.png";
 import apis from "../services/index";
 
 //schema to validate input
@@ -147,7 +146,7 @@ const ProfileUpdateForm = () => {
               />
               <p style={{ color: "red" }}>{errors.userName}</p>
             </FormControl>
-  
+
             <FormControl id="email" isRequired>
               <FormLabel>Email Address</FormLabel>
               <InputGroup size="md">
@@ -164,7 +163,7 @@ const ProfileUpdateForm = () => {
               </InputGroup>
               <p style={{ color: "red" }}>{errors.email}</p>
             </FormControl>
-  
+
             <FormControl id="password" isRequired>
               <FormLabel>New Password</FormLabel>
               <InputGroup size="md">
@@ -191,7 +190,7 @@ const ProfileUpdateForm = () => {
               </InputGroup>
               <p style={{ color: "red" }}>{errors.password}</p>
             </FormControl>
-  
+
             <Button
               mt="4"
               width="280px"
@@ -208,6 +207,6 @@ const ProfileUpdateForm = () => {
       </Flex>
     </>
   );
-  }  
+};
 
-  export default ProfileUpdateForm;
+export default ProfileUpdateForm;

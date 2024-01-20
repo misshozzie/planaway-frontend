@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { ArrowLeftIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Flex,
-  Link,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Image,
   Heading,
+  Image,
+  Input,
+  Link,
   Text,
 } from "@chakra-ui/react";
 import Joi from "joi";
-import apis from "../services/index";
+import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import logo from "../components/assets/PAlogo.png";
-import bg from "../components/assets/planawaybg.png";
-import { ArrowLeftIcon } from "@chakra-ui/icons";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import logo from "../assets/PAlogo.png";
+import bg from "../assets/planawaybg.png";
+import apis from "../services/index";
 
 const schema = Joi.object({
   email: Joi.string()
