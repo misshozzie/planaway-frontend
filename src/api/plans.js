@@ -35,7 +35,6 @@ export function getOneCard() {
   return { getData, data, isLoading, error };
 }
 
-
 export async function createPlan(formData, tripid) {
   const tripID = tripid;
   const fullURL = `${BASE_URL}/plans/${tripID}`;
@@ -112,4 +111,38 @@ export async function showPlans(tripid) {
   }
 
   return { error: null, data: jsonArray };
+}
+
+export function deleteOnePlan() {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(null);
+
+  async function deleteData(planid) {
+    setIsLoading(true);
+    const fullURL = `${BASE_URL}/plans/${planid}`;
+
+    try {
+      const res = await fetch(fullURL, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${token}`, --> to update: need this later
+        },
+      });
+
+      if (!res.ok) {
+        const json = await res.json();
+        setError(json.error);
+      } else {
+        setData(null);
+      }
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return { deleteData, data, isLoading, error };
 }

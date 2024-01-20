@@ -97,6 +97,7 @@ export default function PlanPage() {
                   id={item.key}
                   header={item.header}
                   description={item.description}
+                  tripid={tripid}
                 />
               </Box>
             ))}
