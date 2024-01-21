@@ -13,6 +13,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Joi from "joi";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
@@ -20,9 +21,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { createOneTrip } from "../api/trips";
 
+const schema = Joi.object({
+  destination: Joi.string().required().messages({
+    "string.empty": "Destination is required.",
+  }),
+  startDay: Joi.date().required().messages({
+    "date.empty": "Start day is required.",
+  }),
+  endDay: Joi.date().min(Joi.ref("startDay")).required().messages({
+    "date.empty": "End day is required.",
+    "date.min": "End day must be equal to or later than start day",
+  }),
+  description: Joi.any().optional(),
+});
+
 export default function NewTripForm() {
   const [formState, setFormState] = useState({});
   const [disabled, setDisabled] = useState(true);
+  const [errors, setErrors] = useState({});
   const { postData, data, isLoading, error } = createOneTrip();
   const navigate = useNavigate();
 
@@ -47,6 +63,19 @@ export default function NewTripForm() {
   function handleSubmit(evt) {
     evt.preventDefault();
     // console.log(formState);
+
+    const { error } = schema.validate(formState, { abortEarly: false });
+
+    if (error) {
+      const newErrors = error.details.reduce((acc, detail) => {
+        acc[detail.path[0]] = detail.message;
+        return acc;
+      }, {});
+      setErrors(newErrors);
+      console.error("Validation error:", newErrors);
+      return;
+    }
+
     async function fetch() {
       await postData(username, formState);
     }
@@ -104,6 +133,7 @@ export default function NewTripForm() {
                   onChange={handleChange}
                   required
                 />
+                <p style={{ color: "red" }}>{errors.destination}</p>
               </FormControl>
 
               <FormControl isRequired>
@@ -116,6 +146,7 @@ export default function NewTripForm() {
                   onChange={handleChange}
                   required
                 />
+                <p style={{ color: "red" }}>{errors.startDay}</p>
               </FormControl>
 
               <FormControl isRequired>
@@ -128,9 +159,10 @@ export default function NewTripForm() {
                   onChange={handleChange}
                   required
                 />
+                <p style={{ color: "red" }}>{errors.endDay}</p>
               </FormControl>
 
-              <FormControl isRequired>
+              <FormControl>
                 <FormLabel>Description</FormLabel>
                 <Input
                   backgroundColor="white"

@@ -13,6 +13,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Joi from "joi";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
@@ -20,6 +21,20 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getOneTrip, updateOneTrip } from "../api/trips";
 import { formatDate } from "../util/helperFunc";
+
+const schema = Joi.object({
+  destination: Joi.string().required().messages({
+    "string.empty": "Destination is required.",
+  }),
+  startDay: Joi.date().required().messages({
+    "date.empty": "Start day is required.",
+  }),
+  endDay: Joi.date().min(Joi.ref("startDay")).required().messages({
+    "date.empty": "End day is required.",
+    "date.min": "End day must be equal to or later than start day",
+  }),
+  description: Joi.any().optional(),
+});
 
 export default function UpdateTripForm() {
   const [formState, setFormState] = useState({
@@ -29,6 +44,7 @@ export default function UpdateTripForm() {
     endDay: null,
   });
   const [disabled, setDisabled] = useState(true);
+  const [errors, setErrors] = useState({});
   const { getOneData, data, isLoading, error } = getOneTrip();
   const { updateOneData, updateData, isUpdateLoading, updateError } =
     updateOneTrip();
@@ -48,8 +64,8 @@ export default function UpdateTripForm() {
     fetch();
   }, [tripId]);
 
-  console.log("data");
-  console.log(data);
+  // console.log("data");
+  // console.log(data);
   // console.log("formData:");
   // console.log(formState);
 
@@ -81,6 +97,17 @@ export default function UpdateTripForm() {
   function handleSubmit(evt) {
     evt.preventDefault();
     // console.log(formState);
+    const { error } = schema.validate(formState, { abortEarly: false });
+
+    if (error) {
+      const newErrors = error.details.reduce((acc, detail) => {
+        acc[detail.path[0]] = detail.message;
+        return acc;
+      }, {});
+      setErrors(newErrors);
+      console.error("Validation error:", newErrors);
+      return;
+    }
     async function fetch() {
       await updateOneData(username, tripId, formState);
     }
@@ -142,6 +169,7 @@ export default function UpdateTripForm() {
                   value={formState.destination}
                   // required
                 />
+                <p style={{ color: "red" }}>{errors.destination}</p>
               </FormControl>
 
               <FormControl isRequired>
@@ -155,6 +183,7 @@ export default function UpdateTripForm() {
                   value={formState.startDay}
                   required
                 />
+                <p style={{ color: "red" }}>{errors.startDay}</p>
               </FormControl>
 
               <FormControl isRequired>
@@ -168,9 +197,10 @@ export default function UpdateTripForm() {
                   value={formState.endDay}
                   required
                 />
+                <p style={{ color: "red" }}>{errors.endDay}</p>
               </FormControl>
 
-              <FormControl isRequired>
+              <FormControl>
                 <FormLabel>Description</FormLabel>
                 <Input
                   backgroundColor="white"

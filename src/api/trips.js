@@ -70,12 +70,12 @@ export function createOneTrip() {
 }
 
 export function deleteOneTrip() {
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
-  const [data, setData] = useState(null);
+  const [deleteError, setDeleteError] = useState(null);
+  const [isdeleteLoading, setDeleteIsLoading] = useState(null);
+  const [dataDeleted, setDataDeleted] = useState(null);
 
   async function deleteData(username, tripid) {
-    setIsLoading(true);
+    setDeleteIsLoading(true);
     const fullURL = `${BASE_URL}/trips/${username}?tripid=${tripid}`;
 
     const res = await fetch(fullURL, {
@@ -89,15 +89,15 @@ export function deleteOneTrip() {
     const json = await res.json();
 
     if (!res.ok) {
-      setError(json.error);
+      setDeleteError(json.error);
     }
     if (res.ok) {
-      setData(json);
-      setIsLoading(false);
+      setDataDeleted(json);
+      setDeleteIsLoading(false);
     }
   }
 
-  return { deleteData, data, isLoading, error };
+  return { deleteData, dataDeleted, isdeleteLoading, deleteError };
 }
 
 export function getOneTrip() {

@@ -8,19 +8,12 @@ export default function TripCard({
   endDay,
   description,
   tripId,
+  handleDelete,
 }) {
   const navigate = useNavigate();
-  const { deleteData, data, isLoading, error } = deleteOneTrip();
   let query = new URLSearchParams(window.location.search);
   // console.log(`query:${query}`);
   let username = query.get("username");
-
-  function handleDelete() {
-    async function fetch() {
-      await deleteData(username, tripId);
-    }
-    fetch();
-  }
 
   return (
     <>
@@ -56,7 +49,7 @@ export default function TripCard({
             colorScheme="teal"
             onClick={() =>
               navigate(
-                `user/trips/plans`
+                `/user/trips/update?username=${username}&tripid=${tripId}`
               )
             }
           >

@@ -9,8 +9,14 @@ const HomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const userCookie = Cookies.get("user");
+
     if (userCookie) {
-      navigate("/trips");
+      const jsonStartIndex = userCookie.indexOf("{");
+      const jsonString = userCookie.slice(jsonStartIndex);
+      // Parse the JSON string into a JavaScript object
+      const userObject = JSON.parse(jsonString);
+      const userName = userObject.userName;
+      navigate(`/user/trips?username=${userName}`);
     }
   }, []);
 
