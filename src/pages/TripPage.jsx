@@ -20,7 +20,7 @@ import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { getAllTrips } from "../api/trips";
+import { getAllTrips, deleteOneTrip } from "../api/trips";
 import { useEffect, useState } from "react";
 import TripCard from "../components/TripCard";
 import { formatDate } from "../util/helperFunc";
@@ -28,6 +28,9 @@ import { formatDate } from "../util/helperFunc";
 export default function TripPage() {
   const navigate = useNavigate();
   const { getData, data, isLoading, error } = getAllTrips();
+  const { deleteData, dataDeleted, isdeleteLoading, deleteError } =
+    deleteOneTrip();
+  const [render, setRender] = useState(false);
   // to get the query params in url
   let query = new URLSearchParams(window.location.search);
   let username = query.get("username");
@@ -38,7 +41,7 @@ export default function TripPage() {
       await getData(username);
     }
     fetch();
-  }, [username]);
+  }, [username, render]);
 
   // useEffect(() => {
   //   console.log(data);
@@ -53,6 +56,14 @@ export default function TripPage() {
   // if (error) {
   //   return <p>Error: {error.message}</p>;
   // }
+
+  function handleDelete(username, tripId) {
+    async function fetch() {
+      await deleteData(username, tripId);
+    }
+    fetch();
+    setRender(!render); //force a re-render after data is deleted
+  }
 
   return (
     <>
@@ -91,6 +102,7 @@ export default function TripPage() {
                   description={trip.description}
                   key={trip._id}
                   tripId={trip._id}
+                  handleDelete={() => handleDelete(username, trip._id)}
                 />
               </Box>
             ))}
