@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   Box,
   Flex,
-  Link,
   FormControl,
   FormLabel,
   Input,
@@ -26,7 +25,7 @@ export default function UpdateTripForm() {
   const [formState, setFormState] = useState({})
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { planid } = useParams(); 
+  const { planid, tripid } = useParams(); 
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -84,8 +83,12 @@ export default function UpdateTripForm() {
         textAlign="center"
         zIndex="2"
       >
+    <div>
+      <Link to={`/user/trips/plans/${tripid}`}>
         <ArrowLeftIcon />
         Go Back
+      </Link>
+    </div>
         <Heading as="h2" size="l" mt={4}>
           UPDATE PLAN
         </Heading>

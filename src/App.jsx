@@ -30,9 +30,9 @@ function App() {
         <Route path="user/trips/new" element={<NewTripForm />} />
         <Route path="user/trips/update" element={<UpdateTripForm />} />
 
-        <Route path="user/trips/plans/new" element={<NewPlanForm />} />
-        <Route path="user/trips/plans" element={<PlanPage />} />
-        <Route path="user/trips/plans/update/:planid" element={<UpdatePlanForm />} />
+        <Route path="user/trips/plans/new/:tripid" element={<NewPlanForm />} />
+        <Route path="user/trips/plans/:tripid" element={<PlanPage />} />
+        <Route path="user/trips/plans/update/:tripid/:planid" element={<UpdatePlanForm />} />
         <Route path="user/trips/plans/view" element={<PlanCard />} />
       </Routes>
     </>
