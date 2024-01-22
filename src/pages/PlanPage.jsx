@@ -1,7 +1,6 @@
 import PlanCard from "../components/PlanCard.jsx";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -13,7 +12,6 @@ import {
   Image,
   Heading,
   Spinner,
-  VStack,
   Text,
   SimpleGrid,
   useColorModeValue,
@@ -21,16 +19,13 @@ import {
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
-import { showPlans } from "../api/plans";
+import { showPlans, deleteOnePlan } from "../api/plans";
 
 export default function PlanPage() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  // to get the query params in url
-  let query = new URLSearchParams(window.location.search);
-  let username = query.get("username");
-  let tripid = query.get("tripid");
+  const { tripid } = useParams();
 
   function extractData(dataArray) {
     const cleanedData = dataArray[0].map((item) => ({
@@ -64,6 +59,22 @@ export default function PlanPage() {
     fetchData();
   }, []);
 
+  function handleDelete(planid) {
+    async function fetch() {
+      try {
+        await deleteOnePlan(tripid, planid);
+        // Plan deleted successfully, you can perform any actions you need here
+        console.log("Plan has been deleted")
+        setData((prevData) => prevData.filter(item => item.key !== planid));
+      } catch (error) {
+        // Handle the error, e.g., show an error message
+        console.error("Error deleting plan:", error);
+      }
+    }
+    fetch();
+  }
+  
+  
   return (
     <>
       <Flex
@@ -80,7 +91,7 @@ export default function PlanPage() {
           colorScheme="teal"
           variant="solid"
           type="button"
-          onClick={() => navigate(`/user/trips/plans/new${window.location.search}`)}
+          onClick={() => navigate(`/user/trips/plans/new/${tripid}`)}
         >
           Create New Plan
         </Button>
@@ -97,6 +108,8 @@ export default function PlanPage() {
                   id={item.key}
                   header={item.header}
                   description={item.description}
+                  tripid={tripid}
+                  handleDelete={() => handleDelete(item.key)}
                 />
               </Box>
             ))}

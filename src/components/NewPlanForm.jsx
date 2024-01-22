@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useParams, Link } from 'react-router-dom';
 import {
   Box,
   Flex,
-  Link,
   FormControl,
   FormLabel,
   Input,
@@ -24,9 +24,7 @@ export default function NewTripForm() {
   const [formState, setFormState] = useState({})
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  let query = new URLSearchParams(window.location.search);
-  let username = query.get("username");
-  let tripid = query.get("tripid");
+  const { tripid } = useParams(); 
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -83,8 +81,12 @@ export default function NewTripForm() {
       textAlign="center"
       zIndex="2"
     >
-      <ArrowLeftIcon />
-      Go Back
+    <div>
+      <Link to={`/user/trips/plans/${tripid}`}>
+        <ArrowLeftIcon />
+        Go Back
+      </Link>
+    </div>
       <Heading as="h2" size="l" mt={4}>
         NEW PLAN
       </Heading>

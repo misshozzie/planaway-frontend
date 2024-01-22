@@ -113,3 +113,25 @@ export async function showPlans(tripid) {
 
   return { error: null, data: jsonArray };
 }
+
+
+export async function deleteOnePlan(tripid, planid) {
+  const fullURL = `${BASE_URL}/plans/${tripid}`;
+
+  const res = await fetch(fullURL, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: `Bearer ${token}`, --> to update: need this later
+    },
+    body: JSON.stringify({ planid: planid }),
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.error);
+  }
+
+  return json;
+}

@@ -1,6 +1,5 @@
 import { Box, Text, Button, ButtonGroup } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { deleteOneTrip } from "../api/trips";
 
 export default function TripCard({
   destination,
@@ -39,7 +38,7 @@ export default function TripCard({
             colorScheme="whiteAlpha"
             onClick={() =>
               navigate(
-                `/user/trips/plans?username=${username}&tripid=${tripId}`
+                `/user/trips/plans/${tripId}`
               )
             }
           >
