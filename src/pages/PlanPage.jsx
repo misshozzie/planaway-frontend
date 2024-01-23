@@ -106,7 +106,11 @@ export default function PlanPage() {
             colorScheme="teal"
             variant="solid"
             type="button"
-            onClick={() => navigate(`/user/trips/plans/new/${tripid}`)}
+            onClick={() =>
+              navigate(`/user/trips/plans/new/${tripid}`, {
+                state: { username: username },
+              })
+            }
           >
             Create New Plan
           </Button>
