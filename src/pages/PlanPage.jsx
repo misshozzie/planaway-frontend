@@ -20,6 +20,7 @@ import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { showPlans, deleteOnePlan } from "../api/plans";
+import NavBar from"../components/NavBar.jsx";
 
 export default function PlanPage() {
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ export default function PlanPage() {
   
   return (
     <>
+    <NavBar />
       <Flex
         align="center"
         justify="center"

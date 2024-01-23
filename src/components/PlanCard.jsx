@@ -8,12 +8,13 @@ export default function PlanCard({tripid, id,  header, description, handleDelete
 
   return (
     <>
+    <NavBar />
       <Box
         width={{ base: "100%", sm: "100%", md: "100%", lg: "100%", xl: "100%" }} // This will be responsive
         borderWidth="1px"
         borderRadius="lg"
         boxShadow="lg"
-        bg="rgba(195, 226, 194, 0.30)"
+        bg="rgba(195, 226, 194, 0.50)"
         textAlign="center"
         zIndex="2"
         mx="auto" // This centers the Box component
@@ -25,7 +26,7 @@ export default function PlanCard({tripid, id,  header, description, handleDelete
         {/* <Text fontSize="xl">{id}</Text> */}
         <ButtonGroup gap="4">
           <Button
-            colorScheme="teal"
+            bgColor="#CD8D7A"
             onClick={() =>
               navigate(
                 `/user/trips/plans/update/${tripid}/${id}`

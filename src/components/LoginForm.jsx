@@ -122,10 +122,12 @@ const LoginForm = () => {
           boxShadow="lg"
           bg="rgba(195, 226, 194, 0.30)"
           w="700px"
-          h="300px"
-          p="32px"
+          //maxH="calc(100vh - 100px)" 
+          //h="300px"
+          p="40px"
           textAlign="center"
           zIndex="2"
+          //overflowY="auto" 
         >
           <form>
             <Link as={RouterLink} to="/" display="flex" alignItems="center">

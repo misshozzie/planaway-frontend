@@ -24,6 +24,7 @@ import { getAllTrips, deleteOneTrip } from "../api/trips";
 import { useEffect, useState } from "react";
 import TripCard from "../components/TripCard";
 import { formatDate } from "../util/helperFunc";
+import NavBar from "../components/NavBar";
 
 export default function TripPage() {
   const navigate = useNavigate();
@@ -67,6 +68,7 @@ export default function TripPage() {
 
   return (
     <>
+    <NavBar />
       <Flex
         align="center"
         justify="center"
@@ -79,7 +81,10 @@ export default function TripPage() {
         </Heading>
         <br />
         <Button
-          colorScheme="teal"
+          bgColor="#CD8D7A"
+          _hover={{ bg: "##DBAD9F", color: "white" }}
+          _expanded={{ bg: "#DBAD9F", color: "white" }}
+          _focus={{ boxShadow: "outline" }}
           variant="solid"
           type="button"
           onClick={() => navigate(`/user/trips/new?username=${username}`)}
