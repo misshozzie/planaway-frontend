@@ -8,6 +8,7 @@ export default function PlanCard({
   header,
   description,
   handleDelete,
+  username,
 }) {
   const navigate = useNavigate();
 
@@ -31,7 +32,11 @@ export default function PlanCard({
         <ButtonGroup gap="4">
           <Button
             bgColor="#CD8D7A"
-            onClick={() => navigate(`/user/trips/plans/update/${tripid}/${id}`)}
+            onClick={() =>
+              navigate(`/user/trips/plans/update/${tripid}/${id}`, {
+                state: { username: username },
+              })
+            }
           >
             Edit
           </Button>
