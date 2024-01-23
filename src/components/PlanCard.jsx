@@ -1,14 +1,19 @@
 import React from "react";
-import { Box, Text, ButtonGroup, Button} from "@chakra-ui/react";
+import { Box, Text, ButtonGroup, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { getAllTrips, deleteOneTrip } from "../api/trips";
 
-export default function PlanCard({tripid, id,  header, description, handleDelete}) {
+export default function PlanCard({
+  tripid,
+  id,
+  header,
+  description,
+  handleDelete,
+}) {
   const navigate = useNavigate();
 
   return (
     <>
-    <NavBar />
       <Box
         width={{ base: "100%", sm: "100%", md: "100%", lg: "100%", xl: "100%" }} // This will be responsive
         borderWidth="1px"
@@ -27,18 +32,14 @@ export default function PlanCard({tripid, id,  header, description, handleDelete
         <ButtonGroup gap="4">
           <Button
             bgColor="#CD8D7A"
-            onClick={() =>
-              navigate(
-                `/user/trips/plans/update/${tripid}/${id}`
-              )
-            }
+            onClick={() => navigate(`/user/trips/plans/update/${tripid}/${id}`)}
           >
             Edit
           </Button>
           <Button colorScheme="blackAlpha" onClick={handleDelete}>
             Delete
           </Button>
-          </ButtonGroup>
+        </ButtonGroup>
       </Box>
     </>
   );
