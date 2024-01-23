@@ -1,8 +1,14 @@
 import React from "react";
-import { Box, Text, ButtonGroup, Button} from "@chakra-ui/react";
+import { Box, Text, ButtonGroup, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-export default function PlanCard({tripid, id,  header, description, handleDelete}) {
+export default function PlanCard({
+  tripid,
+  id,
+  header,
+  description,
+  handleDelete,
+}) {
   const navigate = useNavigate();
 
   return (
@@ -25,18 +31,14 @@ export default function PlanCard({tripid, id,  header, description, handleDelete
         <ButtonGroup gap="4">
           <Button
             bgColor="#CD8D7A"
-            onClick={() =>
-              navigate(
-                `/user/trips/plans/update/${tripid}/${id}`
-              )
-            }
+            onClick={() => navigate(`/user/trips/plans/update/${tripid}/${id}`)}
           >
             Edit
           </Button>
           <Button colorScheme="blackAlpha" onClick={handleDelete}>
             Delete
           </Button>
-          </ButtonGroup>
+        </ButtonGroup>
       </Box>
     </>
   );

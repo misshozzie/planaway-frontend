@@ -1,7 +1,7 @@
 import PlanCard from "../components/PlanCard.jsx";
 import NavBar from"../components/NavBar.jsx";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -21,12 +21,17 @@ import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { showPlans, deleteOnePlan } from "../api/plans";
+import NavBar from "../components/NavBar";
+
 
 export default function PlanPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { tripid } = useParams();
+
+  const username = location.state.username;
 
   function extractData(dataArray) {
     const cleanedData = dataArray[0].map((item) => ({
@@ -65,8 +70,8 @@ export default function PlanPage() {
       try {
         await deleteOnePlan(tripid, planid);
         // Plan deleted successfully, you can perform any actions you need here
-        console.log("Plan has been deleted")
-        setData((prevData) => prevData.filter(item => item.key !== planid));
+        console.log("Plan has been deleted");
+        setData((prevData) => prevData.filter((item) => item.key !== planid));
       } catch (error) {
         // Handle the error, e.g., show an error message
         console.error("Error deleting plan:", error);
@@ -74,11 +79,10 @@ export default function PlanPage() {
     }
     fetch();
   }
-  
-  
+
   return (
     <>
-    <NavBar />
+      <NavBar />
       <Flex
         align="center"
         justify="center"
@@ -89,14 +93,30 @@ export default function PlanPage() {
         <Heading align="center">
           <Image src={logo} alt="planaway" height={200} />
         </Heading>
-        <Button
-          colorScheme="teal"
-          variant="solid"
-          type="button"
-          onClick={() => navigate(`/user/trips/plans/new/${tripid}`)}
-        >
-          Create New Plan
-        </Button>
+
+        <Flex>
+          <Button
+            colorScheme="teal"
+            variant="solid"
+            type="button"
+            mr={6}
+            onClick={() => navigate(`/user/trips?username=${username}`)}
+          >
+            Back To Trips
+          </Button>
+          <Button
+            colorScheme="teal"
+            variant="solid"
+            type="button"
+            onClick={() =>
+              navigate(`/user/trips/plans/new/${tripid}`, {
+                state: { username: username },
+              })
+            }
+          >
+            Create New Plan
+          </Button>
+        </Flex>
         <br />
         <br />
         {loading ? (
