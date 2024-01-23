@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -26,6 +26,9 @@ export default function UpdateTripForm() {
   const [error, setError] = useState(null);
   const { planid, tripid } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const username = location.state.username;
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -34,7 +37,6 @@ export default function UpdateTripForm() {
       [name]: value,
     }));
   }
-
   useEffect(() => {
     async function fetchPlanData() {
       try {
@@ -59,8 +61,10 @@ export default function UpdateTripForm() {
       if (result.error) {
         setError(result.error);
       } else {
-        console.log('Plan has been updated');
-        navigate(`/user/trips/plans/${tripid}`);
+        console.log("Plan has been updated");
+        navigate(`/user/trips/plans/${tripid}`, {
+          state: { username: username },
+        });
       }
     } catch (error) {
       setIsLoading(false);
