@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Text, ButtonGroup, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { getAllTrips, deleteOneTrip } from "../api/trips";
 
 export default function PlanCard({
   tripid,

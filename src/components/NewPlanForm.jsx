@@ -19,12 +19,14 @@ import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { createPlan } from "../api/plans";
 import NavBar from "./NavBar";
+import { useNavigate } from "react-router";
 
 export default function NewTripForm() {
   const [formState, setFormState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { tripid } = useParams();
+  const navigate = useNavigate();
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -44,8 +46,7 @@ export default function NewTripForm() {
         setError(result.error);
       } else {
         console.log("request went through");
-        // Handle success or navigate to another page
-        // NEED TO PROVIDE FEEDBACK TO THE USER
+        navigate(`/user/trips/plans/${tripid}`);
       }
     } catch (error) {
       setIsLoading(false);
