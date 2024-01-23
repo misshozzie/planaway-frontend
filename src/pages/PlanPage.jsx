@@ -1,4 +1,5 @@
 import PlanCard from "../components/PlanCard.jsx";
+import NavBar from"../components/NavBar.jsx";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -20,7 +21,6 @@ import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { showPlans, deleteOnePlan } from "../api/plans";
-import NavBar from"../components/NavBar.jsx";
 
 export default function PlanPage() {
   const navigate = useNavigate();

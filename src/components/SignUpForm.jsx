@@ -152,7 +152,6 @@ const SignupForm = () => {
 
   return (
     <>
-    <NavBar />
       <Flex
         align="center"
         justify="center"

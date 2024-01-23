@@ -1,14 +1,12 @@
 import React from "react";
 import { Box, Text, ButtonGroup, Button} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { getAllTrips, deleteOneTrip } from "../api/trips";
 
 export default function PlanCard({tripid, id,  header, description, handleDelete}) {
   const navigate = useNavigate();
 
   return (
     <>
-    <NavBar />
       <Box
         width={{ base: "100%", sm: "100%", md: "100%", lg: "100%", xl: "100%" }} // This will be responsive
         borderWidth="1px"

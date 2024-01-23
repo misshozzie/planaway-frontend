@@ -26,6 +26,8 @@ export default function UpdateTripForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { planid, tripid } = useParams(); 
+  const navigate = useNavigate();
+
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -45,8 +47,7 @@ export default function UpdateTripForm() {
       setError(result.error);
     } else {
       console.log('Plan has been updated');
-      // Handle success or navigate to another page
-      // NEED TO PROVIDE FEEDBACK TO THE USER 
+      navigate(`/user/trips/plans/${tripid}`);
     } 
   }catch (error) {
       setIsLoading(false);
