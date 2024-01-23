@@ -20,6 +20,7 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { createOneTrip } from "../api/trips";
+import NavBar from "../components/NavBar";
 
 const schema = Joi.object({
   destination: Joi.string().required().messages({
@@ -85,47 +86,54 @@ export default function NewTripForm() {
 
   return (
     <>
-      <Flex
-        align="center"
-        justify="center"
-        height="100vh"
-        direction="column"
-        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
-      >
+      <NavBar />
+      <Flex align="center" justify="center" height="100vh" direction="column" >
         <Heading align="center">
           <Image src={logo} alt="planaway" height={200} />
         </Heading>
         <br />
-        <br />
         <Box
+          position="relative"
           minWidth="sm"
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="lg"
-          bg="rgba(195, 226, 194, 0.30)"
-          w="700px"
-          h="600px"
-          p="32px"
+          bg="#C3E2C2"
+          //bg="rgba(195, 226, 194, 0.40)"
+          p="20px"
           textAlign="center"
-          zIndex="2"
+          zIndex="docked"
+          w={["100px", "150px", "200px", "250px", "800px"]}
+          h="auto"
         >
-          <ArrowLeftIcon />
           <Button
-            colorScheme="black"
+            position="absolute" // Position absolute to place it on top of the relative container
+            top="10px" // Distance from the top of the container
+            right="600px" // Distance from the right of the container, adjust as needed
+            bgColor="#CD8D7A"
+            _hover={{ bg: "#DBAD9F", color: "white" }}
+            _focus={{ boxShadow: "outline" }}
+            w="150px"
+            h="30px"
+            zIndex="1" // 'docked' is a token from Chakra's default theme for a high z-index value
             variant="link"
             onClick={() => navigate(`/user/trips?username=${username}`)}
           >
             Go Back
           </Button>
-          <Heading as="h2" size="l" mt={4}>
+          <br />
+          <Heading as="h2" size="3" mt={4} bg="rgba(195, 226, 194, 0.40)">
             NEW TRIP
           </Heading>
+          <br />
           <div>
-            <form autoComplete="off" onSubmit={handleSubmit}>
-              <FormControl isRequired>
-                <FormLabel>Destination</FormLabel>
+            <form autoComplete="off" onSubmit={handleSubmit} >
+              <FormControl isRequired display="flex" alignItems="center" >
+                <FormLabel mb={4} width="150px" >
+                  Destination
+                </FormLabel>
                 <Input
-                  backgroundColor="white"
+                  //bg="rgba(195, 226, 194, 0.40)"
                   type="text"
                   placeholder="Enter your destination"
                   name="destination"
@@ -136,8 +144,10 @@ export default function NewTripForm() {
                 <p style={{ color: "red" }}>{errors.destination}</p>
               </FormControl>
 
-              <FormControl isRequired>
-                <FormLabel>Start Day</FormLabel>
+              <FormControl isRequired display="flex" alignItems="center"   >
+                <FormLabel mb={4} width="150px" >
+                  Start Day
+                </FormLabel>
                 <Input
                   backgroundColor="white"
                   type="date"
@@ -149,38 +159,46 @@ export default function NewTripForm() {
                 <p style={{ color: "red" }}>{errors.startDay}</p>
               </FormControl>
 
-              <FormControl isRequired>
-                <FormLabel>End Day</FormLabel>
+              <FormControl isRequired display="flex" alignItems="center" >
+                <FormLabel mb={4} width="150px" >
+                  End Day
+                </FormLabel>
                 <Input
                   backgroundColor="white"
                   type="date"
                   name="endDay"
                   mb={2}
+                  borderColor="#ccc"
                   onChange={handleChange}
                   required
                 />
                 <p style={{ color: "red" }}>{errors.endDay}</p>
               </FormControl>
 
-              <FormControl>
-                <FormLabel>Description</FormLabel>
-                <Input
-                  backgroundColor="white"
+              <FormControl isRequired display="flex" alignItems="center" >
+                <FormLabel mb={4} width="150px" >
+                  Description
+                </FormLabel>
+                <Textarea
+                  bgColor="white"
+                  backgroundColor="#EAECCC"
+                  borderColor="#ccc"
                   type="text"
                   name="description"
                   mb={2}
                   onChange={handleChange}
                 />
               </FormControl>
-
               <Button
+                bgColor="#CD8D7A"
+                _hover={{ bg: "#DBAD9F", color: "white" }}
+                _expanded={{ bg: "#DBAD9F", color: "white" }}
+                _focus={{ boxShadow: "outline" }}
                 type="submit"
-                bg="#CD8D7A"
                 w="280px"
                 mt={4}
                 spinnerPlacement="start"
                 loadingText="Saving"
-                _hover={{ bg: " #DBCC95" }}
                 disabled={disabled}
               >
                 Confirm

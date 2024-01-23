@@ -45,7 +45,7 @@ export default function TripCard({
             View
           </Button>
           <Button
-            colorScheme="teal"
+          bgColor="#CD8D7A"
             onClick={() =>
               navigate(
                 `/user/trips/update?username=${username}&tripid=${tripId}`

@@ -1,3 +1,10 @@
+* {
+    background-image: url("./assets/planawaybg.png");
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: Lato;
+  }
+
 footer {
     position:fixed;
     left: 0;
