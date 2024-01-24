@@ -13,7 +13,6 @@ import {
 import Joi from "joi";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import Toast from "react-hot-toast";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
 import apis from "../services/index";
@@ -120,22 +119,23 @@ const ProfileUpdateForm = () => {
         </Heading>
         <br />
         <Box
+          position="relative"
           minWidth="sm"
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="lg"
-          bg="rgba(195, 226, 194, 0.30)"
-          w="500px"
-          h="300px"
-          p="32px"
+          bg="rgba(195, 226, 194, 0.50)"
+          p="20px"
           textAlign="center"
-          zIndex="2"
+          zIndex="docked"
+          w={["100px", "150px", "200px", "250px", "800px"]}
+          h="auto"
         >
           <form>
             <FormControl id="username" isRequired>
               <FormLabel>Username</FormLabel>
               <Input
-                backgroundColor="#EAECCC"
+                backgroundColor="white"
                 type="text"
                 placeholder="Enter your username"
                 mb="2"
@@ -151,7 +151,7 @@ const ProfileUpdateForm = () => {
               <FormLabel>Email Address</FormLabel>
               <InputGroup size="md">
                 <Input
-                  backgroundColor="#EAECCC"
+                  backgroundColor="white"
                   type="text"
                   placeholder="Enter your email"
                   mb="2"
@@ -168,7 +168,7 @@ const ProfileUpdateForm = () => {
               <FormLabel>New Password</FormLabel>
               <InputGroup size="md">
                 <Input
-                  backgroundColor="#EAECCC"
+                  backgroundColor="white"
                   pr="4.5rem"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter new password"
@@ -194,13 +194,14 @@ const ProfileUpdateForm = () => {
             <Button
               mt="4"
               width="280px"
-              bg="#CD8D7A"
-              color="white"
+              bgColor="#CD8D7A"
+              _hover={{ bg: "##DBAD9F", color: "white" }}
+              _expanded={{ bg: "#DBAD9F", color: "white" }}
               isLoading={loading}
               loadingText="Updating..."
               onClick={onSubmit}
             >
-              UPDATE PROFILE
+              Update
             </Button>
           </form>
         </Box>

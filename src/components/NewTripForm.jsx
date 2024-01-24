@@ -85,7 +85,13 @@ export default function NewTripForm() {
 
   return (
     <>
-      <Flex align="center" justify="center" height="100vh" direction="column">
+      <Flex
+        align="center"
+        justify="center"
+        height="100vh"
+        direction="column"
+        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
+      >
         <Heading align="center">
           <Image src={logo} alt="planaway" height={200} />
         </Heading>
@@ -96,24 +102,16 @@ export default function NewTripForm() {
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="lg"
-          bg="#C3E2C2"
-          //bg="rgba(195, 226, 194, 0.40)"
+          bg="rgba(195, 226, 194, 0.50)"
           p="20px"
           textAlign="center"
           zIndex="docked"
           w={["100px", "150px", "200px", "250px", "800px"]}
           h="auto"
         >
+          <ArrowLeftIcon />
           <Button
-            position="absolute" // Position absolute to place it on top of the relative container
-            top="10px" // Distance from the top of the container
-            right="600px" // Distance from the right of the container, adjust as needed
-            bgColor="#CD8D7A"
-            _hover={{ bg: "#DBAD9F", color: "white" }}
-            _focus={{ boxShadow: "outline" }}
-            w="150px"
-            h="30px"
-            zIndex="1" // 'docked' is a token from Chakra's default theme for a high z-index value
+            colorScheme="black"
             variant="link"
             onClick={() => navigate(`/user/trips?username=${username}`)}
           >
@@ -135,6 +133,7 @@ export default function NewTripForm() {
                   type="text"
                   placeholder="Enter your destination"
                   name="destination"
+                  backgroundColor="white"
                   mb={2}
                   onChange={handleChange}
                   required
@@ -178,8 +177,7 @@ export default function NewTripForm() {
                   Description
                 </FormLabel>
                 <Textarea
-                  bgColor="white"
-                  backgroundColor="#EAECCC"
+                  backgroundColor="white"
                   borderColor="#ccc"
                   type="text"
                   name="description"
@@ -189,7 +187,7 @@ export default function NewTripForm() {
               </FormControl>
               <Button
                 bgColor="#CD8D7A"
-                _hover={{ bg: "#DBAD9F", color: "white" }}
+                _hover={{ bg: "##DBAD9F", color: "white" }}
                 _expanded={{ bg: "#DBAD9F", color: "white" }}
                 _focus={{ boxShadow: "outline" }}
                 type="submit"

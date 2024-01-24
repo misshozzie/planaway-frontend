@@ -25,13 +25,17 @@ export default function PlanCard({
         mx="auto" // This centers the Box component
         p={4} // Padding can be adjusted as needed
       >
-        <Text fontSize="xl">{header}</Text>
+        <Text fontSize="xl" 
+        style={{ fontWeight: 'bold', textTransform: 'uppercase' }}
+        >
+        {header}
+          </Text>
+        <Text fontSize="l" > {description} </Text>
         <br />
-        <Text fontSize="xl">{description}</Text>
-        {/* <Text fontSize="xl">{id}</Text> */}
         <ButtonGroup gap="4">
           <Button
             bgColor="#CD8D7A"
+            _hover={{ bgColor: "#FFC1B3" }} 
             onClick={() =>
               navigate(`/user/trips/plans/update/${tripid}/${id}`, {
                 state: { username: username },
@@ -40,7 +44,8 @@ export default function PlanCard({
           >
             Edit
           </Button>
-          <Button colorScheme="blackAlpha" onClick={handleDelete}>
+          <Button bg="blackAlpha.900" color="white" _hover={{ bg: "blackAlpha.700" }} 
+          onClick={handleDelete}>
             Delete
           </Button>
         </ButtonGroup>
