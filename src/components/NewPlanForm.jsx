@@ -28,7 +28,7 @@ export default function NewTripForm() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const username = location.state.username;
+  // const username = location.state.username;
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -48,9 +48,11 @@ export default function NewTripForm() {
         setError(result.error);
       } else {
         console.log("request went through");
-        navigate(`/user/trips/plans/${tripid}`, {
-          state: { username: username },
-        });
+        navigate(`/user/trips/plans/${tripid}`, 
+        // {
+        //   state: { username: username },
+        // }
+        );
       }
     } catch (error) {
       setIsLoading(false);
@@ -76,17 +78,18 @@ export default function NewTripForm() {
           <br />
           <br />
           <Box
-            minWidth="sm"
-            borderWidth="1px"
-            borderRadius="lg"
-            boxShadow="lg"
-            bg="rgba(195, 226, 194, 0.30)"
-            w="700px"
-            h="300px"
-            p="32px"
-            textAlign="center"
-            zIndex="2"
-          >
+          position="relative"
+          minWidth="sm"
+          borderWidth="1px"
+          borderRadius="lg"
+          boxShadow="lg"
+          bg="rgba(195, 226, 194, 0.50)"
+          p="20px"
+          textAlign="center"
+          zIndex="docked"
+          w={["100px", "150px", "200px", "250px", "800px"]}
+          h="auto"
+        >
             <div>
               <Link to={`/user/trips/plans/${tripid}`}>
                 <ArrowLeftIcon />

@@ -29,7 +29,7 @@ export default function PlanPage() {
   const [loading, setLoading] = useState(true);
   const { tripid } = useParams();
 
-  const username = location.state.username;
+  // const username = location.state.username;
 
   function extractData(dataArray) {
     const cleanedData = dataArray[0].map((item) => ({
@@ -93,22 +93,32 @@ export default function PlanPage() {
 
         <Flex>
           <Button
-            colorScheme="teal"
+            bgColor="#CD8D7A"
+            _hover={{ bg: "##DBAD9F", color: "white" }}
+            _expanded={{ bg: "#DBAD9F", color: "white" }}
+            _focus={{ boxShadow: "outline" }}
             variant="solid"
             type="button"
             mr={6}
-            onClick={() => navigate(`/user/trips?username=${username}`)}
+            onClick={() => navigate(`/user/trips
+            `)} 
           >
+            {/* ?username=${username} */}
             Back To Trips
           </Button>
           <Button
-            colorScheme="teal"
+            bgColor="#CD8D7A"
+            _hover={{ bg: "##DBAD9F", color: "white" }}
+            _expanded={{ bg: "#DBAD9F", color: "white" }}
+            _focus={{ boxShadow: "outline" }}
             variant="solid"
             type="button"
             onClick={() =>
-              navigate(`/user/trips/plans/new/${tripid}`, {
-                state: { username: username },
-              })
+              navigate(`/user/trips/plans/new/${tripid}`, 
+              // {
+              //   state: { username: username }, TO ADDED 
+              // }
+              )
             }
           >
             Create New Plan
@@ -129,7 +139,7 @@ export default function PlanPage() {
                   description={item.description}
                   tripid={tripid}
                   handleDelete={() => handleDelete(item.key)}
-                  username={username}
+                  // username={username}
                 />
               </Box>
             ))}
