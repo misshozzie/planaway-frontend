@@ -20,7 +20,6 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { createOneTrip } from "../api/trips";
-import NavBar from "../components/NavBar";
 
 const schema = Joi.object({
   destination: Joi.string().required().messages({
@@ -86,7 +85,6 @@ export default function NewTripForm() {
 
   return (
     <>
-      <NavBar />
       <Flex align="center" justify="center" height="100vh" direction="column" >
         <Heading align="center">
           <Image src={logo} alt="planaway" height={200} />

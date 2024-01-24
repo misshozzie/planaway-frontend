@@ -24,7 +24,6 @@ import { getAllTrips, deleteOneTrip } from "../api/trips";
 import { useEffect, useState } from "react";
 import TripCard from "../components/TripCard";
 import { formatDate } from "../util/helperFunc";
-import NavBar from "../components/NavBar";
 
 export default function TripPage() {
   const navigate = useNavigate();
@@ -68,7 +67,6 @@ export default function TripPage() {
 
   return (
     <>
-    <NavBar />
       <Flex
         align="center"
         justify="center"

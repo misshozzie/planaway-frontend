@@ -80,39 +80,6 @@ const SignupForm = () => {
     setShowPassword(!showPassword);
   };
 
-  // const onSubmit = async () => {
-  //   // Validate all fields on form submission
-  //   const validation = schema.validate(formData, { abortEarly: false });
-
-  //   if (validation.error) {
-  //     const newErrors = {};
-  //     validation.error.details.forEach((detail) => {
-  //       const key = detail.path[0];
-  //       newErrors[key] = detail.message;
-  //     });
-  //     setErrors(newErrors);
-  //     console.error("Validation error:", validation.error.details);
-  //     return;
-  //   }
-
-  //   try {
-  //     setIsLoading(true);
-  //     const { confirmPassword, ...rest } = formData || {};
-
-  //     const response = await apis?.authSignup(rest);
-  //     if (response?.status === 201) {
-  //       navigate("/login");
-  //       toast.success(response?.data?.message, { id: 1 });
-  //     }
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     if (error.message) {
-  //       toast.error(error.response?.data?.message || "An error occurred", { id: 1 });
-  //     }
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const onSubmit = async (event) => {
     // Prevent default form submission behavior
     event.preventDefault();
