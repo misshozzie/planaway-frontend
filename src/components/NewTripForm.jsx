@@ -87,7 +87,7 @@ export default function NewTripForm() {
   return (
     <>
       <NavBar />
-      <Flex align="center" justify="center" height="100vh" direction="column" >
+      <Flex align="center" justify="center" height="100vh" direction="column">
         <Heading align="center">
           <Image src={logo} alt="planaway" height={200} />
         </Heading>
@@ -126,85 +126,83 @@ export default function NewTripForm() {
             NEW TRIP
           </Heading>
           <br />
-          <div>
-            <form autoComplete="off" onSubmit={handleSubmit} >
-              <FormControl isRequired display="flex" alignItems="center" >
-                <FormLabel mb={4} width="150px" >
-                  Destination
-                </FormLabel>
-                <Input
-                  //bg="rgba(195, 226, 194, 0.40)"
-                  type="text"
-                  placeholder="Enter your destination"
-                  name="destination"
-                  mb={2}
-                  onChange={handleChange}
-                  required
-                />
-                <p style={{ color: "red" }}>{errors.destination}</p>
-              </FormControl>
+          <form autoComplete="off" onSubmit={handleSubmit}>
+            <FormControl isRequired display="flex" alignItems="center">
+              <FormLabel mb={4} width="150px">
+                Destination
+              </FormLabel>
+              <Input
+                //bg="rgba(195, 226, 194, 0.40)"
+                type="text"
+                placeholder="Enter your destination"
+                name="destination"
+                mb={2}
+                onChange={handleChange}
+                required
+              />
+              <p style={{ color: "red" }}>{errors.destination}</p>
+            </FormControl>
 
-              <FormControl isRequired display="flex" alignItems="center"   >
-                <FormLabel mb={4} width="150px" >
-                  Start Day
-                </FormLabel>
-                <Input
-                  backgroundColor="white"
-                  type="date"
-                  name="startDay"
-                  mb={2}
-                  onChange={handleChange}
-                  required
-                />
-                <p style={{ color: "red" }}>{errors.startDay}</p>
-              </FormControl>
+            <FormControl isRequired display="flex" alignItems="center">
+              <FormLabel mb={4} width="150px">
+                Start Day
+              </FormLabel>
+              <Input
+                backgroundColor="white"
+                type="date"
+                name="startDay"
+                mb={2}
+                onChange={handleChange}
+                required
+              />
+              <p style={{ color: "red" }}>{errors.startDay}</p>
+            </FormControl>
 
-              <FormControl isRequired display="flex" alignItems="center" >
-                <FormLabel mb={4} width="150px" >
-                  End Day
-                </FormLabel>
-                <Input
-                  backgroundColor="white"
-                  type="date"
-                  name="endDay"
-                  mb={2}
-                  borderColor="#ccc"
-                  onChange={handleChange}
-                  required
-                />
-                <p style={{ color: "red" }}>{errors.endDay}</p>
-              </FormControl>
+            <FormControl isRequired display="flex" alignItems="center">
+              <FormLabel mb={4} width="150px">
+                End Day
+              </FormLabel>
+              <Input
+                backgroundColor="white"
+                type="date"
+                name="endDay"
+                mb={2}
+                borderColor="#ccc"
+                onChange={handleChange}
+                required
+              />
+              <p style={{ color: "red" }}>{errors.endDay}</p>
+            </FormControl>
 
-              <FormControl isRequired display="flex" alignItems="center" >
-                <FormLabel mb={4} width="150px" >
-                  Description
-                </FormLabel>
-                <Textarea
-                  bgColor="white"
-                  backgroundColor="#EAECCC"
-                  borderColor="#ccc"
-                  type="text"
-                  name="description"
-                  mb={2}
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <Button
-                bgColor="#CD8D7A"
-                _hover={{ bg: "#DBAD9F", color: "white" }}
-                _expanded={{ bg: "#DBAD9F", color: "white" }}
-                _focus={{ boxShadow: "outline" }}
-                type="submit"
-                w="280px"
-                mt={4}
-                spinnerPlacement="start"
-                loadingText="Saving"
-                disabled={disabled}
-              >
-                Confirm
-              </Button>
-            </form>
-          </div>
+            <FormControl isRequired display="flex" alignItems="center">
+              <FormLabel mb={4} width="150px">
+                Description
+              </FormLabel>
+              <Textarea
+                bgColor="white"
+                backgroundColor="#EAECCC"
+                borderColor="#ccc"
+                type="text"
+                name="description"
+                mb={2}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <Button
+              bgColor="#CD8D7A"
+              _hover={{ bg: "#DBAD9F", color: "white" }}
+              _expanded={{ bg: "#DBAD9F", color: "white" }}
+              _focus={{ boxShadow: "outline" }}
+              type="submit"
+              w="280px"
+              mt={4}
+              spinnerPlacement="start"
+              loadingText="Saving"
+              disabled={disabled}
+            >
+              Confirm
+            </Button>
+          </form>
         </Box>
       </Flex>
     </>
