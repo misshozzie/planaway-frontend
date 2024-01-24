@@ -29,7 +29,8 @@ export default function PlanPage() {
   const [loading, setLoading] = useState(true);
   const { tripid } = useParams();
 
-  // const username = location.state.username;
+  let query = new URLSearchParams(window.location.search);
+  let username = query.get("username");
 
   function extractData(dataArray) {
     const cleanedData = dataArray[0].map((item) => ({
@@ -100,10 +101,8 @@ export default function PlanPage() {
             variant="solid"
             type="button"
             mr={6}
-            onClick={() => navigate(`/user/trips
-            `)} 
+            onClick={() => navigate(`/user/trips?username=${username}`)}
           >
-            {/* ?username=${username} */}
             Back To Trips
           </Button>
           <Button
@@ -114,11 +113,7 @@ export default function PlanPage() {
             variant="solid"
             type="button"
             onClick={() =>
-              navigate(`/user/trips/plans/new/${tripid}`, 
-              // {
-              //   state: { username: username }, TO ADDED 
-              // }
-              )
+              navigate(`/user/trips/plans/new/${tripid}?username=${username}`)
             }
           >
             Create New Plan
@@ -139,7 +134,7 @@ export default function PlanPage() {
                   description={item.description}
                   tripid={tripid}
                   handleDelete={() => handleDelete(item.key)}
-                  // username={username}
+                  username={username}
                 />
               </Box>
             ))}

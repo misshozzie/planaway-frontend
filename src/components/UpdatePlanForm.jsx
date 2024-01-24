@@ -26,9 +26,8 @@ export default function UpdateTripForm() {
   const [error, setError] = useState(null);
   const { planid, tripid } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const username = location.state.username;
+  let query = new URLSearchParams(window.location.search);
+  let username = query.get("username");
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -62,9 +61,7 @@ export default function UpdateTripForm() {
         setError(result.error);
       } else {
         console.log("Plan has been updated");
-        navigate(`/user/trips/plans/${tripid}`, {
-          state: { username: username },
-        });
+        navigate(`/user/trips/plans/${tripid}?username=${username}`);
       }
     } catch (error) {
       setIsLoading(false);
@@ -102,7 +99,7 @@ export default function UpdateTripForm() {
           h="auto"
         >
           <div>
-            <Link to={`/user/trips/plans/${tripid}`}>
+            <Link to={`/user/trips/plans/${tripid}?username=${username}`}>
               <ArrowLeftIcon />
               Go Back
             </Link>

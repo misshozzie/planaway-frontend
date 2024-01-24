@@ -85,8 +85,13 @@ export default function NewTripForm() {
 
   return (
     <>
-      <Flex align="center" justify="center" height="100vh" direction="column" 
-      style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}>
+      <Flex
+        align="center"
+        justify="center"
+        height="100vh"
+        direction="column"
+        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
+      >
         <Heading align="center">
           <Image src={logo} alt="planaway" height={200} />
         </Heading>
@@ -105,22 +110,22 @@ export default function NewTripForm() {
           h="auto"
         >
           <ArrowLeftIcon />
-            <Button
-              colorScheme="black"
-              variant="link"
-              onClick={() => navigate(`/user/trips?username=${username}`)}
-            >
-              Go Back
-            </Button>
+          <Button
+            colorScheme="black"
+            variant="link"
+            onClick={() => navigate(`/user/trips?username=${username}`)}
+          >
+            Go Back
+          </Button>
           <br />
           <Heading as="h2" size="3" mt={4} bg="rgba(195, 226, 194, 0.40)">
             NEW TRIP
           </Heading>
           <br />
           <div>
-            <form autoComplete="off" onSubmit={handleSubmit} >
-              <FormControl isRequired display="flex" alignItems="center" >
-                <FormLabel mb={4} width="150px" >
+            <form autoComplete="off" onSubmit={handleSubmit}>
+              <FormControl isRequired display="flex" alignItems="center">
+                <FormLabel mb={4} width="150px">
                   Destination
                 </FormLabel>
                 <Input
@@ -136,8 +141,8 @@ export default function NewTripForm() {
                 <p style={{ color: "red" }}>{errors.destination}</p>
               </FormControl>
 
-              <FormControl isRequired display="flex" alignItems="center"   >
-                <FormLabel mb={4} width="150px" >
+              <FormControl isRequired display="flex" alignItems="center">
+                <FormLabel mb={4} width="150px">
                   Start Day
                 </FormLabel>
                 <Input
@@ -151,8 +156,8 @@ export default function NewTripForm() {
                 <p style={{ color: "red" }}>{errors.startDay}</p>
               </FormControl>
 
-              <FormControl isRequired display="flex" alignItems="center" >
-                <FormLabel mb={4} width="150px" >
+              <FormControl isRequired display="flex" alignItems="center">
+                <FormLabel mb={4} width="150px">
                   End Day
                 </FormLabel>
                 <Input
@@ -167,8 +172,8 @@ export default function NewTripForm() {
                 <p style={{ color: "red" }}>{errors.endDay}</p>
               </FormControl>
 
-              <FormControl isRequired display="flex" alignItems="center" >
-                <FormLabel mb={4} width="150px" >
+              <FormControl isRequired display="flex" alignItems="center">
+                <FormLabel mb={4} width="150px">
                   Description
                 </FormLabel>
                 <Textarea
