@@ -18,8 +18,7 @@ import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { createPlan } from "../api/plans";
-import NavBar from "./NavBar";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 export default function NewTripForm() {
   const [formState, setFormState] = useState({});
@@ -27,6 +26,9 @@ export default function NewTripForm() {
   const [error, setError] = useState(null);
   const { tripid } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const username = location.state.username;
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -46,7 +48,9 @@ export default function NewTripForm() {
         setError(result.error);
       } else {
         console.log("request went through");
-        navigate(`/user/trips/plans/${tripid}`);
+        navigate(`/user/trips/plans/${tripid}`, {
+          state: { username: username },
+        });
       }
     } catch (error) {
       setIsLoading(false);
@@ -58,7 +62,6 @@ export default function NewTripForm() {
 
   return (
     <>
-    <NavBar />
       <form onSubmit={handleSubmit}>
         <Flex
           align="center"

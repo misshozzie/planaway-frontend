@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
+
 const HomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {

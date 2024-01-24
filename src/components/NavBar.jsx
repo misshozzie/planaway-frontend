@@ -17,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
-import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const NavBar = () => {
   const [user, setUser] = useState();
@@ -43,34 +42,30 @@ const NavBar = () => {
   };
 
   return (
-    <Box bgColor="white">
-      <Container minW={"80%"}>
+    <Box bg="whitesmoke">
+      <Container minW={"90%"} bg="whitesmoke">
         <Flex
+          bg="whitesmoke"
           as="nav"
           align="center"
-          justify="flex-start"
-          padding="5px"
+          justify="space-between"
+          padding="1rem"
           width={"100%"}
         >
           <Link to="/">
             <Box maxH={"80px"}>
-              <img src={logo} style={{ maxWidth: "40px" }} alt="logo" />
+              <img src={logo} style={{ maxWidth: "50px" }} alt="logo" />
             </Box>
-          </Link>
-          <Flex align="center" marginLeft="auto">
-            <Text fontSize={"x1"} me={10}>
-              Welcome, {user?.userName.toUpperCase()}
+          </Link >
+          <Flex align="center" bg="whitesmoke">
+            <Text fontSize={"x1"} me={10} bg="whitesmoke">
+              Welcome, {user?.userName}
             </Text>
 
-            <Menu>
-              <MenuButton 
-              as={Button} 
-              _hover={{ bg: "#CD8D7A", color: "white" }}
-              _expanded={{ bg: "#CD8D7A", color: "white" }}
-              _focus={{ boxShadow: "outline" }}
-              variant="ghost">
-                Account
-              </MenuButton>
+            <Menu bg="whitesmoke">
+            <MenuButton as={Button} bg="whitesmoke">
+                  Account
+                </MenuButton>
               <MenuList>
                 <MenuGroup>
                   <Link to="/profile">

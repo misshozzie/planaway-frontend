@@ -81,8 +81,9 @@ const LoginForm = () => {
     try {
       setIsLoading(true);
       const response = await apis?.authLogin(formData);
+      console.log("🚀 ~ onSubmit ~ response:", response);
       if (response?.status === 200) {
-        console.log(3);
+        //store jwt token to local storage 
         const userCookie = Cookies.get("user");
         console.log(userCookie, "userCookie");
         const jsonStartIndex = userCookie.indexOf("{");

@@ -1,5 +1,4 @@
 import PlanCard from "../components/PlanCard.jsx";
-import NavBar from"../components/NavBar.jsx";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
@@ -21,8 +20,7 @@ import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { showPlans, deleteOnePlan } from "../api/plans";
-import NavBar from "../components/NavBar";
-
+//import NavBar from "../components/NavBar";
 
 export default function PlanPage() {
   const navigate = useNavigate();
@@ -82,7 +80,6 @@ export default function PlanPage() {
 
   return (
     <>
-      <NavBar />
       <Flex
         align="center"
         justify="center"
@@ -132,6 +129,7 @@ export default function PlanPage() {
                   description={item.description}
                   tripid={tripid}
                   handleDelete={() => handleDelete(item.key)}
+                  username={username}
                 />
               </Box>
             ))}
