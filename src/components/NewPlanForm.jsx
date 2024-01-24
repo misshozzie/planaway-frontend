@@ -18,7 +18,6 @@ import logo from "../assets/PAlogo.png";
 import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { createPlan } from "../api/plans";
-import NavBar from "./NavBar";
 import { useNavigate, useLocation } from "react-router";
 
 export default function NewTripForm() {
@@ -63,7 +62,6 @@ export default function NewTripForm() {
 
   return (
     <>
-      <NavBar />
       <form onSubmit={handleSubmit}>
         <Flex
           align="center"
