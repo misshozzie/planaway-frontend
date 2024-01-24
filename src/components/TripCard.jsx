@@ -27,7 +27,12 @@ export default function TripCard({
         mx="auto" // This centers the Box component
         p={4} // Padding can be adjusted as needed
       >
-        <Text fontSize="xl" style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>{destination}</Text>
+        <Text
+          fontSize="xl"
+          style={{ fontWeight: "bold", textTransform: "uppercase" }}
+        >
+          {destination}
+        </Text>
         <br />
         <Text fontSize="l">Start: {startDay}</Text>
         <Text fontSize="l">End: {endDay}</Text>
@@ -35,20 +40,18 @@ export default function TripCard({
         <br />
         <ButtonGroup gap="0">
           <Button
-            bg="gray.500" 
-            color="white" 
-            _hover={{ bg: "gray.300" }} 
+            bg="gray.500"
+            color="white"
+            _hover={{ bg: "gray.300" }}
             onClick={() =>
-              navigate(`/user/trips/plans/${tripId}?`, {
-                state: { username: username },
-              })
+              navigate(`/user/trips/plans/${tripId}?username=${username}`)
             }
           >
             View
           </Button>
           <Button
             bgColor="#CD8D7A"
-            _hover={{ bgColor: "#FFC1B3" }} 
+            _hover={{ bgColor: "#FFC1B3" }}
             color="white"
             onClick={() =>
               navigate(
@@ -58,8 +61,12 @@ export default function TripCard({
           >
             Edit
           </Button>
-          <Button bg="blackAlpha.900" color="white" _hover={{ bg: "blackAlpha.700" }} 
-            onClick={handleDelete}>
+          <Button
+            bg="blackAlpha.900"
+            color="white"
+            _hover={{ bg: "blackAlpha.700" }}
+            onClick={handleDelete}
+          >
             Delete
           </Button>
         </ButtonGroup>
