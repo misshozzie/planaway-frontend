@@ -29,14 +29,18 @@ export async function loginUser(userData) {
 
 export async function logoutUser() {
   const token = getToken();
+  // console.log("token to remove:", token);
+  console.log("parse data", JSON.parse(atob(token.split(".")[1])).payload);
   if (token) {
     const res = await usersAPI.logoutUser(
       token,
       JSON.parse(atob(token.split(".")[1])).payload
     );
-    removeToken();
+    console.log("resssss", res);
+    // removeToken();
+    localStorage.removeItem("token");
   }
-  return res;
+  return;
 }
 
 export function getUser() {

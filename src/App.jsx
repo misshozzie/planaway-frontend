@@ -22,7 +22,7 @@ function App() {
     <main>
       {user ? (
         <>
-          <NavBar username={user} />
+          <NavBar username={user} setUser={setUser} />
           <Routes>
             <Route path="/" element={<TripPage username={user} />} />
             <Route path="/profile" element={<ProfileUpdate />} />
