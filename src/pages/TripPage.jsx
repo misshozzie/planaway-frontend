@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 import TripCard from "../components/TripCard";
 import { formatDate } from "../util/helperFunc";
 
-export default function TripPage({ username }) {
+export default function TripPage({ username, setUser }) {
   // console.log(username);
   const navigate = useNavigate();
   const { getData, data, isLoading, error } = getAllTrips();
@@ -44,21 +44,7 @@ export default function TripPage({ username }) {
     fetch();
   }, [username, render]);
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
-
-  // console.log("trip data:", data);
-
-  // console.log(`tripData:${JSON.stringify(tripData)}`);
-
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (error) {
-  //   return <p>Error: {error.message}</p>;
-  // }
+  console.log("trip error", error);
 
   function handleDelete(username, tripId) {
     async function fetch() {
@@ -66,6 +52,11 @@ export default function TripPage({ username }) {
     }
     fetch();
     setRender(!render); //force a re-render after data is deleted
+  }
+
+  function handleError() {
+    setUser(null);
+    navigate("/login");
   }
 
   return (
@@ -93,10 +84,10 @@ export default function TripPage({ username }) {
           Create New Trip
         </Button>
         <br />
-        {isLoading ? (
+        {error ? (
+          handleError()
+        ) : isLoading ? (
           <Spinner size="xl" color="teal.500" />
-        ) : error ? (
-          <p>Error: {error.message}</p>
         ) : (
           <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacing={4}>
             {data.map((trip) => (
@@ -109,6 +100,7 @@ export default function TripPage({ username }) {
                   key={trip._id}
                   tripId={trip._id}
                   handleDelete={() => handleDelete(username, trip._id)}
+                  setUser={setUser}
                 />
               </Box>
             ))}

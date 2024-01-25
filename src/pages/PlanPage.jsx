@@ -21,7 +21,7 @@ import bg from "../assets/Planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { showPlans, deleteOnePlan } from "../api/plans";
 
-export default function PlanPage() {
+export default function PlanPage({ setUser }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [data, setData] = useState([]);
@@ -49,6 +49,8 @@ export default function PlanPage() {
         if (error) {
           // Handle the error, e.g., show an error message
           console.error("Error fetching data:", error);
+          setUser(null);
+          navigate("/login");
         } else {
           const cleanData = extractData(data);
           setData(cleanData);
@@ -73,6 +75,8 @@ export default function PlanPage() {
       } catch (error) {
         // Handle the error, e.g., show an error message
         console.error("Error deleting plan:", error);
+        setUser(null);
+        navigate("/login");
       }
     }
     fetch();

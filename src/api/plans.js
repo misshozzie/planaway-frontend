@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 const BASE_URL = "http://localhost:3000";
 
 export function getOneCard() {
-
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
 
   async function getData(planID) {
     const fullURL = `${BASE_URL}/plans/${planID}`;
+    const token = localStorage.getItem("token");
     setIsLoading(true);
 
     const res = await fetch(fullURL, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, --> to update: need this later
+        Authorization: `Bearer ${token}`,
         //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
@@ -28,7 +28,7 @@ export function getOneCard() {
     if (res.ok) {
       //   localStorage.setItem("token", json.token); --> to update: need this later
       setData(json);
-      console.log(json)
+      console.log(json);
       setIsLoading(false);
     }
   }
@@ -36,23 +36,22 @@ export function getOneCard() {
   return { getData, data, isLoading, error };
 }
 
-
 export async function createPlan(formData, tripid) {
   const tripID = tripid;
   const fullURL = `${BASE_URL}/plans/${tripID}`;
-
+  const token = localStorage.getItem("token");
 
   const sendData = {
     header: formData.header,
     description: formData.description,
-    tripID: tripID, 
+    tripID: tripID,
   };
 
   const res = await fetch(fullURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`, --> to update: need this later
+      Authorization: `Bearer ${token}`,
       //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(sendData),
@@ -67,8 +66,9 @@ export async function createPlan(formData, tripid) {
 }
 
 export async function updatePlan(formData, planid) {
-  const planID = planid
+  const planID = planid;
   const fullURL = `${BASE_URL}/plans/${planID}`;
+  const token = localStorage.getItem("token");
 
   const sendData = {
     header: formData.header,
@@ -79,7 +79,7 @@ export async function updatePlan(formData, planid) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`, --> to update: need this later
+      Authorization: `Bearer ${token}`,
       //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(sendData),
@@ -94,39 +94,38 @@ export async function updatePlan(formData, planid) {
 }
 
 export async function showPlans(tripid) {
-
   const tripID = tripid;
   const fullURL = `${BASE_URL}/plans/${tripID}`;
+  const token = localStorage.getItem("token");
 
   const res = await fetch(fullURL, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`, --> to update: need this later
+      Authorization: `Bearer ${token}`,
       //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 
   const json = await res.json();
   const jsonArray = Object.values(json);
- 
 
   if (!res.ok) {
-    return { error: json.error, data: null };
+    return { error: json, data: null };
   }
 
   return { error: null, data: jsonArray };
 }
 
-
 export async function deleteOnePlan(tripid, planid) {
   const fullURL = `${BASE_URL}/plans/${tripid}`;
+  const token = localStorage.getItem("token");
 
   const res = await fetch(fullURL, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`, --> to update: need this later
+      Authorization: `Bearer ${token}`,
       //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify({ planid: planid }),
@@ -143,12 +142,13 @@ export async function deleteOnePlan(tripid, planid) {
 
 export async function getOnePlan(tripid, planid) {
   const fullURL = `${BASE_URL}/plans/${tripid}/${planid}`;
+  const token = localStorage.getItem("token");
 
   const res = await fetch(fullURL, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`, --> to update: need this later
+      Authorization: `Bearer ${token}`,
       //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });

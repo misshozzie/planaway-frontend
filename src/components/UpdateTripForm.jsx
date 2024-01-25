@@ -35,7 +35,7 @@ const schema = Joi.object({
   description: Joi.any().optional(),
 });
 
-export default function UpdateTripForm() {
+export default function UpdateTripForm({ setUser }) {
   const [formState, setFormState] = useState({
     destination: null,
     description: null,
@@ -111,6 +111,11 @@ export default function UpdateTripForm() {
     navigate(`/user/trips?username=${username}`);
   }
 
+  function handleError() {
+    setUser(null);
+    navigate("/login");
+  }
+
   return (
     <>
       <Flex
@@ -125,24 +130,24 @@ export default function UpdateTripForm() {
         </Heading>
         <br />
         <br />
-        {isLoading || formState.destination == null ? (
+        {error ? (
+          handleError()
+        ) : isLoading || formState.destination == null ? (
           <p>Loading...</p>
-        ) : error ? (
-          <p>Error: {error.message}</p>
         ) : (
           <Box
-          position="relative"
-          minWidth="sm"
-          borderWidth="1px"
-          borderRadius="lg"
-          boxShadow="lg"
-          bg="rgba(195, 226, 194, 0.50)"
-          p="20px"
-          textAlign="center"
-          zIndex="docked"
-          w={["100px", "150px", "200px", "250px", "800px"]}
-          h="auto"
-        >
+            position="relative"
+            minWidth="sm"
+            borderWidth="1px"
+            borderRadius="lg"
+            boxShadow="lg"
+            bg="rgba(195, 226, 194, 0.50)"
+            p="20px"
+            textAlign="center"
+            zIndex="docked"
+            w={["100px", "150px", "200px", "250px", "800px"]}
+            h="auto"
+          >
             <ArrowLeftIcon />
             <Button
               colorScheme="black"

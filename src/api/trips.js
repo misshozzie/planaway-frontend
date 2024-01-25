@@ -26,7 +26,8 @@ export function getAllTrips() {
     const json = await res.json();
 
     if (!res.ok) {
-      setError(json.error);
+      console.log("api error:", json);
+      setError(json);
     }
     if (res.ok) {
       //   localStorage.setItem("token", json.token); --> to update: need this later
@@ -62,7 +63,7 @@ export function createOneTrip() {
     const json = await res.json();
 
     if (!res.ok) {
-      setError(json.error);
+      setError(json);
     }
     if (res.ok) {
       setResponse(json);
@@ -95,6 +96,7 @@ export function deleteOneTrip() {
     const json = await res.json();
 
     if (!res.ok) {
+      console.log("trip delete error:", json);
       setDeleteError(json.error);
     }
     if (res.ok) {
@@ -130,7 +132,7 @@ export function getOneTrip() {
     const json = await res.json();
 
     if (!res.ok) {
-      setError(json.error);
+      setError(json);
     }
     if (res.ok) {
       //   localStorage.setItem("token", json.token); --> to update: need this later
@@ -153,6 +155,7 @@ export function updateOneTrip() {
   async function updateOneData(username, tripid, body) {
     const fullURL = `${BASE_URL}/trips/${username}?tripid=${tripid}`;
     // console.log(`fullURL:${fullURL}`);
+    const token = localStorage.getItem("token");
     setIsLoading(true);
 
     const res = await fetch(fullURL, {

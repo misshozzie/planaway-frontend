@@ -24,23 +24,40 @@ function App() {
         <>
           <NavBar username={user} setUser={setUser} />
           <Routes>
-            <Route path="/" element={<TripPage username={user} />} />
-            <Route path="/profile" element={<ProfileUpdate />} />
+            <Route
+              path="/profile"
+              element={<ProfileUpdate setUser={setUser} />}
+            />
 
-            <Route path="/user/trips" element={<TripPage username={user} />} />
-            <Route path="/user/trips/new" element={<NewTripForm />} />
-            <Route path="/user/trips/update" element={<UpdateTripForm />} />
+            <Route
+              path="/user/trips"
+              element={<TripPage username={user} setUser={setUser} />}
+            />
+            <Route
+              path="/user/trips/new"
+              element={<NewTripForm setUser={setUser} />}
+            />
+            <Route
+              path="/user/trips/update"
+              element={<UpdateTripForm setUser={setUser} />}
+            />
 
             <Route
               path="/user/trips/plans/new/:tripid"
-              element={<NewPlanForm />}
+              element={<NewPlanForm setUser={setUser} />}
             />
-            <Route path="/user/trips/plans/:tripid" element={<PlanPage />} />
+            <Route
+              path="/user/trips/plans/:tripid"
+              element={<PlanPage setUser={setUser} />}
+            />
             <Route
               path="/user/trips/plans/update/:tripid/:planid"
-              element={<UpdatePlanForm />}
+              element={<UpdatePlanForm setUser={setUser} />}
             />
-            <Route path="/user/trips/plans/view" element={<PlanCard />} />
+            <Route
+              path="/user/trips/plans/view"
+              element={<PlanCard setUser={setUser} />}
+            />
           </Routes>
         </>
       ) : (

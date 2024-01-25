@@ -17,7 +17,7 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router";
 import { updatePlan, getOnePlan } from "../api/plans";
 
-export default function UpdateTripForm() {
+export default function UpdateTripForm({ setUser }) {
   const [formState, setFormState] = useState({
     header: "",
     description: "",
@@ -47,6 +47,8 @@ export default function UpdateTripForm() {
         });
       } catch (error) {
         console.error("Error fetching plan data:", error);
+        setUser(null);
+        navigate("/login");
       }
     }
     fetchPlanData();
