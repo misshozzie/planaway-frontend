@@ -32,8 +32,8 @@ const createBackendServer = (baseURL) => {
   const authSignup = async (body) => api.post("auth/register", body);
 
   /*=== GET REQUEST ===*/
-  const updateProfile = async ({ id, body }) =>
-    api.put(`auth/update/${id}`, body);
+  const updateProfile = async ({ body }) =>
+    api.put("auth/update", body);
 
   return {
     authLogin,

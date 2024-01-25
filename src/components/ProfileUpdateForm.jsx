@@ -14,6 +14,7 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 import Joi from "joi";
 import { getUserDetails } from "../services/user";
 import React, { useEffect, useState } from "react";
+import { hashData } from "../util/security";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../assets/PAlogo.png";
@@ -40,6 +41,31 @@ const schema = Joi.object({
   password: Joi.string().optional(),
 });
 
+const updatePasswordSchema = Joi.object({
+  userName: Joi.string().min(3).required().messages({
+    "string.required": "Username is required.",
+    "string.empty": "Username is required.",
+    "string.min": "Username must be at least 5 characters",
+  }),
+
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      "string.email": "Please enter a valid email address.",
+      "string.empty": "Email address is required.",
+      "any.required": "Email address is required.",
+    }),
+
+  password: Joi.string().min(3)
+    .required()
+    .messages({
+      "string.required": "Please enter a password.",
+      "string.empty": "Password must be at least 8 characters",
+      "any.required": "Password is required.",
+  }),
+});
+
 const userDetails = getUserDetails();
 
 const ProfileUpdateForm = () => {
@@ -51,6 +77,7 @@ const ProfileUpdateForm = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [updatedPassword, setupdatedPassword ] = useState(false)
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -59,7 +86,7 @@ const ProfileUpdateForm = () => {
     }));
   };
 
-  const [newUsers, setNewUsers] = useState("");
+  // const [newUsers, setNewUsers] = useState("");
   // useEffect(() => {
   //   const userCookie = Cookies.get("user");
   //   if (userCookie) {
@@ -77,9 +104,19 @@ const ProfileUpdateForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = async () => {
-    const validation = schema.validate(formData, { abortEarly: false });
+  function hashPassword() {
+    var currForm = formData;
+    if (currForm.password) {
+      var hash = hashData(currForm.password);
+      currForm.password = hash.hash;
+      currForm.salt = hash.salt;
+      currForm.iterations = hash.iterations;
+    }
+  }
 
+  const onSubmit = async () => {
+    setupdatedPassword(false)
+    const validation = updatePasswordSchema.validate(formData, { abortEarly: false });
     if (validation.error) {
       const newErrors = {};
       validation.error.details.forEach((detail) => {
@@ -93,22 +130,37 @@ const ProfileUpdateForm = () => {
 
     try {
       setLoading(true);
-      const response = await apis?.updateProfile({
-        id: newUsers?._id,
+      hashPassword()
+      const updateUserRequest = {
         body: formData,
-      });
-
+      };
+      const response = await apis?.updateProfile(updateUserRequest);
       if (response?.status === 200) {
         toast.success(response?.data?.message, { id: 1 });
       }
       setLoading(false);
+      console.log("User saved successfully")
+      setFormData({
+        userName: userDetails.user,
+        email: userDetails.email,
+        password: "", 
+      });
+      setupdatedPassword(true)
+      setErrors({});
     } catch (error) {
       if (error.message) {
         toast?.error(error?.message, { id: 1 });
       }
+      setFormData({
+        userName: userDetails.user,
+        email: userDetails.email,
+        password: "", 
+      });
       setLoading(false);
     }
   };
+
+
 
   return (
     <>
@@ -142,6 +194,9 @@ const ProfileUpdateForm = () => {
               Go Back
             </Link>
         </div>
+        {updatedPassword && (
+        <p style={{ color: "green" }}>Password has been updated!</p>
+        )}
           <form>
             <FormControl id="username" isRequired>
               <FormLabel>Username</FormLabel>
