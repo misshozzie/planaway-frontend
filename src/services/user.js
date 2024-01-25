@@ -41,8 +41,15 @@ export async function logoutUser() {
 
 export function getUser() {
   const token = getToken();
-  // console.log("user token", token);
   // If there's a token, return the user in the payload, otherwise return null
   return token ? JSON.parse(atob(token.split(".")[1])).payload.user : null;
   // return token ? "test" : null;
 }
+
+export function getUserDetails() {
+  const token = getToken();
+  // If there's a token, return the user in the payload, otherwise return null
+  return token ? JSON.parse(atob(token.split(".")[1])).payload : null;
+  // return token ? "test" : null;
+}
+

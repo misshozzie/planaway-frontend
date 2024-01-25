@@ -17,7 +17,7 @@ import "./index.css";
 
 function App() {
   const [user, setUser] = useState(getUser());
-  console.log("user", user);
+  // console.log("user", user);
   return (
     <main>
       {user ? (

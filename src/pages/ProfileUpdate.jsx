@@ -5,7 +5,7 @@ const ProfileUpdate = () => {
     return (
         <>
         <ProfileUpdateForm />
-        </>
+        </> 
     );
 };
 

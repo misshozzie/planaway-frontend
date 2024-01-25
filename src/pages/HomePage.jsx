@@ -39,7 +39,7 @@ const HomePage = () => {
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="lg"
-          bg="rgba(195, 226, 194, 0.30)"
+          bg="rgba(195, 226, 194, 0.50)"
           w="500px"
           h="250px"
           p="32px"
