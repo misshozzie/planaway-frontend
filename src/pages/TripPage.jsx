@@ -48,7 +48,7 @@ export default function TripPage({ username }) {
   //   console.log(data);
   // }, [data]);
 
-  console.log("trip data:", data);
+  // console.log("trip data:", data);
 
   // console.log(`tripData:${JSON.stringify(tripData)}`);
 

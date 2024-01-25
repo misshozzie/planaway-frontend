@@ -10,9 +10,11 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
+import { ArrowLeftIcon } from "@chakra-ui/icons";
 import Joi from "joi";
-import Cookies from "js-cookie";
+import { getUserDetails } from "../services/user";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
@@ -38,10 +40,12 @@ const schema = Joi.object({
   password: Joi.string().optional(),
 });
 
+const userDetails = getUserDetails();
+
 const ProfileUpdateForm = () => {
   const [formData, setFormData] = useState({
-    userName: "",
-    email: "",
+    userName: userDetails.user,
+    email: userDetails.email,
     password: "",
   });
   const [errors, setErrors] = useState({});
@@ -132,6 +136,12 @@ const ProfileUpdateForm = () => {
           w={["100px", "150px", "200px", "250px", "800px"]}
           h="auto"
         >
+        <div>
+            <Link to={`/user/trips`}>
+              <ArrowLeftIcon />
+              Go Back
+            </Link>
+        </div>
           <form>
             <FormControl id="username" isRequired>
               <FormLabel>Username</FormLabel>
@@ -141,7 +151,7 @@ const ProfileUpdateForm = () => {
                 placeholder="Enter your username"
                 mb="2"
                 name="userName"
-                value={formData.userName}
+                value={userDetails.user}
                 onChange={handleInputChange}
                 borderColor="#ccc"
               />
@@ -157,7 +167,7 @@ const ProfileUpdateForm = () => {
                   placeholder="Enter your email"
                   mb="2"
                   name="email"
-                  value={formData.email}
+                  value={userDetails.email}
                   onChange={handleInputChange}
                   borderColor="#ccc"
                 />
