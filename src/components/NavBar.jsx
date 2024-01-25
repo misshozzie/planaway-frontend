@@ -18,7 +18,7 @@ import {
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 
-const NavBar = () => {
+const NavBar = ({ username }) => {
   const [user, setUser] = useState();
   const navigate = useNavigate();
   useEffect(() => {
@@ -56,16 +56,16 @@ const NavBar = () => {
             <Box maxH={"80px"}>
               <img src={logo} style={{ maxWidth: "50px" }} alt="logo" />
             </Box>
-          </Link >
+          </Link>
           <Flex align="center" bg="whitesmoke">
             <Text fontSize={"x1"} me={10} bg="whitesmoke">
-              Welcome, {user?.userName}
+              Welcome, {username}
             </Text>
 
             <Menu bg="whitesmoke">
-            <MenuButton as={Button} bg="whitesmoke">
-                  Account
-                </MenuButton>
+              <MenuButton as={Button} bg="whitesmoke">
+                Account
+              </MenuButton>
               <MenuList>
                 <MenuGroup>
                   <Link to="/profile">

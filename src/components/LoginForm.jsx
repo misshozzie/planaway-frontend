@@ -19,6 +19,8 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
 import apis from "../services/index";
+import { getLoginDetails, loginUser } from "../services/user";
+import { hashDataWithSaltRounds, storeToken } from "../util/security";
 
 const schema = Joi.object({
   email: Joi.string()
@@ -48,61 +50,93 @@ const LoginForm = () => {
     }));
   };
 
-  useEffect(() => {
-    const userCookie = Cookies.get("user");
-    console.log(userCookie, "userCookie");
+  // useEffect(() => {
+  //   const userCookie = Cookies.get("user");
+  //   console.log(userCookie, "userCookie");
 
-    if (userCookie) {
-      const jsonStartIndex = userCookie.indexOf("{");
-      const jsonString = userCookie.slice(jsonStartIndex);
-      // Parse the JSON string into a JavaScript object
-      const userObject = JSON.parse(jsonString);
-      const userName = userObject.userName;
-      navigate(`/user/trips?username=${userName}`);
-    }
-    // eslint-disable-next-line
-  }, []);
+  //   if (userCookie) {
+  //     const jsonStartIndex = userCookie.indexOf("{");
+  //     const jsonString = userCookie.slice(jsonStartIndex);
+  //     // Parse the JSON string into a JavaScript object
+  //     const userObject = JSON.parse(jsonString);
+  //     const userName = userObject.userName;
+  //     navigate(`/user/trips?username=${userName}`);
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
-  const onSubmit = async () => {
-    // Validate all fields on form submission
-    const validation = schema.validate(formData, { abortEarly: false });
-    console.log(1);
-    if (validation.error) {
-      const newErrors = {};
-      validation.error.details.forEach((detail) => {
-        const key = detail.path[0];
-        newErrors[key] = detail.message;
-      });
-      setErrors(newErrors);
-      console.error("Validation error:", validation.error.details);
-      return;
-    }
-    console.log(2);
+  // const onSubmit = async () => {
+  //   // Validate all fields on form submission
+  //   const validation = schema.validate(formData, { abortEarly: false });
+  //   console.log(1);
+  //   if (validation.error) {
+  //     const newErrors = {};
+  //     validation.error.details.forEach((detail) => {
+  //       const key = detail.path[0];
+  //       newErrors[key] = detail.message;
+  //     });
+  //     setErrors(newErrors);
+  //     console.error("Validation error:", validation.error.details);
+  //     return;
+  //   }
+  //   console.log(2);
+  //   try {
+  //     setIsLoading(true);
+  //     const response = await apis?.authLogin(formData);
+  //     console.log("🚀 ~ onSubmit ~ response:", response);
+  //     if (response?.status === 200) {
+  //       //store jwt token to local storage
+  //       localStorage.setItem("token", response.data.token);
+  //       const userCookie = Cookies.get("user");
+  //       console.log(userCookie, "userCookie");
+  //       const jsonStartIndex = userCookie.indexOf("{");
+  //       const jsonString = userCookie.slice(jsonStartIndex);
+  //       // Parse the JSON string into a JavaScript object
+  //       const userObject = JSON.parse(jsonString);
+  //       const userName = userObject.userName;
+  //       navigate(`/user/trips?username=${userName}`);
+  //       toast.success(response?.data?.message, { id: 1 });
+  //     }
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     if (error.message) {
+  //       toast?.error(error?.message, { id: 1 });
+  //     }
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  async function handleSubmit(evt) {
     try {
-      setIsLoading(true);
-      const response = await apis?.authLogin(formData);
-      console.log("🚀 ~ onSubmit ~ response:", response);
-      if (response?.status === 200) {
-        //store jwt token to local storage 
-        localStorage.setItem("token", response.data.token);
-        const userCookie = Cookies.get("user");
-        console.log(userCookie, "userCookie");
-        const jsonStartIndex = userCookie.indexOf("{");
-        const jsonString = userCookie.slice(jsonStartIndex);
-        // Parse the JSON string into a JavaScript object
-        const userObject = JSON.parse(jsonString);
-        const userName = userObject.userName;
-        navigate(`/user/trips?username=${userName}`);
-        toast.success(response?.data?.message, { id: 1 });
-      }
-      setIsLoading(false);
-    } catch (error) {
-      if (error.message) {
-        toast?.error(error?.message, { id: 1 });
-      }
-      setIsLoading(false);
+      evt.preventDefault();
+      // We don't want to send the 'error' or 'confirm' property,
+      //  so let's make a copy of the state object, then delete them
+      // highlight-start
+      const formDataNew = { ...formData };
+      delete formDataNew.error;
+      delete formDataNew.confirm;
+      // highlight-end
+      console.log("formDataNew", formDataNew);
+      // get user hash password from database
+      const loginDetails = await getLoginDetails(formData.email);
+      console.log("login Details", loginDetails);
+      const hashedPassword = hashDataWithSaltRounds(
+        formDataNew.password,
+        loginDetails.salt,
+        loginDetails.iterations
+      );
+      console.log("hashedPassword", hashedPassword);
+      formDataNew.password = hashedPassword;
+      const token = await loginUser(formDataNew);
+      console.log("token", token);
+      // store token in localStorage
+      storeToken(token);
+      navigate(`/user/trips?username=${loginDetails.userName}`);
+      // Baby step!
+    } catch (e) {
+      console.log(e);
     }
-  };
+  }
 
   return (
     <>
@@ -124,12 +158,12 @@ const LoginForm = () => {
           boxShadow="lg"
           bg="rgba(195, 226, 194, 0.30)"
           w="700px"
-          //maxH="calc(100vh - 100px)" 
+          //maxH="calc(100vh - 100px)"
           //h="300px"
           p="40px"
           textAlign="center"
           zIndex="2"
-          //overflowY="auto" 
+          //overflowY="auto"
         >
           <form>
             <Link as={RouterLink} to="/" display="flex" alignItems="center">
@@ -175,7 +209,7 @@ const LoginForm = () => {
               mt={4}
               spinnerPlacement="start"
               loadingText="Logging In"
-              onClick={onSubmit}
+              onClick={handleSubmit}
               _hover={{ bg: " #DBCC95" }}
             >
               LOGIN

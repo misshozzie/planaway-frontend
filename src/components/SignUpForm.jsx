@@ -21,7 +21,9 @@ import { useNavigate, Link as RouterLink } from "react-router-dom";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
-import bcrypt from "bcryptjs";
+// import bcrypt from "bcryptjs";
+import { hashData } from "../util/security";
+import { signUp } from "../services/user";
 
 const schema = Joi.object({
   userName: Joi.string().min(5).required().messages({
@@ -59,7 +61,7 @@ const SignupForm = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(true);
   const navigate = useNavigate();
 
   // const handleInputChange = (e) => {
@@ -68,28 +70,30 @@ const SignupForm = () => {
   //     ...prevData,
   //     [name]: value,
   //   }));
-    
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
-        ...prevData,
-        [name]: value
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
     }));
     setDisable(checkPassword());
-};
+  };
 
-    // make sure check and password is the same
-    function checkPassword() {
-      // password validation
-      // must have at least 1 uppercase, 1 lowercase, 1 special
-      //var currForm = formData;
-      if (!formData.password || !formData.confirmPassword ||
-        formData.password !== formData.confirmPassword) {
-          return true; 
-        }
-        return false;
-      }
+  // make sure check and password is the same
+  function checkPassword() {
+    // password validation
+    // must have at least 1 uppercase, 1 lowercase, 1 special
+    //var currForm = formData;
+    if (
+      !formData.password ||
+      !formData.confirmPassword ||
+      formData.password !== formData.confirmPassword
+    ) {
+      return true;
+    }
+    return false;
+  }
   //     if (currForm.password !== currForm.confirm) {
   //         console.log(currForm.password)
   //         console.log(currForm.confirm)
@@ -98,32 +102,38 @@ const SignupForm = () => {
   //     return false
   // }
 
+  // function hashPassword() {
+  //   var currForm = formData;
+  //   if (currForm.password) {
+  //     const salt = bcrypt.genSaltSync(10);
+  //     const hash = bcrypt.hashSync(currForm.password, salt);
+
+  //     setFormData({
+  //       ...currForm,
+  //       password: hash,
+  //       salt: salt,
+  //     });
+  //   }
+  // }
+
   function hashPassword() {
     var currForm = formData;
     if (currForm.password) {
-        // console.log(currForm.password)
-        // var hash = hashData(currForm.password);
-        // currForm.password = hash.hash;
-        // currForm.salt = hash.salt;
-        // currForm.iterations = hash.iterations;
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(currForm.password, salt);
-
-        setFormData({
-          ...currForm,
-          password:hash,
-          salt: salt
-        })
-    }  
-}
-
-  useEffect(() => {
-    const userCookie = Cookies.get("user");
-    if (userCookie) {
-      navigate("/trips");
+      console.log(currForm.password);
+      var hash = hashData(currForm.password);
+      currForm.password = hash.hash;
+      currForm.salt = hash.salt;
+      currForm.iterations = hash.iterations;
     }
-    // eslint-disable-next-line
-  }, []);
+  }
+
+  // useEffect(() => {
+  //   const userCookie = Cookies.get("user");
+  //   if (userCookie) {
+  //     navigate("/trips");
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -153,7 +163,7 @@ const SignupForm = () => {
   //     const response = await apis.authSignup(dataToSubmit);
   //     if (response.status === 201) {
   //       toast.success(response.data.message);
-  //       //store jwt token to local storage 
+  //       //store jwt token to local storage
   //       //localStorage.setItem("token", response.data.token);
   //       navigate("/login");
   //     } else {
@@ -172,13 +182,14 @@ const SignupForm = () => {
     try {
       e.preventDefault();
       hashPassword();
-      const formData = {...formData};
-      delete formData.error;
-      delete formData.confirm;
-      console.log(formData)
+      const formDataNew = { ...formData };
+      delete formDataNew.error;
+      delete formDataNew.confirm;
+      console.log(formDataNew);
       const user = await signUp(formData);
-      console.log(user)
-    } catch(e) {
+      console.log(user);
+      navigate("/login");
+    } catch (e) {
       console.log(e);
     }
   }
@@ -296,26 +307,26 @@ const SignupForm = () => {
         </Box>
         <br />
         <Button
-                backgroundColor="#CD8D7A"
-                w="280px"
-                h="50px"
-                mt={2}
-                type="submit"
-                isLoading={isLoading} // Use isLoading prop for Spinner
-                onClick={onSubmit}
-            >
-              {isLoading ? (
-                <Spinner
-                thickness="3px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="sm"
-              />
-              ) : ( 
-                "SIGNUP"
-              )}
-            </Button>
+          backgroundColor="#CD8D7A"
+          w="280px"
+          h="50px"
+          mt={2}
+          type="submit"
+          isLoading={isLoading} // Use isLoading prop for Spinner
+          onClick={onSubmit}
+        >
+          {isLoading ? (
+            <Spinner
+              thickness="3px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="sm"
+            />
+          ) : (
+            "SIGNUP"
+          )}
+        </Button>
       </Flex>
     </>
   );
