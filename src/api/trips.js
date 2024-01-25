@@ -11,13 +11,14 @@ export function getAllTrips() {
   async function getData(username) {
     const fullURL = `${BASE_URL}/trips/all/${username}`;
     // console.log(`fullURL:${fullURL}`);
+    const token = localStorage.getItem("token"); // Get the stored JWT token
     setIsLoading(true);
 
     const res = await fetch(fullURL, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, --> to update: need this later
+        Authorization: `Bearer ${token}`,
         //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
@@ -45,13 +46,14 @@ export function createOneTrip() {
   async function postData(username, body) {
     setIsLoading(true);
     const fullURL = `${BASE_URL}/trips/${username}`;
+    const token = localStorage.getItem("token"); // Get the stored JWT token
     // console.log(body);
 
     const res = await fetch(fullURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, --> to update: need this later
+        Authorization: `Bearer ${token}`,
         //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(body),
@@ -79,12 +81,13 @@ export function deleteOneTrip() {
   async function deleteData(username, tripid) {
     setDeleteIsLoading(true);
     const fullURL = `${BASE_URL}/trips/${username}?tripid=${tripid}`;
+    const token = localStorage.getItem("token");
 
     const res = await fetch(fullURL, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, --> to update: need this later
+        Authorization: `Bearer ${token}`,
         //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
@@ -112,13 +115,14 @@ export function getOneTrip() {
   async function getOneData(username, tripid) {
     const fullURL = `${BASE_URL}/trips/one/${username}?tripid=${tripid}`;
     // console.log(`fullURL:${fullURL}`);
+    const token = localStorage.getItem("token");
     setIsLoading(true);
 
     const res = await fetch(fullURL, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, --> to update: need this later
+        Authorization: `Bearer ${token}`,
         //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
@@ -155,7 +159,7 @@ export function updateOneTrip() {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, --> to update: need this later
+        Authorization: `Bearer ${token}`,
         //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(body),

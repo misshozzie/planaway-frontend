@@ -17,9 +17,10 @@ import {
 } from "@chakra-ui/react";
 // import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+import { logoutUser } from "../services/user";
 
-const NavBar = ({ username }) => {
-  const [user, setUser] = useState();
+const NavBar = ({ username, setUser }) => {
+  // const [user, setUser] = useState();
   const navigate = useNavigate();
   // useEffect(() => {
   //   const isUser = Cookies.get("user");
@@ -39,6 +40,13 @@ const NavBar = ({ username }) => {
     // } catch (error) {
     //   console.log(error);
     // }
+    try {
+      logoutUser();
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
