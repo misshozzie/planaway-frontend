@@ -13,7 +13,7 @@ import {
   InputRightElement,
   Spinner,
 } from "@chakra-ui/react";
-import Joi from "joi";
+import Joi, { func } from "joi";
 import toast from "react-hot-toast";
 import apis from "../services/index";
 import Cookies from "js-cookie";
@@ -21,6 +21,7 @@ import { useNavigate, Link as RouterLink } from "react-router-dom";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
+import bcrypt from "bcryptjs";
 
 const schema = Joi.object({
   userName: Joi.string().min(5).required().messages({
@@ -58,15 +59,63 @@ const SignupForm = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [disable, setDisable] = useState(false);
   const navigate = useNavigate();
 
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+    
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
+    setFormData(prevData => ({
+        ...prevData,
+        [name]: value
     }));
-  };
+    setDisable(checkPassword());
+};
+
+    // make sure check and password is the same
+    function checkPassword() {
+      // password validation
+      // must have at least 1 uppercase, 1 lowercase, 1 special
+      //var currForm = formData;
+      if (!formData.password || !formData.confirmPassword ||
+        formData.password !== formData.confirmPassword) {
+          return true; 
+        }
+        return false;
+      }
+  //     if (currForm.password !== currForm.confirm) {
+  //         console.log(currForm.password)
+  //         console.log(currForm.confirm)
+  //         return true
+  //     }
+  //     return false
+  // }
+
+  function hashPassword() {
+    var currForm = formData;
+    if (currForm.password) {
+        // console.log(currForm.password)
+        // var hash = hashData(currForm.password);
+        // currForm.password = hash.hash;
+        // currForm.salt = hash.salt;
+        // currForm.iterations = hash.iterations;
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(currForm.password, salt);
+
+        setFormData({
+          ...currForm,
+          password:hash,
+          salt: salt
+        })
+    }  
+}
 
   useEffect(() => {
     const userCookie = Cookies.get("user");
@@ -80,42 +129,59 @@ const SignupForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = async (event) => {
-    // Prevent default form submission behavior
-    event.preventDefault();
+  // const onSubmit = async (event) => {
+  //   // Prevent default form submission behavior
+  //   event.preventDefault();
 
-    // Validate all fields on form submission
-    const { error } = schema.validate(formData, { abortEarly: false });
-    if (error) {
-      const newErrors = error.details.reduce((acc, detail) => {
-        acc[detail.path[0]] = detail.message;
-        return acc;
-      }, {});
-      setErrors(newErrors);
-      console.error("Validation error:", error.details);
-      return;
-    }
+  //   // Validate all fields on form submission
+  //   const { error } = schema.validate(formData, { abortEarly: false });
+  //   if (error) {
+  //     const newErrors = error.details.reduce((acc, detail) => {
+  //       acc[detail.path[0]] = detail.message;
+  //       return acc;
+  //     }, {});
+  //     setErrors(newErrors);
+  //     console.error("Validation error:", error.details);
+  //     return;
+  //   }
 
+  //   try {
+  //     setIsLoading(true);
+  //     // Exclude confirmPassword from the data to be sent to the backend
+  //     const { confirmPassword, ...dataToSubmit } = formData;
+
+  //     const response = await apis.authSignup(dataToSubmit);
+  //     if (response.status === 201) {
+  //       toast.success(response.data.message);
+  //       //store jwt token to local storage 
+  //       //localStorage.setItem("token", response.data.token);
+  //       navigate("/login");
+  //     } else {
+  //       // Handle other statuses if necessary
+  //       toast.error("An unexpected status was returned from the server");
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response?.data?.message || "An error occurred");
+  //   } finally {
+  //     // Ensure isLoading is set to false when the request is completed
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  async function onSubmit(e) {
     try {
-      setIsLoading(true);
-      // Exclude confirmPassword from the data to be sent to the backend
-      const { confirmPassword, ...dataToSubmit } = formData;
-
-      const response = await apis.authSignup(dataToSubmit);
-      if (response.status === 201) {
-        toast.success(response.data.message);
-        navigate("/login");
-      } else {
-        // Handle other statuses if necessary
-        toast.error("An unexpected status was returned from the server");
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "An error occurred");
-    } finally {
-      // Ensure isLoading is set to false when the request is completed
-      setIsLoading(false);
+      e.preventDefault();
+      hashPassword();
+      const formData = {...formData};
+      delete formData.error;
+      delete formData.confirm;
+      console.log(formData)
+      const user = await signUp(formData);
+      console.log(user)
+    } catch(e) {
+      console.log(e);
     }
-  };
+  }
 
   return (
     <>
@@ -142,7 +208,7 @@ const SignupForm = () => {
           textAlign="center"
           zIndex="2"
         >
-          <form>
+          <form onSubmit={onSubmit}>
             <Link as={RouterLink} to="/" display="flex" alignItems="center">
               <ArrowLeftIcon />
               Go Home
@@ -230,25 +296,26 @@ const SignupForm = () => {
         </Box>
         <br />
         <Button
-          backgroundColor="#CD8D7A"
-          w="280px"
-          h="50px"
-          mt={2}
-          type="submit"
-          onClick={onSubmit}
-        >
-          {isLoading ? (
-            <Spinner
-              thickness="3px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="sm"
-            />
-          ) : (
-            "SIGNUP"
-          )}
-        </Button>
+                backgroundColor="#CD8D7A"
+                w="280px"
+                h="50px"
+                mt={2}
+                type="submit"
+                isLoading={isLoading} // Use isLoading prop for Spinner
+                onClick={onSubmit}
+            >
+              {isLoading ? (
+                <Spinner
+                thickness="3px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="sm"
+              />
+              ) : ( 
+                "SIGNUP"
+              )}
+            </Button>
       </Flex>
     </>
   );

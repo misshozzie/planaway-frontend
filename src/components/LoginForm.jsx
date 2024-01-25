@@ -84,6 +84,7 @@ const LoginForm = () => {
       console.log("🚀 ~ onSubmit ~ response:", response);
       if (response?.status === 200) {
         //store jwt token to local storage 
+        localStorage.setItem("token", response.data.token);
         const userCookie = Cookies.get("user");
         console.log(userCookie, "userCookie");
         const jsonStartIndex = userCookie.indexOf("{");

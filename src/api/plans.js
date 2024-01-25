@@ -16,6 +16,7 @@ export function getOneCard() {
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`, --> to update: need this later
+        //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
@@ -52,6 +53,7 @@ export async function createPlan(formData, tripid) {
     headers: {
       "Content-Type": "application/json",
       // Authorization: `Bearer ${token}`, --> to update: need this later
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(sendData),
   });
@@ -78,6 +80,7 @@ export async function updatePlan(formData, planid) {
     headers: {
       "Content-Type": "application/json",
       // Authorization: `Bearer ${token}`, --> to update: need this later
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(sendData),
   });
@@ -100,6 +103,7 @@ export async function showPlans(tripid) {
     headers: {
       "Content-Type": "application/json",
       // Authorization: `Bearer ${token}`, --> to update: need this later
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 
@@ -123,6 +127,7 @@ export async function deleteOnePlan(tripid, planid) {
     headers: {
       "Content-Type": "application/json",
       // Authorization: `Bearer ${token}`, --> to update: need this later
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify({ planid: planid }),
   });
@@ -144,6 +149,7 @@ export async function getOnePlan(tripid, planid) {
     headers: {
       "Content-Type": "application/json",
       // Authorization: `Bearer ${token}`, --> to update: need this later
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 
