@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { getUser } from "./services/user";
 import HomePage from "./pages/HomePage";
 import TripPage from "./pages/TripPage";
@@ -51,7 +46,7 @@ function App() {
       ) : (
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/sign-up" element={<SignUp />} />
         </Routes>
       )}

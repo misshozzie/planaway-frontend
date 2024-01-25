@@ -37,7 +37,7 @@ const schema = Joi.object({
   }),
 });
 
-const LoginForm = () => {
+const LoginForm = ({ setUser }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
@@ -131,6 +131,7 @@ const LoginForm = () => {
       console.log("token", token);
       // store token in localStorage
       storeToken(token);
+      setUser(loginDetails.userName);
       navigate(`/user/trips?username=${loginDetails.userName}`);
       // Baby step!
     } catch (e) {

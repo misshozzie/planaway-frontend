@@ -15,30 +15,30 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 
 const NavBar = ({ username }) => {
   const [user, setUser] = useState();
   const navigate = useNavigate();
-  useEffect(() => {
-    const isUser = Cookies.get("user");
-    if (isUser) {
-      let parseUser = isUser?.substring(2);
-      setUser(JSON?.parse(parseUser));
-    } else {
-      navigate("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const isUser = Cookies.get("user");
+  //   if (isUser) {
+  //     let parseUser = isUser?.substring(2);
+  //     setUser(JSON?.parse(parseUser));
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   const logout = async () => {
-    try {
-      Cookies.remove("user");
-      toast.success("Logout Successfully");
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   Cookies.remove("user");
+    //   toast.success("Logout Successfully");
+    //   navigate("/login");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
