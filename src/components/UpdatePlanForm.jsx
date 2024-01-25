@@ -26,9 +26,8 @@ export default function UpdateTripForm() {
   const [error, setError] = useState(null);
   const { planid, tripid } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const username = location.state.username;
+  let query = new URLSearchParams(window.location.search);
+  let username = query.get("username");
 
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -62,9 +61,7 @@ export default function UpdateTripForm() {
         setError(result.error);
       } else {
         console.log("Plan has been updated");
-        navigate(`/user/trips/plans/${tripid}`, {
-          state: { username: username },
-        });
+        navigate(`/user/trips/plans/${tripid}?username=${username}`);
       }
     } catch (error) {
       setIsLoading(false);
@@ -89,19 +86,20 @@ export default function UpdateTripForm() {
         <br />
         <br />
         <Box
+          position="relative"
           minWidth="sm"
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="lg"
-          bg="rgba(195, 226, 194, 0.30)"
-          w="700px"
-          h="300px"
-          p="32px"
+          bg="rgba(195, 226, 194, 0.50)"
+          p="20px"
           textAlign="center"
-          zIndex="2"
+          zIndex="docked"
+          w={["100px", "150px", "200px", "250px", "800px"]}
+          h="auto"
         >
           <div>
-            <Link to={`/user/trips/plans/${tripid}`}>
+            <Link to={`/user/trips/plans/${tripid}?username=${username}`}>
               <ArrowLeftIcon />
               Go Back
             </Link>
@@ -135,12 +133,13 @@ export default function UpdateTripForm() {
           <br />
           <Button
             type="submit"
-            bg="#CD8D7A"
+            bgColor="#CD8D7A"
+            _hover={{ bg: "##DBAD9F", color: "white" }}
+            _expanded={{ bg: "#DBAD9F", color: "white" }}
             w="280px"
             mt={4}
             spinnerPlacement="start"
             loadingText="Saving"
-            _hover={{ bg: " #DBCC95" }}
           >
             SAVE
           </Button>

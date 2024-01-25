@@ -197,29 +197,42 @@ const SignupForm = () => {
         </Heading>
         <br />
         <Box
+          position="relative"
           minWidth="sm"
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="lg"
-          bg="rgba(195, 226, 194, 0.30)"
-          w="900px"
-          h="350px"
-          p="32px"
+          bg="rgba(195, 226, 194, 0.50)"
+          p="20px"
           textAlign="center"
-          zIndex="2"
+          zIndex="docked"
+          w={["100px", "150px", "200px", "250px", "800px"]}
+          h="auto"
         >
           <form onSubmit={onSubmit}>
             <Link as={RouterLink} to="/" display="flex" alignItems="center">
               <ArrowLeftIcon />
               Go Home
             </Link>
+            <ArrowLeftIcon />
+            <Button
+              colorScheme="black"
+              variant="link"
+              onClick={() => navigate(`/`)}
+            >
+              Go Back
+            </Button>
             <br />
+            <Heading as="h2" size="l" mt={4}>
+              SIGN UP
+            </Heading>
+            <form>
             <FormControl isRequired display="flex" alignItems="center">
               <FormLabel mb={4} width="150px">
                 Username
               </FormLabel>
               <Input
-                backgroundColor="#EAECCC"
+                backgroundColor="white"
                 type="text"
                 placeholder="Enter your username"
                 mb={4}
@@ -236,7 +249,7 @@ const SignupForm = () => {
                 Email
               </FormLabel>
               <Input
-                backgroundColor="#EAECCC"
+                backgroundColor="white"
                 type="email"
                 placeholder="Enter your email"
                 mb={2}
@@ -254,7 +267,7 @@ const SignupForm = () => {
               </FormLabel>
               <InputGroup>
                 <Input
-                  backgroundColor="#EAECCC"
+                  backgroundColor="white"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   mb={2}
@@ -281,7 +294,7 @@ const SignupForm = () => {
                 Confirm
               </FormLabel>
               <Input
-                backgroundColor="#EAECCC"
+                backgroundColor="white"
                 type="password"
                 placeholder="Confirm your password"
                 mb={2}
@@ -293,29 +306,29 @@ const SignupForm = () => {
               <p style={{ color: "red" }}>{errors.confirmPassword}</p>
             </FormControl>
           </form>
-        </Box>
         <br />
         <Button
-                backgroundColor="#CD8D7A"
-                w="280px"
-                h="50px"
-                mt={2}
-                type="submit"
-                isLoading={isLoading} // Use isLoading prop for Spinner
-                onClick={onSubmit}
-            >
-              {isLoading ? (
-                <Spinner
-                thickness="3px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="sm"
-              />
-              ) : ( 
-                "SIGNUP"
-              )}
-            </Button>
+          bgColor="#CD8D7A"
+          _hover={{ bg: "##DBAD9F", color: "white" }}
+          _expanded={{ bg: "#DBAD9F", color: "white" }}
+          w="280px"
+          mt={4}
+          type="submit"
+          onClick={onSubmit}
+        >
+          {isLoading ? (
+            <Spinner
+              thickness="3px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="sm"
+            />
+          ) : (
+            "Sign Up"
+          )}
+        </Button>
+        </Box>
       </Flex>
     </>
   );
