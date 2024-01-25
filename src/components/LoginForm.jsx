@@ -224,7 +224,6 @@ const LoginForm = ({ setUser }) => {
               spinnerPlacement="start"
               loadingText="Logging In"
               onClick={handleSubmit}
-              _hover={{ bg: " #DBCC95" }}
             >
               Log In
             </Button>

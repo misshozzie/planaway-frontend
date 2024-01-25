@@ -14,7 +14,7 @@ import Joi from "joi";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-logo from "../assets/PAlogo.png";
+import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
 import apis from "../services/index";
 
