@@ -8,6 +8,7 @@ export default function TripCard({
   description,
   tripId,
   handleDelete,
+  setUser,
 }) {
   const navigate = useNavigate();
   let query = new URLSearchParams(window.location.search);
