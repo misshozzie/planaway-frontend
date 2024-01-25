@@ -6,6 +6,7 @@ const createBackendServer = (baseURL) => {
     withCredentials: true,
     headers: {
       Accept: "application/json",
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     timeout: 60 * 1000,
   });

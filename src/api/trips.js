@@ -18,6 +18,7 @@ export function getAllTrips() {
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`, --> to update: need this later
+        //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
@@ -51,6 +52,7 @@ export function createOneTrip() {
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`, --> to update: need this later
+        //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(body),
     });
@@ -83,6 +85,7 @@ export function deleteOneTrip() {
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`, --> to update: need this later
+        //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
@@ -116,6 +119,7 @@ export function getOneTrip() {
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`, --> to update: need this later
+        //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
@@ -152,6 +156,7 @@ export function updateOneTrip() {
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`, --> to update: need this later
+        //Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(body),
     });
