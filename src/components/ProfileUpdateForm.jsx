@@ -112,6 +112,7 @@ const ProfileUpdateForm = () => {
       currForm.salt = hash.salt;
       currForm.iterations = hash.iterations;
     }
+    return currForm
   }
 
   const onSubmit = async () => {
@@ -130,10 +131,11 @@ const ProfileUpdateForm = () => {
 
     try {
       setLoading(true);
-      hashPassword()
+      const updatedData = hashPassword(); 
       const updateUserRequest = {
-        body: formData,
+        body: updatedData,
       };
+      console.log(updateUserRequest)
       const response = await apis?.updateProfile(updateUserRequest);
       if (response?.status === 200) {
         toast.success(response?.data?.message, { id: 1 });
@@ -146,7 +148,6 @@ const ProfileUpdateForm = () => {
         password: "", 
       });
       setupdatedPassword(true)
-      setErrors({});
     } catch (error) {
       if (error.message) {
         toast?.error(error?.message, { id: 1 });
