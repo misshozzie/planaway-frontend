@@ -15,30 +15,30 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 
-const NavBar = () => {
+const NavBar = ({ username }) => {
   const [user, setUser] = useState();
   const navigate = useNavigate();
-  useEffect(() => {
-    const isUser = Cookies.get("user");
-    if (isUser) {
-      let parseUser = isUser?.substring(2);
-      setUser(JSON?.parse(parseUser));
-    } else {
-      navigate("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const isUser = Cookies.get("user");
+  //   if (isUser) {
+  //     let parseUser = isUser?.substring(2);
+  //     setUser(JSON?.parse(parseUser));
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   const logout = async () => {
-    try {
-      Cookies.remove("user");
-      toast.success("Logout Successfully");
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   Cookies.remove("user");
+    //   toast.success("Logout Successfully");
+    //   navigate("/login");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -56,16 +56,16 @@ const NavBar = () => {
             <Box maxH={"80px"}>
               <img src={logo} style={{ maxWidth: "50px" }} alt="logo" />
             </Box>
-          </Link >
+          </Link>
           <Flex align="center" bg="whitesmoke">
             <Text fontSize={"x1"} me={10} bg="whitesmoke">
-              Welcome, {user?.userName}
+              Welcome, {username}
             </Text>
 
             <Menu bg="whitesmoke">
-            <MenuButton as={Button} bg="whitesmoke">
-                  Account
-                </MenuButton>
+              <MenuButton as={Button} bg="whitesmoke">
+                Account
+              </MenuButton>
               <MenuList>
                 <MenuGroup>
                   <Link to="/profile">

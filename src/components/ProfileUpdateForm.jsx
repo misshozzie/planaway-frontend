@@ -56,18 +56,18 @@ const ProfileUpdateForm = () => {
   };
 
   const [newUsers, setNewUsers] = useState("");
-  useEffect(() => {
-    const userCookie = Cookies.get("user");
-    if (userCookie) {
-      let parseUser = userCookie?.substring(2);
-      const user = JSON?.parse(parseUser);
-      setNewUsers(user);
-      setFormData({
-        userName: user?.userName,
-        email: user?.email,
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const userCookie = Cookies.get("user");
+  //   if (userCookie) {
+  //     let parseUser = userCookie?.substring(2);
+  //     const user = JSON?.parse(parseUser);
+  //     setNewUsers(user);
+  //     setFormData({
+  //       userName: user?.userName,
+  //       email: user?.email,
+  //     });
+  //   }
+  // }, []);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

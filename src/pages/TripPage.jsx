@@ -25,15 +25,16 @@ import { useEffect, useState } from "react";
 import TripCard from "../components/TripCard";
 import { formatDate } from "../util/helperFunc";
 
-export default function TripPage() {
+export default function TripPage({ username }) {
+  // console.log(username);
   const navigate = useNavigate();
   const { getData, data, isLoading, error } = getAllTrips();
   const { deleteData, dataDeleted, isdeleteLoading, deleteError } =
     deleteOneTrip();
   const [render, setRender] = useState(false);
   // to get the query params in url
-  let query = new URLSearchParams(window.location.search);
-  let username = query.get("username");
+  // let query = new URLSearchParams(window.location.search);
+  // let username = query.get("username");
 
   //to update: dependency might need to change
   useEffect(() => {
@@ -46,6 +47,8 @@ export default function TripPage() {
   // useEffect(() => {
   //   console.log(data);
   // }, [data]);
+
+  console.log("trip data:", data);
 
   // console.log(`tripData:${JSON.stringify(tripData)}`);
 

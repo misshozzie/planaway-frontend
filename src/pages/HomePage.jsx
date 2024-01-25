@@ -2,24 +2,24 @@
 import React, { useEffect } from "react";
 import { Box, Flex, Heading, Text, Button, Image } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    const userCookie = Cookies.get("user");
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   const userCookie = Cookies.get("user");
 
-    if (userCookie) {
-      const jsonStartIndex = userCookie.indexOf("{");
-      const jsonString = userCookie.slice(jsonStartIndex);
-      // Parse the JSON string into a JavaScript object
-      const userObject = JSON.parse(jsonString);
-      const userName = userObject.userName;
-      navigate(`/user/trips?username=${userName}`);
-    }
-  }, []);
+  //   if (userCookie) {
+  //     const jsonStartIndex = userCookie.indexOf("{");
+  //     const jsonString = userCookie.slice(jsonStartIndex);
+  //     // Parse the JSON string into a JavaScript object
+  //     const userObject = JSON.parse(jsonString);
+  //     const userName = userObject.userName;
+  //     navigate(`/user/trips?username=${userName}`);
+  //   }
+  // }, []);
 
   return (
     <>

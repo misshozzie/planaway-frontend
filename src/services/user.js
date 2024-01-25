@@ -2,22 +2,22 @@ import * as usersAPI from "../api/users";
 import { getToken } from "../util/security";
 
 export async function signUp(userData) {
-    // Delegate the network request code to the users-api.js API module
-    // which will ultimately return a JSON Web Token (JWT)
-    console.log("service", userData)
-    const token = await usersAPI.signUp(userData);
-    // Baby step by returning whatever is sent back by the server
-    return token;
-  }
+  // Delegate the network request code to the users-api.js API module
+  // which will ultimately return a JSON Web Token (JWT)
+  console.log("service", userData);
+  const token = await usersAPI.signUp(userData);
+  // Baby step by returning whatever is sent back by the server
+  return token;
+}
 
 export async function getLoginDetails(email) {
-    // Delegate the network request code to the users-api.js API module
-    // which will ultimately return a JSON Web Token (JWT)
-    console.log("getLoginDetails", email)
-    const loginDetails = await usersAPI.getLoginDetails(email);
-    // Baby step by returning whatever is sent back by the server
-    return loginDetails;
-  }
+  // Delegate the network request code to the users-api.js API module
+  // which will ultimately return a JSON Web Token (JWT)
+  console.log("getLoginDetails", email);
+  const loginDetails = await usersAPI.getLoginDetails(email);
+  // Baby step by returning whatever is sent back by the server
+  return loginDetails;
+}
 
 export async function loginUser(userData) {
   // Delegate the network request code to the users-api.js API module
@@ -30,7 +30,10 @@ export async function loginUser(userData) {
 export async function logoutUser() {
   const token = getToken();
   if (token) {
-    const res = await usersAPI.logoutUser(token, JSON.parse(atob(token.split(".")[1])).payload);
+    const res = await usersAPI.logoutUser(
+      token,
+      JSON.parse(atob(token.split(".")[1])).payload
+    );
     removeToken();
   }
   return res;
@@ -38,6 +41,8 @@ export async function logoutUser() {
 
 export function getUser() {
   const token = getToken();
+  // console.log("user token", token);
   // If there's a token, return the user in the payload, otherwise return null
   return token ? JSON.parse(atob(token.split(".")[1])).payload.user : null;
+  // return token ? "test" : null;
 }
