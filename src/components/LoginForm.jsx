@@ -157,7 +157,7 @@ const LoginForm = ({ setUser }) => {
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="lg"
-          bg="rgba(195, 226, 194, 0.30)"
+          bg="rgba(195, 226, 194, 0.50)"
           w="700px"
           //maxH="calc(100vh - 100px)"
           //h="300px"
@@ -166,16 +166,27 @@ const LoginForm = ({ setUser }) => {
           zIndex="2"
           //overflowY="auto"
         >
+         <ArrowLeftIcon />
+            <Button
+              colorScheme="black"
+              variant="link"
+              onClick={() => navigate(`/`)}
+            >
+              Go Home
+            </Button>
+            <Heading as="h2" size="l" mt={4}>
+              LOG IN
+            </Heading>
           <form>
-            <Link as={RouterLink} to="/" display="flex" alignItems="center">
+            {/* <Link as={RouterLink} to="/" display="flex" alignItems="center">
               <ArrowLeftIcon />
               Go Home
-            </Link>
+            </Link> */}
             <br />
             <FormControl isRequired>
               <FormLabel>Email address</FormLabel>
               <Input
-                backgroundColor="#EAECCC"
+                backgroundColor="white"
                 type="text"
                 placeholder="Enter your email"
                 mb={4}
@@ -189,7 +200,7 @@ const LoginForm = ({ setUser }) => {
             <FormControl isRequired>
               <FormLabel>Password</FormLabel>
               <Input
-                backgroundColor="#EAECCC"
+                backgroundColor="white"
                 type="password"
                 placeholder="Enter your password"
                 mb={4}
@@ -205,7 +216,9 @@ const LoginForm = ({ setUser }) => {
             <Button
               isLoading={isLoading}
               type="submit"
-              bg="#CD8D7A"
+              bgColor="#CD8D7A"
+              _hover={{ bg: "##DBAD9F", color: "white" }}
+              _expanded={{ bg: "#DBAD9F", color: "white" }}
               w="280px"
               mt={4}
               spinnerPlacement="start"
@@ -213,7 +226,7 @@ const LoginForm = ({ setUser }) => {
               onClick={handleSubmit}
               _hover={{ bg: " #DBCC95" }}
             >
-              LOGIN
+              Log In
             </Button>
           </form>
         </Box>

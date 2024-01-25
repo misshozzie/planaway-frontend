@@ -11,7 +11,6 @@ import {
   Spinner,
   Textarea,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import Joi from "joi";
 import logo from "../assets/PAlogo.png";
@@ -53,9 +52,6 @@ export default function UpdateTripForm() {
   let query = new URLSearchParams(window.location.search);
   let username = query.get("username");
   let tripId = query.get("tripid");
-
-  // console.log(username);
-  // console.log(tripId);
 
   useEffect(() => {
     async function fetch() {
@@ -135,17 +131,18 @@ export default function UpdateTripForm() {
           <p>Error: {error.message}</p>
         ) : (
           <Box
-            minWidth="sm"
-            borderWidth="1px"
-            borderRadius="lg"
-            boxShadow="lg"
-            bg="rgba(195, 226, 194, 0.30)"
-            w="700px"
-            h="600px"
-            p="32px"
-            textAlign="center"
-            zIndex="2"
-          >
+          position="relative"
+          minWidth="sm"
+          borderWidth="1px"
+          borderRadius="lg"
+          boxShadow="lg"
+          bg="rgba(195, 226, 194, 0.50)"
+          p="20px"
+          textAlign="center"
+          zIndex="docked"
+          w={["100px", "150px", "200px", "250px", "800px"]}
+          h="auto"
+        >
             <ArrowLeftIcon />
             <Button
               colorScheme="black"
@@ -212,13 +209,14 @@ export default function UpdateTripForm() {
                 />
               </FormControl>
               <Button
+                bgColor="#CD8D7A"
+                _hover={{ bg: "##DBAD9F", color: "white" }}
+                _expanded={{ bg: "#DBAD9F", color: "white" }}
                 type="submit"
-                bg="#CD8D7A"
                 w="280px"
                 mt={4}
                 spinnerPlacement="start"
                 loadingText="Saving"
-                _hover={{ bg: " #DBCC95" }}
                 disabled={disabled}
               >
                 Update

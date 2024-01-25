@@ -28,7 +28,8 @@ export default function PlanPage() {
   const [loading, setLoading] = useState(true);
   const { tripid } = useParams();
 
-  const username = location.state.username;
+  let query = new URLSearchParams(window.location.search);
+  let username = query.get("username");
 
   function extractData(dataArray) {
     const cleanedData = dataArray[0].map((item) => ({
@@ -92,7 +93,10 @@ export default function PlanPage() {
 
         <Flex>
           <Button
-            colorScheme="teal"
+            bgColor="#CD8D7A"
+            _hover={{ bg: "##DBAD9F", color: "white" }}
+            _expanded={{ bg: "#DBAD9F", color: "white" }}
+            _focus={{ boxShadow: "outline" }}
             variant="solid"
             type="button"
             mr={6}
@@ -101,13 +105,14 @@ export default function PlanPage() {
             Back To Trips
           </Button>
           <Button
-            colorScheme="teal"
+            bgColor="#CD8D7A"
+            _hover={{ bg: "##DBAD9F", color: "white" }}
+            _expanded={{ bg: "#DBAD9F", color: "white" }}
+            _focus={{ boxShadow: "outline" }}
             variant="solid"
             type="button"
             onClick={() =>
-              navigate(`/user/trips/plans/new/${tripid}`, {
-                state: { username: username },
-              })
+              navigate(`/user/trips/plans/new/${tripid}?username=${username}`)
             }
           >
             Create New Plan
