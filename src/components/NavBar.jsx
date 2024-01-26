@@ -1,7 +1,7 @@
 //Navigation Bar
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/planaway.png";
+import logo from "../assets/Planaway.png";
 import { Container } from "@chakra-ui/react";
 import {
   Box,
