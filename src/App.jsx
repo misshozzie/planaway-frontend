@@ -25,6 +25,7 @@ function App() {
         <>
           <NavBar username={user} setUser={setUser} />
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route
               path="/profile"
               element={<ProfileUpdate setUser={setUser} username={user} />}
