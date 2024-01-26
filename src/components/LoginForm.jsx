@@ -122,6 +122,12 @@ const LoginForm = ({ setUser }) => {
       // get user hash password from database
       const loginDetails = await getLoginDetails(formData.email);
       console.log("login Details", loginDetails);
+
+      if (loginDetails === null) {
+        // Set the error message for null login details
+        setErrorMessage("Password or email is incorrect");
+        return;
+      }
       const hashedPassword = hashDataWithSaltRounds(
         formDataNew.password,
         loginDetails.salt,
