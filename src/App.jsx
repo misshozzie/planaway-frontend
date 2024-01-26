@@ -17,7 +17,7 @@ import "./index.css";
 
 function App() {
   const [user, setUser] = useState(getUser());
-  // console.log("user", user);
+
   return (
     <main>
       {user ? (
@@ -28,7 +28,10 @@ function App() {
               path="/profile"
               element={<ProfileUpdate setUser={setUser} />}
             />
-
+            <Route
+              path="/"
+              element={<TripPage username={user} setUser={setUser}/>}
+            />
             <Route
               path="/user/trips"
               element={<TripPage username={user} setUser={setUser} />}
