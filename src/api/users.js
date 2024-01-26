@@ -18,7 +18,8 @@
 
 // export default reduxApis;
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+console.log(BASE_URL);
 
 export async function signUp(userData) {
   // Fetch uses an options object as a second arg to make requests

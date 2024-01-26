@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const createBackendServer = (baseURL) => {
   const api = axios.create({
     baseURL: `${baseURL}api/`,
@@ -32,8 +34,7 @@ const createBackendServer = (baseURL) => {
   const authSignup = async (body) => api.post("auth/register", body);
 
   /*=== GET REQUEST ===*/
-  const updateProfile = async ({ body }) =>
-    api.put("auth/update", body);
+  const updateProfile = async ({ body }) => api.put("auth/update", body);
 
   return {
     authLogin,
@@ -43,6 +44,6 @@ const createBackendServer = (baseURL) => {
   };
 };
 
-const apis = createBackendServer("http://localhost:3000/");
+const apis = createBackendServer(BASE_URL);
 
 export default apis;
