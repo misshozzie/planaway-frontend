@@ -78,10 +78,14 @@ export default function NewTripForm({ setRender, render }) {
 
     async function fetch() {
       await postData(username, formState);
+      setRender(!render);
+      navigate(`/user/trips?username=${username}`);
     }
     fetch();
-    setRender(!render); //force rerender
-    navigate(`/user/trips?username=${username}`);
+    // console.log("Re-rendering")
+    // setRender(!render); //force rerender
+    // navigate(`/user/trips?username=${username}`);
+    // console.log("Navigating")
   }
 
   return (

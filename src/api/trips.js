@@ -66,6 +66,7 @@ export function createOneTrip() {
       setError(json);
     }
     if (res.ok) {
+      console.log("Data is created")
       setResponse(json);
       setIsLoading(false);
     }
