@@ -15,11 +15,13 @@ import Joi from "joi";
 import { getUserDetails } from "../services/user";
 import React, { useEffect, useState } from "react";
 import { hashData } from "../util/security";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../assets/PAlogo.png";
 import bg from "../assets/planawaybg.png";
 import apis from "../services/index";
+import { userUpdate, getLoginDetails } from "../services/user";
+import { hashDataWithSaltRounds } from "../util/security";
 
 //schema to validate input
 const schema = Joi.object({
@@ -57,27 +59,28 @@ const updatePasswordSchema = Joi.object({
       "any.required": "Email address is required.",
     }),
 
-  password: Joi.string().min(3)
-    .required()
-    .messages({
-      "string.required": "Please enter a password.",
-      "string.empty": "Password must be at least 8 characters",
-      "any.required": "Password is required.",
+  password: Joi.string().min(3).required().messages({
+    "string.required": "Please enter a password.",
+    "string.empty": "Password must be at least 8 characters",
+    "any.required": "Password is required.",
   }),
 });
 
-const userDetails = getUserDetails();
-
-const ProfileUpdateForm = () => {
+const ProfileUpdateForm = ({ setUser }) => {
+  const userDetails = getUserDetails();
   const [formData, setFormData] = useState({
     userName: userDetails.user,
     email: userDetails.email,
+    passwordold: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [updatedPassword, setupdatedPassword ] = useState(false)
+  const [updatedPassword, setupdatedPassword] = useState(false);
+
+  // console.log("userDetails:", userDetails);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -108,60 +111,107 @@ const ProfileUpdateForm = () => {
     var currForm = formData;
     if (currForm.password) {
       var hash = hashData(currForm.password);
+      // console.log("new hash:", hash);
       currForm.password = hash.hash;
       currForm.salt = hash.salt;
       currForm.iterations = hash.iterations;
     }
-    return currForm
+    return currForm;
   }
 
-  const onSubmit = async () => {
-    setupdatedPassword(false)
-    const validation = updatePasswordSchema.validate(formData, { abortEarly: false });
-    if (validation.error) {
-      const newErrors = {};
-      validation.error.details.forEach((detail) => {
-        const key = detail.path[0];
-        newErrors[key] = detail.message;
-      });
-      setErrors(newErrors);
-      console.error("Validation error:", validation.error.details);
-      return;
-    }
-
+  async function onSubmit(e) {
     try {
-      setLoading(true);
-      const updatedData = hashPassword(); 
-      const updateUserRequest = {
-        body: updatedData,
-      };
-      console.log(updateUserRequest)
-      const response = await apis?.updateProfile(updateUserRequest);
-      if (response?.status === 200) {
-        toast.success(response?.data?.message, { id: 1 });
+      e.preventDefault();
+      const loginDetails = await getLoginDetails(formData.email);
+      console.log("loginDetails:", loginDetails);
+      const hashedPasswordNew = hashDataWithSaltRounds(
+        formData.password,
+        loginDetails.salt,
+        loginDetails.iterations
+      );
+      hashPassword();
+      const formDataNew = { ...formData };
+      delete formDataNew.error;
+      delete formDataNew.confirm;
+      // console.log("formDataNew", formDataNew);
+
+      const hashedPasswordOld = hashDataWithSaltRounds(
+        formDataNew.passwordold,
+        loginDetails.salt,
+        loginDetails.iterations
+      );
+      // console.log("hashedPassword - old", hashedPasswordOld);
+      formDataNew.passwordold = hashedPasswordOld;
+      formDataNew.passwordnew = hashedPasswordNew;
+      console.log(formDataNew);
+
+      const res = await userUpdate(formDataNew);
+      if (res.error) {
+        console.log("error:", res.error);
+        setErrors(res.error);
+        setFormData({
+          userName: userDetails.user,
+          email: userDetails.email,
+          passwordold: "",
+          password: "",
+        });
+      } else {
+        setUser(null);
+        navigate("/login");
       }
-      setLoading(false);
-      console.log("User saved successfully")
-      setFormData({
-        userName: userDetails.user,
-        email: userDetails.email,
-        password: "", 
-      });
-      setupdatedPassword(true)
-    } catch (error) {
-      if (error.message) {
-        toast?.error(error?.message, { id: 1 });
-      }
-      setFormData({
-        userName: userDetails.user,
-        email: userDetails.email,
-        password: "", 
-      });
-      setLoading(false);
+    } catch (e) {
+      console.log(e);
     }
-  };
+  }
 
+  // const onSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setupdatedPassword(false);
+  //   const validation = updatePasswordSchema.validate(formData, {
+  //     abortEarly: false,
+  //   });
+  //   if (validation.error) {
+  //     const newErrors = {};
+  //     validation.error.details.forEach((detail) => {
+  //       const key = detail.path[0];
+  //       newErrors[key] = detail.message;
+  //     });
+  //     setErrors(newErrors);
+  //     console.error("Validation error:", validation.error.details);
+  //     return;
+  //   }
 
+  //   try {
+  //     setLoading(true);
+  //     const updatedData = hashPassword();
+  //     const updateUserRequest = {
+  //       body: updatedData,
+  //     };
+  //     console.log(updateUserRequest);
+  //     const response = await apis?.updateProfile(updateUserRequest);
+  //     if (response?.status === 200) {
+  //       toast.success(response?.data?.message, { id: 1 });
+  //     }
+  //     setLoading(false);
+  //     console.log("User saved successfully");
+  //     setFormData({
+  //       userName: userDetails.user,
+  //       email: userDetails.email,
+  //       password: "",
+  //     });
+  //     setupdatedPassword(true);
+  //   } catch (error) {
+  //     if (error.message) {
+  //       toast?.error(error?.message, { id: 1 });
+  //     }
+  //     setFormData({
+  //       userName: userDetails.user,
+  //       email: userDetails.email,
+  //       password: "",
+  //     });
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <>
@@ -189,15 +239,15 @@ const ProfileUpdateForm = () => {
           w={["100px", "150px", "200px", "250px", "800px"]}
           h="auto"
         >
-        <div>
+          <div>
             <Link to={`/user/trips`}>
               <ArrowLeftIcon />
               Go Back
             </Link>
-        </div>
-        {updatedPassword && (
-        <p style={{ color: "green" }}>Password has been updated!</p>
-        )}
+          </div>
+          {updatedPassword && (
+            <p style={{ color: "green" }}>Password has been updated!</p>
+          )}
           <form>
             <FormControl id="username" isRequired>
               <FormLabel>Username</FormLabel>
@@ -208,10 +258,11 @@ const ProfileUpdateForm = () => {
                 mb="2"
                 name="userName"
                 value={userDetails.user}
-                onChange={handleInputChange}
+                // onChange={handleInputChange}
+                readOnly
                 borderColor="#ccc"
               />
-              <p style={{ color: "red" }}>{errors.userName}</p>
+              {/* <p style={{ color: "red" }}>{errors.userName}</p> */}
             </FormControl>
 
             <FormControl id="email" isRequired>
@@ -224,11 +275,38 @@ const ProfileUpdateForm = () => {
                   mb="2"
                   name="email"
                   value={userDetails.email}
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
+                  readOnly
                   borderColor="#ccc"
                 />
               </InputGroup>
-              <p style={{ color: "red" }}>{errors.email}</p>
+              {/* <p style={{ color: "red" }}>{errors.email}</p> */}
+            </FormControl>
+            <FormControl id="password old" isRequired>
+              <FormLabel>Current Password</FormLabel>
+              <InputGroup size="md">
+                <Input
+                  backgroundColor="white"
+                  pr="4.5rem"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter new password"
+                  mb="2"
+                  name="passwordold"
+                  value={formData.passwordold}
+                  onChange={handleInputChange}
+                  borderColor="#ccc"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              {/* <p style={{ color: "red" }}>{errors.password}</p> */}
             </FormControl>
 
             <FormControl id="password" isRequired>
@@ -255,7 +333,7 @@ const ProfileUpdateForm = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              <p style={{ color: "red" }}>{errors.password}</p>
+              <p style={{ color: "red" }}>{errors}</p>
             </FormControl>
 
             <Button

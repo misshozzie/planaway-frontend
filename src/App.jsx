@@ -26,7 +26,7 @@ function App() {
           <Routes>
             <Route
               path="/profile"
-              element={<ProfileUpdate setUser={setUser} />}
+              element={<ProfileUpdate setUser={setUser} username={user} />}
             />
 
             <Route

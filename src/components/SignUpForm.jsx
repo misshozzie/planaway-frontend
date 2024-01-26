@@ -186,7 +186,7 @@ const SignupForm = () => {
       delete formDataNew.error;
       delete formDataNew.confirm;
       console.log(formDataNew);
-      const user = await signUp(formData);
+      const user = await signUp(formDataNew);
       console.log(user);
       navigate("/login");
     } catch (e) {
@@ -221,7 +221,7 @@ const SignupForm = () => {
           h="auto"
         >
           <form onSubmit={onSubmit}>
-          <ArrowLeftIcon />
+            <ArrowLeftIcon />
             <Button
               colorScheme="black"
               variant="link"
@@ -230,7 +230,7 @@ const SignupForm = () => {
               Go Home
             </Button>
             <Heading as="h2" size="l" mt={4}>
-              SIGN UP 
+              SIGN UP
             </Heading>
             <br />
             <FormControl isRequired display="flex" alignItems="center">
@@ -273,7 +273,7 @@ const SignupForm = () => {
               </FormLabel>
               <InputGroup>
                 <Input
-                backgroundColor="white"
+                  backgroundColor="white"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   mb={2}
@@ -311,30 +311,30 @@ const SignupForm = () => {
               />
               <p style={{ color: "red" }}>{errors.confirmPassword}</p>
             </FormControl>
-        <br />
-        <Button
-          backgroundColor="#CD8D7A"
-          _hover={{ bg: "##DBAD9F", color: "white" }}
-          _expanded={{ bg: "#DBAD9F", color: "white" }}
-          w="280px"
-          mt={2}
-          type="submit"
-          isLoading={isLoading} // Use isLoading prop for Spinner
-          onClick={onSubmit}
-        >
-          {isLoading ? (
-            <Spinner
-              thickness="3px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="sm"
-            />
-          ) : (
-            "Sign Up"
-          )}
-        </Button>
-        </form>
+            <br />
+            <Button
+              backgroundColor="#CD8D7A"
+              _hover={{ bg: "##DBAD9F", color: "white" }}
+              _expanded={{ bg: "#DBAD9F", color: "white" }}
+              w="280px"
+              mt={2}
+              type="submit"
+              isLoading={isLoading} // Use isLoading prop for Spinner
+              onClick={onSubmit}
+            >
+              {isLoading ? (
+                <Spinner
+                  thickness="3px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="sm"
+                />
+              ) : (
+                "Sign Up"
+              )}
+            </Button>
+          </form>
         </Box>
       </Flex>
     </>
