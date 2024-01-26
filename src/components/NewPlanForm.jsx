@@ -15,7 +15,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import logo from "../assets/PAlogo.png";
-import bg from "../assets/Planawaybg.png";
+import bg from "../assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { createPlan } from "../api/plans";
 import { useNavigate, useLocation } from "react-router";

@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Joi from "joi";
 import logo from "../assets/PAlogo.png";
-import bg from "../assets/Planawaybg.png";
+import bg from "../assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
