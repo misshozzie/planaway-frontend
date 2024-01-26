@@ -15,22 +15,21 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-// import Cookies from "js-cookie";
-import toast from "react-hot-toast";
 import { logoutUser } from "../services/user";
 
 const NavBar = ({ username, setUser }) => {
   // const [user, setUser] = useState();
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   const isUser = Cookies.get("user");
-  //   if (isUser) {
-  //     let parseUser = isUser?.substring(2);
-  //     setUser(JSON?.parse(parseUser));
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    //const isUser = Cookies.get("user");
+    if (username) {
+      navigate("user/trips")
+      // let parseUser = isUser?.substring(2);
+      // setUser(JSON?.parse(parseUser));
+    } else {
+      navigate("/login");
+    }
+  }, []);
 
   const logout = async () => {
     // try {
@@ -60,7 +59,7 @@ const NavBar = ({ username, setUser }) => {
           padding="1rem"
           width={"100%"}
         >
-          <Link to="/">
+          <Link to="user/trips">
             <Box maxH={"80px"}>
               <img src={logo} style={{ maxWidth: "50px" }} alt="logo" />
             </Box>

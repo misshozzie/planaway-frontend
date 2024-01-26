@@ -300,7 +300,7 @@ const ProfileUpdateForm = ({ setUser, username }) => {
                   <Button
                     h="1.75rem"
                     size="sm"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={togglePasswordVisibility}
                   >
                     {showPassword ? "Hide" : "Show"}
                   </Button>
@@ -327,7 +327,7 @@ const ProfileUpdateForm = ({ setUser, username }) => {
                   <Button
                     h="1.75rem"
                     size="sm"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={togglePasswordVisibility}
                   >
                     {showPassword ? "Hide" : "Show"}
                   </Button>
