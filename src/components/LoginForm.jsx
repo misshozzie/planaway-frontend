@@ -42,6 +42,8 @@ const LoginForm = ({ setUser }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -136,6 +138,12 @@ const LoginForm = ({ setUser }) => {
       // Baby step!
     } catch (e) {
       console.log(e);
+      if (e.message && e.message.includes("Invalid Login")) {
+        // Set the error message for "Invalid Login"
+        setErrorMessage("Password or email is incorrect");
+      } else {
+        setErrorMessage(e);
+      }
     }
   }
 
@@ -178,6 +186,11 @@ const LoginForm = ({ setUser }) => {
               LOG IN
             </Heading>
           <form>
+          {errorMessage && (
+          <Text color="red.500" mt={2}>
+            {errorMessage}
+          </Text>
+            )}
             {/* <Link as={RouterLink} to="/" display="flex" alignItems="center">
               <ArrowLeftIcon />
               Go Home
