@@ -25,13 +25,13 @@ import { useEffect, useState } from "react";
 import TripCard from "../components/TripCard";
 import { formatDate } from "../util/helperFunc";
 
-export default function TripPage({ username, setUser }) {
+export default function TripPage({ username, setUser, setRender, render }) {
   // console.log(username);
   const navigate = useNavigate();
   const { getData, data, isLoading, error } = getAllTrips();
   const { deleteData, dataDeleted, isdeleteLoading, deleteError } =
     deleteOneTrip();
-  const [render, setRender] = useState(false);
+
   // to get the query params in url
   // let query = new URLSearchParams(window.location.search);
   // let username = query.get("username");
@@ -44,13 +44,12 @@ export default function TripPage({ username, setUser }) {
     fetch();
   }, [username, render]);
 
-  console.log("trip error", error);
-
   function handleDelete(username, tripId) {
     async function fetch() {
       await deleteData(username, tripId);
     }
     fetch();
+    // console.log("render delete", render);
     setRender(!render); //force a re-render after data is deleted
   }
 
