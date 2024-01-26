@@ -57,3 +57,11 @@ export function getUserDetails() {
   // return token ? "test" : null;
 }
 
+export async function userUpdate(userData) {
+  // Delegate the network request code to the users-api.js API module
+  // which will ultimately return a JSON Web Token (JWT)
+  // console.log("service", userData);
+  const data = await usersAPI.userUpdate(userData);
+  // Baby step by returning whatever is sent back by the server
+  return data;
+}

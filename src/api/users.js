@@ -131,3 +131,25 @@ export async function logoutUser(token, userData) {
     throw new Error("Invalid Logout");
   }
 }
+
+export async function userUpdate(userData) {
+  // Fetch uses an options object as a second arg to make requests
+  // other than basic GET requests, include data, headers, etc.
+  const createURL = BASE_URL + "/users/update";
+  // console.log(createURL);
+  const res = await fetch(createURL, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    // Fetch requires data payloads to be stringified
+    // and assigned to a body property on the options object
+    body: JSON.stringify(userData),
+  });
+  // Check if request was successful
+  if (res.ok) {
+    // res.json() will resolve to the JWT
+    console.log(res);
+    return res.json();
+  } else {
+    throw new Error("Invalid Update");
+  }
+}
