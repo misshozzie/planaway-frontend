@@ -35,7 +35,7 @@ const schema = Joi.object({
   description: Joi.any().optional(),
 });
 
-export default function NewTripForm() {
+export default function NewTripForm({ setRender, render }) {
   const [formState, setFormState] = useState({});
   const [disabled, setDisabled] = useState(true);
   const [errors, setErrors] = useState({});
@@ -80,6 +80,7 @@ export default function NewTripForm() {
       await postData(username, formState);
     }
     fetch();
+    setRender(!render); //force rerender
     navigate(`/user/trips?username=${username}`);
   }
 

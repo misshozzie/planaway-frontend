@@ -66,7 +66,7 @@ const updatePasswordSchema = Joi.object({
   }),
 });
 
-const ProfileUpdateForm = ({ setUser }) => {
+const ProfileUpdateForm = ({ setUser, username }) => {
   const userDetails = getUserDetails();
   const [formData, setFormData] = useState({
     userName: userDetails.user,
@@ -240,7 +240,7 @@ const ProfileUpdateForm = ({ setUser }) => {
           h="auto"
         >
           <div>
-            <Link to={`/user/trips`}>
+            <Link to={`/user/trips?username=${username}`}>
               <ArrowLeftIcon />
               Go Back
             </Link>

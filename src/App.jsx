@@ -17,6 +17,7 @@ import "./index.css";
 
 function App() {
   const [user, setUser] = useState(getUser());
+  const [render, setRender] = useState(false);
   // console.log("user", user);
   return (
     <main>
@@ -31,11 +32,24 @@ function App() {
 
             <Route
               path="/user/trips"
-              element={<TripPage username={user} setUser={setUser} />}
+              element={
+                <TripPage
+                  username={user}
+                  setUser={setUser}
+                  setRender={setRender}
+                  render={render}
+                />
+              }
             />
             <Route
               path="/user/trips/new"
-              element={<NewTripForm setUser={setUser} />}
+              element={
+                <NewTripForm
+                  setUser={setUser}
+                  setRender={setRender}
+                  render={render}
+                />
+              }
             />
             <Route
               path="/user/trips/update"
