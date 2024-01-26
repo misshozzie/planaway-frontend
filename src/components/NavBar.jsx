@@ -23,7 +23,7 @@ const NavBar = ({ username, setUser }) => {
   useEffect(() => {
     //const isUser = Cookies.get("user");
     if (username) {
-      navigate("user/trips")
+      navigate(`user/trips?username=${username}`);
       // let parseUser = isUser?.substring(2);
       // setUser(JSON?.parse(parseUser));
     } else {
@@ -59,7 +59,7 @@ const NavBar = ({ username, setUser }) => {
           padding="1rem"
           width={"100%"}
         >
-          <Link to="user/trips">
+          <Link to={`user/trips?username=${username}`}>
             <Box maxH={"80px"}>
               <img src={logo} style={{ maxWidth: "50px" }} alt="logo" />
             </Box>
