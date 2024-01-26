@@ -12,7 +12,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import logo from "../assets/PAlogo.png";
-import bg from "../assets/Planawaybg.png";
+import bg from "../assets/planawaybg.png";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router";
 import { updatePlan, getOnePlan } from "../api/plans";
