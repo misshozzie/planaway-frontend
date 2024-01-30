@@ -38,6 +38,11 @@ https://www.figma.com/file/JUTtAwrYe0a7AgyYpGwzuL/planaway?type=whiteboard&node-
 
 # Walkthrough #
 
+
+https://github.com/misshozzie/planaway-frontend/assets/10040970/5873bfc8-1799-4d9a-8a55-2f49d7f261bd
+
+
+
 ### Homepage
 <img width="1415" alt="image" src="https://github.com/misshozzie/planaway-frontend/assets/10040970/c0a2e525-dfe0-4d3a-b0fe-9f695c9e31f8">
 
